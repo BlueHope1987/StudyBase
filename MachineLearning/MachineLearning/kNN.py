@@ -1,4 +1,5 @@
 #coding=utf-8
+#以上注释为支持中文注释
 from numpy import *
 import operator
 def createDataSet() :
@@ -28,5 +29,25 @@ group,labels=kNN.createDataSet()
 group
 labels
 kNN.classify0([0,0],group,labels,3)
+'''
 
+def file2matrix(filename):
+    fr=open(filename)
+    arrayOLines=fr.readlines()
+    numberOfLines=len(arrayOLines)
+    returnMat=zeros((numberOfLines,3))
+    classLabelVector=[]
+    index=0
+    for line in arrayOLines:
+        line=line.strip()
+        listFromLine=line.split('\t')
+        returnMat[index,:]=listFromLine[0:3]
+        classLabelVector.append(int(listFromLine[-1]))
+        index+=1
+    return returnMat,classLabelVector
+'''
+reload(kNN)
+datingDataMat,datingLabels=kNN.file2matrix('datingTestSet2.txt')
+datingDataMat
+datingLabels[0:20]
 '''
