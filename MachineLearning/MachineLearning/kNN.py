@@ -88,3 +88,10 @@ def datingClassTest():
         print "the classifier come back with: %d, the real answer is: %d"%(classifierResult,datingLabels[i])
         if(classifierResult!=datingLabels[i]):errorCount+=1.0
     print "the total error rate is: %f"%(errorCount/float(numTestVecs))
+'''
+kNN.datingClassTest()
+'''
+def classifyPerson():
+    resultList=['not at all','in small doses','in large doses']
+    percentTats=float(raw_input("percentage of time spent playing video games?"))
+    ffMiles=float(raw_input("frequent flier.....P28"))
