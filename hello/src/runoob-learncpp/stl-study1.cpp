@@ -45,6 +45,7 @@ class Triangle:public Shape
 
 int main()
 {
+    //接口教程
     Rectangle Rect;
     Triangle Tri;
     Rect.setWidth(5);
