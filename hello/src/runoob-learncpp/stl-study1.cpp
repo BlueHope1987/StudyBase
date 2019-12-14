@@ -2,8 +2,60 @@
 #include <vector>
 using namespace std;
 
+class Shape
+{
+    //C++ 接口是使用抽象类来实现的，抽象类与数据抽象互不混淆，数据抽象是一个把实现细节与相关的数据分离开的概念。
+    //如果类中至少有一个函数被声明为纯虚函数，则这个类就是抽象类。纯虚函数是通过在声明中使用 "= 0" 来指定的
+    //https://www.runoob.com/cplusplus/cpp-interfaces.html
+
+    public:
+    //提供接口框架的纯虚函数
+    virtual int getArea()=0;
+    void setWidth(int w)
+    {
+        width=w;
+    }
+    void setHeight(int h)
+    {
+        height=h;
+    }
+    protected:
+    int width;
+    int height;
+};
+//派生类
+class Rectangle:public Shape
+{
+    public:
+    int getArea()
+    {
+        return (width*height);
+    }
+};
+class Triangle:public Shape
+{
+    public:
+    int getArea()
+    {
+        return(width*height)/2;
+    }
+};
+
+
+
 int main()
 {
+    Rectangle Rect;
+    Triangle Tri;
+    Rect.setWidth(5);
+    Rect.setHeight(7);
+    //输出对象的面积
+    cout<<"Total Rectangle area: "<<Rect.getArea()<<endl;
+    Tri.setWidth(5);
+    Tri.setWidth(7);
+    cout<<"Total Rectangle area: "<<Tri.getArea()<<endl;
+
+
     // 教程：https://www.runoob.com/cplusplus/cpp-stl-tutorial.html
     /*
     C++ STL（标准模板库）是一套功能强大的 C++ 模板类，提供了通用的模板类和函数，这些模板类和函数可以实现多种流行和常用的算法和数据结构，如向量、链表、队列、栈。
@@ -71,6 +123,5 @@ int main()
     针对 capacity 这个属性，STL 中的其他容器，如 list map set deque，由于这些容器的内存是散列分布的，因此不会发生类似 realloc() 的调用情况，因此我们可以认为 capacity 属性针对这些容器是没有意义的，因此设计时这些容器没有该属性。
     在 STL 中，拥有 capacity 属性的容器只有 vector 和 string。
     */
-
     return 0;
 }
