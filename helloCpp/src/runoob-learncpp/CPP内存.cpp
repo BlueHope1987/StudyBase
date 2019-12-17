@@ -13,7 +13,7 @@ using namespace std;
 如果您不再需要动态分配的内存空间，可以使用 delete 运算符，删除之前由 new 运算符分配的内存。
 */
 
-void main(){
+int main(){
 
     double* pvalue=NULL;
     if(!(pvalue=new double)){
@@ -22,5 +22,5 @@ void main(){
     };
     delete pvalue;
     
-    return;
+    return 0;
 }
