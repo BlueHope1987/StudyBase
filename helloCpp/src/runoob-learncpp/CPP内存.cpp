@@ -23,7 +23,12 @@ int main()
         exit(1);
     };
     delete pvalue;
-
+    
+    //一维数组
+    // 动态分配,数组长度为 m
+    int *array = new int[m];
+    //释放内存
+    delete[] array;
 
     //二维数组
     int **array;
