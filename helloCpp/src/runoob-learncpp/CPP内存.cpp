@@ -13,14 +13,33 @@ using namespace std;
 如果您不再需要动态分配的内存空间，可以使用 delete 运算符，删除之前由 new 运算符分配的内存。
 */
 
-int main(){
+int main()
+{
 
-    double* pvalue=NULL;
-    if(!(pvalue=new double)){
-        cout<<"Error: out of memory." <<endl;
+    double *pvalue = NULL;
+    if (!(pvalue = new double))
+    {
+        cout << "Error: out of memory." << endl;
         exit(1);
     };
     delete pvalue;
-    
+
+
+    //二维数组
+    int **array;
+    // 假定数组第一维长度为 m， 第二维长度为 n
+    // 动态分配空间
+    array = new int *[m];
+    for (int i = 0; i < m; i++)
+    {
+        array[i] = new int[n];
+    }
+    //释放
+    for (int i = 0; i < m; i++)
+    {
+        delete[] arrary[i];
+    }
+    delete[] array;
+
     return 0;
 }
