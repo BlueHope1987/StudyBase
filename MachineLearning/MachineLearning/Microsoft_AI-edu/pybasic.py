@@ -114,3 +114,82 @@ plt.ylabel('y')
 plt.grid()
 
 plt.show()
+
+
+
+#In [63]:
+x = 10
+y = 6
+print ((x + y == 16) & ((10 * x) + (25 * y) == 250))
+
+
+#In [64]:
+x = 5**3
+print(x)
+
+
+#In [65]:
+import math
+
+x = math.sqrt(9)            # 平方根
+print (x)
+
+cr = round(64 ** (1. / 3))   # 立方根
+print(cr)
+
+
+#In [66]:
+print (9**0.5)
+print (math.sqrt(9))
+
+
+#In [67]:
+x = math.log(16, 4)
+print(x)
+
+
+#In [68]:
+print(math.log10(64))
+
+print (math.log(64))
+
+
+#In [69]:
+x = np.array(range(-10, 11))
+y3 = 3 * x ** 3
+
+print(tabulate(np.column_stack((x, y3)), headers=['x', 'y']))
+
+
+#In [70]:
+plt.plot(x, y3, color="magenta")  # y3是曲线
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid()
+plt.axhline()
+plt.axvline()
+plt.show()
+
+
+
+#In [71]:
+y4 = 2.0**x
+plt.plot(x, y4, color="magenta")
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid()
+plt.axhline()
+plt.axvline()
+plt.show()
+
+
+
+#In [72]:
+year = np.array(range(1, 21))                      # 年份
+balance = 100 * (1.05 ** year)                     # 余额
+plt.plot(year, balance, color="green")
+plt.xlabel('Year')
+plt.ylabel('Balance')
+plt.show()
+
+
