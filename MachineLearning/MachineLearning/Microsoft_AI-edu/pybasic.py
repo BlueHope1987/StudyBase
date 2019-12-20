@@ -1,6 +1,8 @@
 
 #https://github.com/microsoft/ai-edu/blob/master/A-%E6%95%99%E5%AD%A6%E8%AF%BE%E7%A8%8B/math_intro/01_%E4%BB%A3%E6%95%B0.ipynb
 
+
+#In [54]:
 import numpy as np
 from tabulate import tabulate
 
@@ -11,11 +13,12 @@ print(tabulate(np.column_stack((x,y)), headers=['x', 'y']))
 
 
 
-
+#In [55]:
 from IPython.core.interactiveshell import InteractiveShell
 InteractiveShell.ast_node_interactivity = "last_expr"
 # %matplotlib inline
 
+#In [56]:
 from matplotlib import pyplot as plt
 
 plt.plot(x, y, color="grey", marker = "o")
@@ -25,7 +28,7 @@ plt.grid()
 plt.show()
 
 
-
+#In [57]:
 plt.plot(x, y, color="grey")
 plt.xlabel('x')
 plt.ylabel('y')
@@ -36,7 +39,7 @@ plt.show()
 
 
 
-
+#In [58]:
 plt.plot(x, y, color="grey")
 plt.xlabel('x')
 plt.ylabel('y')
