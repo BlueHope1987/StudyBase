@@ -51,7 +51,7 @@ plt.annotate('y',(0,-2))
 plt.show()
 
 
-
+#In [59]:
 plt.plot(x, y, color="grey")
 plt.xlabel('x')
 plt.ylabel('y')
