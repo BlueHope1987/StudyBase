@@ -240,3 +240,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+MachineLearning/MachineLearning/Microsoft_AI-edu/B13/usr_dir/train.txt.down.clean
+MachineLearning/MachineLearning/Microsoft_AI-edu/B13/usr_dir/train.txt.up.clean
