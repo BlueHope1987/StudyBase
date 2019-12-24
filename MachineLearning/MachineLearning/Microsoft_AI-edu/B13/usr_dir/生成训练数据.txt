@@ -1,0 +1,28 @@
+在本案例中，若要使用 T2T 工具包进行训练，需要把数据转换成T2T认可的二进制文件形式。
+使用如下命令生成训练数据：
+
+
+USR_DIR=./usr_dir
+DATA_DIR=./data_dir
+PROBLEM=translate_up2down
+
+t2t-datagen \
+  --t2t_usr_dir=${USR_DIR} \
+  --data_dir=${DATA_DIR} \
+  --problem=${PROBLEM}
+
+(Note:t2t-datagen 是tensor2tensor的一个命令..怎么调用它呢..似乎和环境变量有关)
+
+其中，
+
+t2t_usr_dir：指定了一个目录，该目录中包含 __init__.py 文件，并可以导入处理对联问题的 python 模块。在该目录中，编写 merge_vocab.py 文件，注册对联问题。
+
+data_dir：数据目录。存放生成的训练数据文件。
+
+problem：定义问题名称，本案例中问题名称为 translate_up2down。
+
+当命令执行完毕，将会在 data 目录下生成两个文件：
+
+translate_up2down-train-00000-of-00001
+translate_up2down-dev-00000-of-00001
+这便是我们需要的训练数据文件。
