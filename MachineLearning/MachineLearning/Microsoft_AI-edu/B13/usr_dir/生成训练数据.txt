@@ -13,6 +13,8 @@ t2t-datagen \
 
 (Note:t2t-datagen 是tensor2tensor的一个命令..怎么调用它呢..似乎和环境变量有关)
 
+"D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_datagen.py" --t2t_usr_dir="./usr_dir" --data_dir="./data_dir" --problem="translate_up2down"
+
 其中，
 
 t2t_usr_dir：指定了一个目录，该目录中包含 __init__.py 文件，并可以导入处理对联问题的 python 模块。在该目录中，编写 merge_vocab.py 文件，注册对联问题。
