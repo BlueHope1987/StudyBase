@@ -244,5 +244,8 @@ MachineLearning/MachineLearning/Microsoft_AI-edu/B13/usr_dir/train.txt.down.clea
 MachineLearning/MachineLearning/Microsoft_AI-edu/B13/usr_dir/train.txt.up.clean
 MachineLearning/MachineLearning/Microsoft_AI-edu/B13/usr_dir/merge.txt
 MachineLearning/MachineLearning/Microsoft_AI-edu/B13/usr_dir/merge.txt.vocab
-MachineLearning/MachineLearning/Microsoft_AI-edu/B13/usr_dir/dev.txt.down
-MachineLearning/MachineLearning/Microsoft_AI-edu/B13/usr_dir/dev.txt.up
+MachineLearning/MachineLearning/Microsoft_AI-edu/B13/usr_dir/train.txt.down
+MachineLearning/MachineLearning/Microsoft_AI-edu/B13/usr_dir/train.txt.up
+MachineLearning/MachineLearning/Microsoft_AI-edu/B13/data_dir/*
+MachineLearning/MachineLearning/Microsoft_AI-edu/B13/output/*
+

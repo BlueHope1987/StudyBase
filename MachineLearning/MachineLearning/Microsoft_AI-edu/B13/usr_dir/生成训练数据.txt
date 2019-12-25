@@ -28,3 +28,53 @@ problem：定义问题名称，本案例中问题名称为 translate_up2down。
 translate_up2down-train-00000-of-00001
 translate_up2down-dev-00000-of-00001
 这便是我们需要的训练数据文件。
+
+
+
+本地训练
+如果你的本地机器性能较好，也可以在本地训练。
+模型训练的代码请参考train.sh。
+训练过程依然调用t2t模型训练命令：t2t_trainer。具体命令如下：
+
+TRAIN_DIR=./output
+LOG_DIR=${TRAIN_DIR}
+DATA_DIR=./data_dir
+USR_DIR=./usr_dir
+
+PROBLEM=translate_up2down
+MODEL=transformer
+HPARAMS_SET=transformer_small
+
+t2t-trainer \
+--t2t_usr_dir=${USR_DIR} \
+--data_dir=${DATA_DIR} \
+--problem=${PROBLEM} \
+--model=${MODEL} \
+--hparams_set=${HPARAMS_SET} \
+--output_dir=${TRAIN_DIR} \
+--keep_checkpoint_max=1000 \
+--worker_gpu=1 \
+--train_steps=200000 \
+--save_checkpoints_secs=1800 \
+--schedule=train \
+--worker_gpu_memory_fraction=0.95 \
+--hparams="batch_size=1024" 2>&1 | tee -a ${LOG_DIR}/train_default.log
+
+
+"D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_trainer.py" --t2t_usr_dir="./usr_dir" --data_dir="./data_dir" --problem="translate_up2down" --model="transformer" --hparams_set="transformer_small" --output_dir="./output" --keep_checkpoint_max=1000 --worker_gpu=1 --train_steps=200000 --save_checkpoints_secs=1800 --schedule=train --worker_gpu_memory_fraction=0.95 --hparams="batch_size=1024" 2>&1 >>./output/train_default.log
+
+
+各项参数的作用和取值分别如下：
+t2t_usr_dir：如前一小节所述，指定了处理对联问题的模块所在的目录。
+data_dir：训练数据目录
+problem：问题名称，即translate_up2down
+model：训练所使用的 NLP 算法模型，本案例中使用 transformer 模型
+hparams_set：transformer 模型下，具体使用的模型。transformer 的各种模型定义在 tensor2tensor/models/transformer.py 文件夹内。本案例使用 transformer_small 模型。
+output_dir：保存训练结果
+keep_checkpoint_max：保存 checkpoint 文件的最大数目
+worker_gpu：是否使用 GPU，以及使用多少 GPU 资源
+train_steps：总训练次数
+save_checkpoints_secs：保存 checkpoint 的时间间隔
+schedule：将要执行的 tf.contrib.learn.Expeiment 方法，比如：train, train_and_evaluate, continuous_train_and_eval,train_eval_and_decode, run_std_server
+worker_gpu_memory_fraction：分配的 GPU 显存空间
+hparams：定义 batch_size 参数。
