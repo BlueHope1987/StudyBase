@@ -1,0 +1,4 @@
+"D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_trainer.py" --t2t_usr_dir=self_script --problem=my_problem --data_dir=./self_data
+
+
+案例地址： https://blog.csdn.net/csa121/article/details/79605215
