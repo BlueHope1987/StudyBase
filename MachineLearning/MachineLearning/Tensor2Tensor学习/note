@@ -1,4 +1,8 @@
-"D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_trainer.py" --t2t_usr_dir=self_script --problem=my_problem --data_dir=./self_data
+"D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_datagen.py" --t2t_usr_dir="./self_script" --problem="my_problem" --data_dir="./self_data"
+
+"D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_trainer.py" --t2t_usr_dir=self_script --problem=my_problem --data_dir=./self_data --model=lstm_seq2seq_attention --hparams_set=lstm_attention --output_dir=./train
+
+"D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_decoder.py" --t2t_usr_dir=self_script --problem=my_problem --data_dir=./self_data --model=lstm_seq2seq_attention --hparams_set=lstm_attention --output_dir=./train --decode_hparams="beam_size=4,alpha=0.6" --decode_from_file=decoder/q.txt --decode_to_file=decoder/a.txt
 
 
 案例地址： https://blog.csdn.net/csa121/article/details/79605215
