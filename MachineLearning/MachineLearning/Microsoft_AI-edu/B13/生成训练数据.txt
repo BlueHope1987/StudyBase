@@ -78,3 +78,6 @@ save_checkpoints_secs：保存 checkpoint 的时间间隔
 schedule：将要执行的 tf.contrib.learn.Expeiment 方法，比如：train, train_and_evaluate, continuous_train_and_eval,train_eval_and_decode, run_std_server
 worker_gpu_memory_fraction：分配的 GPU 显存空间
 hparams：定义 batch_size 参数。
+
+
+"D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_decoder.py" --t2t_usr_dir="./usr_dir" --data_dir="./data_dir" --problem="translate_up2down" --model="transformer" --hparams_set="transformer_small" --output_dir="./output" --decode_from_file="./decode_this.txt" --decode_to_file=result.txt
