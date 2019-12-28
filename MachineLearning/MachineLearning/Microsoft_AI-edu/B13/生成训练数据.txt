@@ -12,7 +12,7 @@ t2t-datagen \
   --problem=${PROBLEM}
 
 (Note:t2t-datagen 是tensor2tensor的一个命令..怎么调用它呢..似乎和环境变量有关)
-
+本地命令
 "D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_datagen.py" --t2t_usr_dir="./usr_dir" --data_dir="./data_dir" --problem="translate_up2down"
 
 其中，
@@ -60,7 +60,7 @@ t2t-trainer \
 --worker_gpu_memory_fraction=0.95 \
 --hparams="batch_size=1024" 2>&1 | tee -a ${LOG_DIR}/train_default.log
 
-
+本地命令
 "D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_trainer.py" --t2t_usr_dir="./usr_dir" --data_dir="./data_dir" --problem="translate_up2down" --model="transformer" --hparams_set="transformer_small" --output_dir="./output" --keep_checkpoint_max=1000 --worker_gpu=1 --train_steps=200000 --save_checkpoints_secs=1800 --schedule=train --worker_gpu_memory_fraction=0.95 --hparams="batch_size=1024" 2>&1 >>./output/train_default.log
 
 
@@ -79,5 +79,8 @@ schedule：将要执行的 tf.contrib.learn.Expeiment 方法，比如：train, t
 worker_gpu_memory_fraction：分配的 GPU 显存空间
 hparams：定义 batch_size 参数。
 
+
+测试模型 上联放在./decode_this.txt里 每汉字以空格分割开
+本地命令
 
 "D:\Program Files\Tools\Python\Python37\Lib\site-packages\tensor2tensor\bin\t2t_decoder.py" --t2t_usr_dir="./usr_dir" --data_dir="./data_dir" --problem="translate_up2down" --model="transformer" --hparams_set="transformer_small" --output_dir="./output" --decode_from_file="./decode_this.txt" --decode_to_file=result.txt
