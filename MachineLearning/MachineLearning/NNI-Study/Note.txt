@@ -1,0 +1,9 @@
+https://github.com/microsoft/nni/blob/master/docs/zh_CN/Tutorial/QuickStart.md
+
+从命令行使用 config.yml 文件启动 MNIST Experiment 。
+
+nnictl create --config config.yml
+
+启动 Experiment 后，可以在命令行界面找到如下的 Web 界面地址：
+
+Web 地址为：[IP 地址]:8080
