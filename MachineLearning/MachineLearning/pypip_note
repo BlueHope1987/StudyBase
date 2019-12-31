@@ -14,6 +14,9 @@ pip国内的一些镜像
 可以在使用pip的时候在后面加上-i参数，指定pip源 
 eg: pip install scrapy -i https://pypi.tuna.tsinghua.edu.cn/simple
 
+本地命令
+pip install XXXX -i https://mirrors.aliyun.com/pypi/simple/
+
 永久修改： 
 linux: 
 修改 ~/.pip/pip.conf (没有就创建一个)， 内容如下：
