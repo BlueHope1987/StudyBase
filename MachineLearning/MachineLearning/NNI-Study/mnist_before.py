@@ -1,5 +1,5 @@
-""https://github.com/microsoft/nni/blob/master/docs/zh_CN/Tutorial/QuickStart.md
-""这是还没有 NNI 的样例代码，用 CNN 在 MNIST 数据集上训练 https://github.com/Microsoft/nni/tree/master/examples/trials/mnist-tfv1/mnist_before.py
+#https://github.com/microsoft/nni/blob/master/docs/zh_CN/Tutorial/QuickStart.md
+#这是还没有 NNI 的样例代码，用 CNN 在 MNIST 数据集上训练 https://github.com/Microsoft/nni/tree/master/examples/trials/mnist-tfv1/mnist_before.py
 """A deep MNIST classifier using convolutional layers."""
 import argparse
 import logging

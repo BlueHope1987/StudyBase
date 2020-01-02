@@ -1,5 +1,5 @@
-"""https://github.com/microsoft/nni/blob/master/docs/zh_CN/Tutorial/QuickStart.md"""
-"""用NNI修改先前的代码 https://github.com/microsoft/nni/blob/master/examples/trials/mnist-tfv1/mnist.py"""
+#https://github.com/microsoft/nni/blob/master/docs/zh_CN/Tutorial/QuickStart.md
+#用NNI修改先前的代码 https://github.com/microsoft/nni/blob/master/examples/trials/mnist-tfv1/mnist.py
 """A deep MNIST classifier using convolutional layers."""
 
 import argparse
