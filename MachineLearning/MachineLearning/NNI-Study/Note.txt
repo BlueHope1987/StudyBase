@@ -7,3 +7,5 @@ nnictl create --config config.yml
 启动 Experiment 后，可以在命令行界面找到如下的 Web 界面地址：
 
 Web 地址为：[IP 地址]:8080
+
+停止服务 nnictl stop 

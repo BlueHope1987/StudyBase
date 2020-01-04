@@ -1,5 +1,6 @@
 #https://github.com/microsoft/nni/blob/master/docs/zh_CN/Tutorial/QuickStart.md
 #这是还没有 NNI 的样例代码，用 CNN 在 MNIST 数据集上训练 https://github.com/Microsoft/nni/tree/master/examples/trials/mnist-tfv1/mnist_before.py
+#Python 3.7.5 tensorflow 1.14.0 测试通过
 """A deep MNIST classifier using convolutional layers."""
 import argparse
 import logging
@@ -9,7 +10,7 @@ import time
 
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
-#这是什么？
+#https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/mnist
 
 FLAGS = None
 
