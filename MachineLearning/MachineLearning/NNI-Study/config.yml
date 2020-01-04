@@ -5,6 +5,7 @@ maxExecDuration: 1h
 maxTrialNum: 10
 #choice: local, remote, pai
 trainingServicePlatform: local
+# 搜索空间文件
 searchSpacePath: search_space.json
 #choice: true, false
 useAnnotation: false
@@ -15,6 +16,7 @@ tuner:
   classArgs:
     #choice: maximize, minimize
     optimize_mode: maximize
+# 运行的命令，以及 Trial 代码的路径
 trial:
   command: python mnist.py
   codeDir: .
