@@ -12,6 +12,7 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 #https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/mnist
 
+
 FLAGS = None
 
 logger = logging.getLogger('mnist_AutoML')
