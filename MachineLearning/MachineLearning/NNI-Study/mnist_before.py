@@ -216,24 +216,24 @@ def get_params():
     ''' Get parameters from command line '''
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_dir", type=str, default='/tmp/tensorflow/mnist/input_data', help="data directory")
-    parser.add_argument("--dropout_rate", type=float, default=0.1, help="dropout rate") #默认 0.5
+    parser.add_argument("--dropout_rate", type=float, default=0.5, help="dropout rate") #默认 0.5
     parser.add_argument("--channel_1_num", type=int, default=32)
     parser.add_argument("--channel_2_num", type=int, default=64)
     parser.add_argument("--conv_size", type=int, default=5)
     parser.add_argument("--pool_size", type=int, default=2)
-    parser.add_argument("--hidden_size", type=int, default=64) #默认 1024
+    parser.add_argument("--hidden_size", type=int, default=1024) #默认 1024
     parser.add_argument("--learning_rate", type=float, default=1e-4)
-    parser.add_argument("--batch_num", type=int, default=20) #默认 2000
-    parser.add_argument("--batch_size", type=int, default=1) #默认 32
+    parser.add_argument("--batch_num", type=int, default=2000) #默认 2000
+    parser.add_argument("--batch_size", type=int, default=32) #默认 32
 
     args, _ = parser.parse_known_args()
     return args
 
 if __name__ == '__main__':
     try:
-        #params = vars(get_params()) #似乎是命令行传参
+        params = vars(get_params()) #似乎是命令行传参
         #教程文本的传参方法 更加直接
-        params = {'data_dir': '/tmp/tensorflow/mnist/input_data', 'dropout_rate': 0.5, 'channel_1_num': 32, 'channel_2_num': 64, 'conv_size': 5, 'pool_size': 2, 'hidden_size': 1024, 'learning_rate': 1e-4, 'batch_num': 2000, 'batch_size': 32}
+        #params = {'data_dir': '/tmp/tensorflow/mnist/input_data', 'dropout_rate': 0.5, 'channel_1_num': 32, 'channel_2_num': 64, 'conv_size': 5, 'pool_size': 2, 'hidden_size': 1024, 'learning_rate': 1e-4, 'batch_num': 2000, 'batch_size': 32}
         main(params)
     except Exception as exception:
         logger.exception(exception)
