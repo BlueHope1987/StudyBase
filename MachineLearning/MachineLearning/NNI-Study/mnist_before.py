@@ -231,7 +231,9 @@ def get_params():
 
 if __name__ == '__main__':
     try:
-        params = vars(get_params())
+        #params = vars(get_params()) #似乎是命令行传参
+        #教程文本的传参方法 更加直接
+        params = {'data_dir': '/tmp/tensorflow/mnist/input_data', 'dropout_rate': 0.5, 'channel_1_num': 32, 'channel_2_num': 64, 'conv_size': 5, 'pool_size': 2, 'hidden_size': 1024, 'learning_rate': 1e-4, 'batch_num': 2000, 'batch_size': 32}
         main(params)
     except Exception as exception:
         logger.exception(exception)
