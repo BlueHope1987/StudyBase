@@ -200,6 +200,7 @@ def main(params):
                     feed_dict={mnist_network.images: mnist.test.images,
                                mnist_network.labels: mnist.test.labels,
                                mnist_network.keep_prob: 1.0})
+                #下面的代码不被运行 why?
 
                 logger.debug('test accuracy %g', test_acc)
                 logger.debug('Pipe send intermediate result done.')
