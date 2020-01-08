@@ -9,7 +9,7 @@ import tempfile
 import time
 
 import tensorflow as tf
-#有机器出现ImportError: DLL load failed with error code 3221225501 更换版本无效 如何处理？
+#有机器出现ImportError: DLL load failed with error code 3221225501 更换tf及py版本无效 如何处理？
 
 from tensorflow.examples.tutorials.mnist import input_data
 #https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/mnist
