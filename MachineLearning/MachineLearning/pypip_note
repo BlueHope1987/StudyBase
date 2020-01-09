@@ -17,6 +17,9 @@ eg: pip install scrapy -i https://pypi.tuna.tsinghua.edu.cn/simple
 本地命令
 pip install XXXX -i https://mirrors.aliyun.com/pypi/simple/
 
+从文件清单安装
+pip install -r train_requirements.txt
+
 永久修改： 
 linux: 
 修改 ~/.pip/pip.conf (没有就创建一个)， 内容如下：
@@ -41,3 +44,7 @@ trusted-host = pypi.tuna.tsinghua.edu.cn
 批量卸载
 pip uninstall <包名> <包名> <包名> <包名> -y
 -y 不再逐一确认
+
+
+淘宝镜像
+https://npm.taobao.org/mirrors/python/
