@@ -1,0 +1,5 @@
+TensorFlow 的GitHub
+https://github.com/tensorflow/tensorflow
+
+默认需要AVX指令集 若处理器不支持需自行编译或找兼容版本
+https://github.com/fo40225/tensorflow-windows-wheel
