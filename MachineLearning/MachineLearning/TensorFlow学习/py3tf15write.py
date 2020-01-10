@@ -2,10 +2,12 @@ __author__ = 'chapter'
 
 #https://www.cnblogs.com/Allen-rg/p/9723017.html
 #TensorFlow 简单实例 TF 手写体识别简单实例
+#https://wiki.jikexueyuan.com/project/tensorflow-zh/tutorials/mnist_pros.html
 
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
+#权值初始化
 def weight_varible(shape):
     initial = tf.truncated_normal(shape, stddev=0.1)
     return tf.Variable(initial)
@@ -14,6 +16,7 @@ def bias_variable(shape):
     initial = tf.constant(0.1, shape=shape)
     return tf.Variable(initial)
 
+#卷积(Convolution)和池化(Pooling)
 def conv2d(x, W):
     return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
 
@@ -26,6 +29,7 @@ print("Download Done!")
 
 sess = tf.InteractiveSession()
 
+#第一层：卷积层
 # paras
 W_conv1 = weight_varible([5, 5, 1, 32])
 b_conv1 = bias_variable([32])
@@ -37,6 +41,7 @@ x_image = tf.reshape(x, [-1, 28, 28, 1])
 h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
 h_pool1 = max_pool_2x2(h_conv1)
 
+#第二层：卷积层
 # conv layer-2
 W_conv2 = weight_varible([5, 5, 32, 64])
 b_conv2 = bias_variable([64])
@@ -44,6 +49,7 @@ b_conv2 = bias_variable([64])
 h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
 h_pool2 = max_pool_2x2(h_conv2)
 
+#全连接层
 # full connection
 W_fc1 = weight_varible([7 * 7 * 64, 1024])
 b_fc1 = bias_variable([1024])
@@ -51,10 +57,12 @@ b_fc1 = bias_variable([1024])
 h_pool2_flat = tf.reshape(h_pool2, [-1, 7 * 7 * 64])
 h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
 
+#dropout技术（即丢弃某些神经元的输出结果）
 # dropout
 keep_prob = tf.placeholder(tf.float32)
 h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
 
+#输出层
 # output layer: softmax
 W_fc2 = weight_varible([1024, 10])
 b_fc2 = bias_variable([10])
