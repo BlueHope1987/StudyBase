@@ -1,6 +1,7 @@
 __author__ = 'chapter'
 
 #https://www.cnblogs.com/Allen-rg/p/9723017.html
+#http://www.jeyzhang.com/tensorflow-learning-notes-2.html
 #TensorFlow 简单实例 TF 手写体识别简单实例
 #https://wiki.jikexueyuan.com/project/tensorflow-zh/tutorials/mnist_pros.html
 
