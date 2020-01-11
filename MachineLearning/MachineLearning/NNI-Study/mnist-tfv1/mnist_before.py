@@ -19,7 +19,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 FLAGS = None
 
 logger = logging.getLogger('mnist_AutoML')
-
+logger.setLevel(logging.DEBUG)
 
 class MnistNetwork(object):
     '''
@@ -197,10 +197,16 @@ def main(params):
 
             if i % 100 == 0:
                 test_acc = mnist_network.accuracy.eval(
-                    feed_dict={mnist_network.images: mnist.test.images,
-                               mnist_network.labels: mnist.test.labels,
-                               mnist_network.keep_prob: 1.0})
-                #下面的代码不被运行 why?
+               #     feed_dict={mnist_network.images: mnist.test.images,
+               #                mnist_network.labels: mnist.test.labels,
+               #                mnist_network.keep_prob: 1.0})
+                     feed_dict={mnist_network.images: batch[0],
+                                mnist_network.labels: batch[1],
+                                mnist_network.keep_prob: 1 - params['dropout_rate']}
+                                )
+
+                print("step %d, training accuracy %g"%(i, test_acc))
+                #下面的代码不被运行 why? 上面原先的feed_dict可能太大了 替换为为if前的可运行
 
                 logger.debug('test accuracy %g', test_acc)
                 logger.debug('Pipe send intermediate result done.')
@@ -216,16 +222,16 @@ def main(params):
 def get_params():
     ''' Get parameters from command line '''
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_dir", type=str, default='/tmp/tensorflow/mnist/input_data', help="data directory")
+    parser.add_argument("--data_dir", type=str, default='/tmp/tensorflow/mnist/input_data', help="data directory") #替换为MNIST_data/无效 中止错误与路径无关
     parser.add_argument("--dropout_rate", type=float, default=0.5, help="dropout rate") #默认 0.5
-    parser.add_argument("--channel_1_num", type=int, default=2) #默认 32
-    parser.add_argument("--channel_2_num", type=int, default=4) #默认 64
+    parser.add_argument("--channel_1_num", type=int, default=32) #默认 32
+    parser.add_argument("--channel_2_num", type=int, default=64) #默认 64
     parser.add_argument("--conv_size", type=int, default=5)
     parser.add_argument("--pool_size", type=int, default=2)
-    parser.add_argument("--hidden_size", type=int, default=12) #默认 1024
+    parser.add_argument("--hidden_size", type=int, default=1024) #默认 1024
     parser.add_argument("--learning_rate", type=float, default=1e-4)
-    parser.add_argument("--batch_num", type=int, default=1) #默认 2000
-    parser.add_argument("--batch_size", type=int, default=1) #默认 32
+    parser.add_argument("--batch_num", type=int, default=2000) #默认 2000
+    parser.add_argument("--batch_size", type=int, default=32) #默认 32
 
     args, _ = parser.parse_known_args()
     return args

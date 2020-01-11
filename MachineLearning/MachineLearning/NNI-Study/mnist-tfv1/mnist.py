@@ -193,9 +193,13 @@ def main(params):
 
             if i % 100 == 0:
                 test_acc = mnist_network.accuracy.eval(
-                    feed_dict={mnist_network.images: mnist.test.images,
-                               mnist_network.labels: mnist.test.labels,
-                               mnist_network.keep_prob: 1.0})
+                #    feed_dict={mnist_network.images: mnist.test.images,
+                #               mnist_network.labels: mnist.test.labels,
+                #               mnist_network.keep_prob: 1.0})
+                     feed_dict={mnist_network.images: batch[0],
+                                mnist_network.labels: batch[1],
+                                mnist_network.keep_prob: 1 - params['dropout_rate']}
+                                        )
 
                 nni.report_intermediate_result(test_acc)
                 logger.debug('test accuracy %g', test_acc)
