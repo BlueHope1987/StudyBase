@@ -197,16 +197,17 @@ def main(params):
 
             if i % 100 == 0:
                 test_acc = mnist_network.accuracy.eval(
-               #     feed_dict={mnist_network.images: mnist.test.images,
-               #                mnist_network.labels: mnist.test.labels,
-               #                mnist_network.keep_prob: 1.0})
-                     feed_dict={mnist_network.images: batch[0],
-                                mnist_network.labels: batch[1],
-                                mnist_network.keep_prob: 1 - params['dropout_rate']}
-                                )
+                    feed_dict={mnist_network.images: mnist.test.images,
+                               mnist_network.labels: mnist.test.labels,
+                               mnist_network.keep_prob: 1.0})
+                #     feed_dict={mnist_network.images: batch[0],
+                #                mnist_network.labels: batch[1],
+                #                mnist_network.keep_prob: 1 - params['dropout_rate']}
+                #                )
 
                 print("step %d, training accuracy %g"%(i, test_acc))
                 #下面的代码不被运行 why? 上面原先的feed_dict可能太大了 替换为为if前的可运行
+                #20200113测试证实 将系统后台程序清空腾出足够内存 原先代码可跑
 
                 logger.debug('test accuracy %g', test_acc)
                 logger.debug('Pipe send intermediate result done.')
