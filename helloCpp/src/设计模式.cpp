@@ -385,7 +385,6 @@ namespace bdr {
 
 //6、代理模式
 namespace prx {
-
 #define SAFE_DELETE(p) if (p) { delete p; p = NULL;}
 
 	class CSubject
@@ -434,6 +433,73 @@ namespace prx {
 }
 
 
+//7、适配器模式
+namespace adp{
+	// Targets
+	class Target
+	{
+	public:
+		virtual void Request()
+		{
+			cout << "Target::Request" << endl;
+		}
+	};
+
+	// Adaptee
+	class Adaptee
+	{
+	public:
+		void SpecificRequest()
+		{
+			cout << "Adaptee::SpecificRequest" << endl;
+		}
+	};
+
+	// Adapter
+	class Adapter : public Target, Adaptee
+	{
+	public:
+		void Request()
+		{
+			Adaptee::SpecificRequest();
+		}
+	};
+}
+
+//8、桥接模式
+namespace bdg{
+	class Implementor
+	{
+	public:
+		virtual void OperationImpl() = 0;
+	};
+	class ConcreteImpementor : public Implementor
+	{
+	public:
+		void OperationImpl()
+		{
+			cout << "OperationImpl" << endl;
+		}
+	};
+	class Abstraction
+	{
+	public:
+		Abstraction(Implementor *pImpl) : m_pImpl(pImpl) {}
+		virtual void Operation() = 0;
+
+	protected:
+		Implementor *m_pImpl;
+	};
+	class RedfinedAbstraction : public Abstraction
+	{
+	public:
+		RedfinedAbstraction(Implementor *pImpl) : Abstraction(pImpl) {}
+		void Operation()
+		{
+			m_pImpl->OperationImpl();
+		}
+	};
+} 
 
 int main(int argc , char *argv [])
 {
@@ -548,6 +614,20 @@ int main(int argc , char *argv [])
 	pSubject->Request();
 	SAFE_DELETE(pSubject);
 
+	//适配器测试
+	adp::Target *targetObj = new adp::Adapter();
+    targetObj->Request();
+    delete targetObj;
+    targetObj = NULL;
+
+	//桥接模式测试
+	bdg::Implementor *pImplObj = new bdg::ConcreteImpementor();
+    bdg::Abstraction *pAbsObj = new bdg::RedfinedAbstraction(pImplObj);
+    pAbsObj->Operation();
+    delete pImplObj;
+    pImplObj = NULL;
+    delete pAbsObj;
+    pAbsObj = NULL;
 
     return 0;
 }
