@@ -61,6 +61,7 @@ GoF 的 23 种设计模式的分类和功能
 #include <iostream>
 using namespace std;
 
+//1、单例模式
 class Singleton
 {
 public:
@@ -96,11 +97,458 @@ private:
  
 Singleton *Singleton ::m_Instance = NULL;
  
+
+
+//2、原型模式
+class Prototype
+{
+public:
+	Prototype() {}
+	virtual ~Prototype() {}
+
+	virtual Prototype * Clone() = 0;
+};
+
+class ConcretePrototype : public Prototype
+{
+public:
+	ConcretePrototype() :m_counter(0) {}
+	virtual ~ConcretePrototype() {}
+
+	//拷贝构造函数
+	ConcretePrototype(const ConcretePrototype & rhs)
+	{
+		m_counter = rhs.m_counter;
+	}
+
+	//复制自身
+	virtual ConcretePrototype * Clone()
+	{
+		//调用拷贝构造函数
+		return new ConcretePrototype(*this);
+	}
+
+private:
+	int m_counter;
+};
+
+
+
+//3、工厂方法
+namespace fac {
+	class Product
+	{
+	public:
+		virtual void Show() = 0;
+	};
+
+	class ProductA : public Product
+	{
+	public:
+		void Show()
+		{
+			cout << "I'm ProductA" << endl;
+		}
+	};
+
+	class ProductB : public Product
+	{
+	public:
+		void Show()
+		{
+			cout << "I'm ProductB" << endl;
+		}
+	};
+
+	class Factory
+	{
+	public:
+		virtual Product *CreateProduct() = 0;
+	};
+
+	class FactoryA : public Factory
+	{
+	public:
+		Product *CreateProduct()
+		{
+			return new ProductA();
+		}
+	};
+
+	class FactoryB : public Factory
+	{
+	public:
+		Product *CreateProduct()
+		{
+			return new ProductB();
+		}
+	};
+}
+
+
+//4、抽象工厂
+namespace absfac {
+	class ProductA
+	{
+	public:
+		virtual void Show() = 0;
+	};
+
+	class ProductA1 : public ProductA
+	{
+	public:
+		void Show()
+		{
+			cout << "I'm ProductA1" << endl;
+		}
+	};
+
+	class ProductA2 : public ProductA
+	{
+	public:
+		void Show()
+		{
+			cout << "I'm ProductA2" << endl;
+		}
+	};
+
+	// Product B
+	class ProductB
+	{
+	public:
+		virtual void Show() = 0;
+	};
+
+	class ProductB1 : public ProductB
+	{
+	public:
+		void Show()
+		{
+			cout << "I'm ProductB1" << endl;
+		}
+	};
+
+	class ProductB2 : public ProductB
+	{
+	public:
+		void Show()
+		{
+			cout << "I'm ProductB2" << endl;
+		}
+	};
+
+	// Factory
+	class Factory
+	{
+	public:
+		virtual ProductA *CreateProductA() = 0;
+		virtual ProductB *CreateProductB() = 0;
+	};
+
+	class Factory1 : public Factory
+	{
+	public:
+		ProductA *CreateProductA()
+		{
+			return new ProductA1();
+		}
+
+		ProductB *CreateProductB()
+		{
+			return new ProductB1();
+		}
+	};
+
+	class Factory2 : public Factory
+	{
+		ProductA *CreateProductA()
+		{
+			return new ProductA2();
+		}
+
+		ProductB *CreateProductB()
+		{
+			return new ProductB2();
+		}
+	};
+}
+
+
+//5、建造者
+namespace bdr {
+	typedef enum MANTYPETag
+	{
+		kFatMan,
+		kThinMan,
+		kNormal
+	}MANTYPE;
+
+	class Man
+	{
+	public:
+		void SetHead(MANTYPE type) { m_Type = type; }
+		void SetBody(MANTYPE type) { m_Type = type; }
+		void SetLeftHand(MANTYPE type) { m_Type = type; }
+		void SetRightHand(MANTYPE type) { m_Type = type; }
+		void SetLeftFoot(MANTYPE type) { m_Type = type; }
+		void SetRightFoot(MANTYPE type) { m_Type = type; }
+		void ShowMan()
+		{
+			switch (m_Type)
+			{
+			case kFatMan:
+				cout << "I'm a fat man" << endl;
+				return;
+
+			case kThinMan:
+				cout << "I'm a thin man" << endl;
+				return;
+
+			default:
+				cout << "I'm a normal man" << endl;
+				return;
+			}
+		}
+
+	private:
+		MANTYPE m_Type;
+	};
+
+	// Builder
+	class Builder
+	{
+	public:
+		virtual void BuildHead() {}
+		virtual void BuildBody() {}
+		virtual void BuildLeftHand() {}
+		virtual void BuildRightHand() {}
+		virtual void BuildLeftFoot() {}
+		virtual void BuildRightFoot() {}
+		virtual Man *GetMan() { return NULL; }
+	};
+
+	// FatManBuilder
+	class FatManBuilder : public Builder
+	{
+	public:
+		FatManBuilder() { m_FatMan = new Man(); }
+		void BuildHead() { m_FatMan->SetHead(kFatMan); }
+		void BuildBody() { m_FatMan->SetBody(kFatMan); }
+		void BuildLeftHand() { m_FatMan->SetLeftHand(kFatMan); }
+		void BuildRightHand() { m_FatMan->SetRightHand(kFatMan); }
+		void BuildLeftFoot() { m_FatMan->SetLeftFoot(kFatMan); }
+		void BuildRightFoot() { m_FatMan->SetRightFoot(kFatMan); }
+		Man *GetMan() { return m_FatMan; }
+
+	private:
+		Man *m_FatMan;
+	};
+
+	// ThisManBuilder
+	class ThinManBuilder : public Builder
+	{
+	public:
+		ThinManBuilder() { m_ThinMan = new Man(); }
+		void BuildHead() { m_ThinMan->SetHead(kThinMan); }
+		void BuildBody() { m_ThinMan->SetBody(kThinMan); }
+		void BuildLeftHand() { m_ThinMan->SetLeftHand(kThinMan); }
+		void BuildRightHand() { m_ThinMan->SetRightHand(kThinMan); }
+		void BuildLeftFoot() { m_ThinMan->SetLeftFoot(kThinMan); }
+		void BuildRightFoot() { m_ThinMan->SetRightFoot(kThinMan); }
+		Man *GetMan() { return m_ThinMan; }
+
+	private:
+		Man *m_ThinMan;
+	};
+
+	// Director
+	class Director
+	{
+	public:
+		Director(Builder *builder) { m_Builder = builder; }
+		void CreateMan();
+
+	private:
+		Builder *m_Builder;
+	};
+
+	void Director::CreateMan()
+	{
+		m_Builder->BuildHead();
+		m_Builder->BuildBody();
+		m_Builder->BuildLeftHand();
+		m_Builder->BuildRightHand();
+		m_Builder->BuildLeftHand();
+		m_Builder->BuildRightHand();
+	}
+}
+
+//6、代理模式
+namespace prx {
+
+#define SAFE_DELETE(p) if (p) { delete p; p = NULL;}
+
+	class CSubject
+	{
+	public:
+		CSubject() {};
+		virtual ~CSubject() {}
+
+		virtual void Request() = 0;
+	};
+
+	class CRealSubject : public CSubject
+	{
+	public:
+		CRealSubject() {}
+		~CRealSubject() {}
+
+		void Request()
+		{
+			cout << "CRealSubject Request" << endl;
+		}
+	};
+
+	class CProxy : public CSubject
+	{
+	public:
+		CProxy() : m_pRealSubject(NULL) {}
+		~CProxy()
+		{
+			SAFE_DELETE(m_pRealSubject);
+		}
+
+		void Request()
+		{
+			if (NULL == m_pRealSubject)
+			{
+				m_pRealSubject = new CRealSubject();
+			}
+			cout << "CProxy Request" << endl;
+			m_pRealSubject->Request();
+		}
+
+	private:
+		CRealSubject *m_pRealSubject;
+	};
+
+}
+
+
+
 int main(int argc , char *argv [])
 {
+	//单例模式测试
     Singleton *singletonObj = Singleton ::GetInstance();
     cout<<singletonObj->GetTest()<<endl;
- 
     Singleton ::DestoryInstance();
+
+	//原型模式测试
+	ConcretePrototype * conProA = new ConcretePrototype();
+	ConcretePrototype * conProB = conProA->Clone();
+	delete conProA;
+	conProA = NULL;
+	delete conProB;
+	conProB = NULL;
+
+	//工厂方法测试
+	fac::Factory *factoryA = new fac::FactoryA();
+	fac::Product *productA = factoryA->CreateProduct();
+	productA->Show();
+	fac::Factory *factoryB = new fac::FactoryB();
+	fac::Product *productB = factoryB->CreateProduct();
+	productB->Show();
+	if (factoryA != NULL)
+	{
+		delete factoryA;
+		factoryA = NULL;
+	}
+	if (productA != NULL)
+	{
+		delete productA;
+		productA = NULL;
+	}
+	if (factoryB != NULL)
+	{
+		delete factoryB;
+		factoryB = NULL;
+	}
+	if (productB != NULL)
+	{
+		delete productB;
+		productB = NULL;
+	}
+
+	//抽象工厂测试
+	absfac::Factory *factoryObj1 = new absfac::Factory1();
+	absfac::ProductA *productObjA1 = factoryObj1->CreateProductA();
+	absfac::ProductB *productObjB1 = factoryObj1->CreateProductB();
+
+	productObjA1->Show();
+	productObjB1->Show();
+
+	absfac::Factory *factoryObj2 = new absfac::Factory2();
+	absfac::ProductA *productObjA2 = factoryObj2->CreateProductA();
+	absfac::ProductB *productObjB2 = factoryObj2->CreateProductB();
+
+	productObjA2->Show();
+	productObjB2->Show();
+
+	if (factoryObj1 != NULL)
+	{
+		delete factoryObj1;
+		factoryObj1 = NULL;
+	}
+
+	if (productObjA1 != NULL)
+	{
+		delete productObjA1;
+		productObjA1 = NULL;
+	}
+
+	if (productObjB1 != NULL)
+	{
+		delete productObjB1;
+		productObjB1 = NULL;
+	}
+
+	if (factoryObj2 != NULL)
+	{
+		delete factoryObj2;
+		factoryObj2 = NULL;
+	}
+
+	if (productObjA2 != NULL)
+	{
+		delete productObjA2;
+		productObjA2 = NULL;
+	}
+
+	if (productObjB2 != NULL)
+	{
+		delete productObjB2;
+		productObjB2 = NULL;
+	}
+
+	//建造者测试
+	bdr::Builder *builderObj = new bdr::FatManBuilder();
+	bdr::Director directorObj(builderObj);
+	directorObj.CreateMan();
+	bdr::Man *manObj = builderObj->GetMan();
+	if (manObj == NULL)
+		return 0;
+	manObj->ShowMan();
+	delete manObj; 
+	manObj = NULL;
+	delete builderObj;
+	builderObj = NULL;
+
+
+	//代理模式测试
+	prx::CSubject *pSubject = new prx::CProxy();
+	pSubject->Request();
+	SAFE_DELETE(pSubject);
+
+
     return 0;
 }
