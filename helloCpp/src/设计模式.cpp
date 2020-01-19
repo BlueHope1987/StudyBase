@@ -402,7 +402,6 @@ namespace prx {
 	public:
 		CRealSubject() {}
 		~CRealSubject() {}
-
 		void Request()
 		{
 			cout << "CRealSubject Request" << endl;
