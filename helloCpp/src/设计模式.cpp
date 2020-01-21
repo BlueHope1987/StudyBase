@@ -1,4 +1,4 @@
-/* 
+/*
 http://c.biancheng.net/view/1320.html
 GoF 的 23 种设计模式的分类和功能
 
@@ -59,80 +59,101 @@ GoF 的 23 种设计模式的分类和功能
 //https://blog.csdn.net/CoderAldrich/article/details/83272866
 
 #include <iostream>
+
+#include <map>
+#include <vector>
+
+#include <string>
+
 using namespace std;
 
 //1、单例模式
-class Singleton
-{
-public:
-    static Singleton *GetInstance()
-    {
-        if (m_Instance == NULL )
-        {
-            m_Instance = new Singleton ();
-        }
-        return m_Instance;
-    }
- 
-    static void DestoryInstance()
-    {
-        if (m_Instance != NULL )
-        {
-            delete m_Instance;
-            m_Instance = NULL ;
-        }
-    }
- 
-    // This is just a operation example
-    int GetTest()
-    {
-        return m_Test;
-    }
- 
-private:
-    Singleton(){ m_Test = 10; }
-    static Singleton *m_Instance;
-    int m_Test;
-};
- 
-Singleton *Singleton ::m_Instance = NULL;
- 
+namespace sng {
+	class Singleton
+	{
+	public:
+		static Singleton *GetInstance()
+		{
+			if (m_Instance == NULL)
+			{
+				m_Instance = new Singleton();
+			}
+			return m_Instance;
+		}
 
+		static void DestoryInstance()
+		{
+			if (m_Instance != NULL)
+			{
+				delete m_Instance;
+				m_Instance = NULL;
+			}
+		}
+
+		// This is just a operation example
+		int GetTest()
+		{
+			return m_Test;
+		}
+
+	private:
+		Singleton() { m_Test = 10; }
+		static Singleton *m_Instance;
+		int m_Test;
+	};
+	Singleton *Singleton::m_Instance = NULL;
+}
+void sngTest() {
+	//单例模式测试
+	sng::Singleton *singletonObj = sng::Singleton::GetInstance();
+	cout << singletonObj->GetTest() << endl;
+	sng::Singleton::DestoryInstance();
+	return;
+};
 
 //2、原型模式
-class Prototype
-{
-public:
-	Prototype() {}
-	virtual ~Prototype() {}
-
-	virtual Prototype * Clone() = 0;
-};
-
-class ConcretePrototype : public Prototype
-{
-public:
-	ConcretePrototype() :m_counter(0) {}
-	virtual ~ConcretePrototype() {}
-
-	//拷贝构造函数
-	ConcretePrototype(const ConcretePrototype & rhs)
+namespace ptp {
+	class Prototype
 	{
-		m_counter = rhs.m_counter;
-	}
+	public:
+		Prototype() {}
+		virtual ~Prototype() {}
 
-	//复制自身
-	virtual ConcretePrototype * Clone()
+		virtual Prototype * Clone() = 0;
+	};
+	class ConcretePrototype : public Prototype
 	{
-		//调用拷贝构造函数
-		return new ConcretePrototype(*this);
-	}
+	public:
+		ConcretePrototype() :m_counter(0) {}
+		virtual ~ConcretePrototype() {}
 
-private:
-	int m_counter;
+		//拷贝构造函数
+		ConcretePrototype(const ConcretePrototype & rhs)
+		{
+			m_counter = rhs.m_counter;
+		}
+
+		//复制自身
+		virtual ConcretePrototype * Clone()
+		{
+			//调用拷贝构造函数
+			return new ConcretePrototype(*this);
+		}
+
+	private:
+		int m_counter;
+	};
+}
+void ptpTest() {
+	//原型模式测试
+	ptp::ConcretePrototype * conProA = new ptp::ConcretePrototype();
+	ptp::ConcretePrototype * conProB = conProA->Clone();
+	delete conProA;
+	conProA = NULL;
+	delete conProB;
+	conProB = NULL;
+	return;
 };
-
-
 
 //3、工厂方法
 namespace fac {
@@ -184,7 +205,36 @@ namespace fac {
 		}
 	};
 }
-
+void facTest() {
+	//工厂方法测试
+	fac::Factory *factoryA = new fac::FactoryA();
+	fac::Product *productA = factoryA->CreateProduct();
+	productA->Show();
+	fac::Factory *factoryB = new fac::FactoryB();
+	fac::Product *productB = factoryB->CreateProduct();
+	productB->Show();
+	if (factoryA != NULL)
+	{
+		delete factoryA;
+		factoryA = NULL;
+	}
+	if (productA != NULL)
+	{
+		delete productA;
+		productA = NULL;
+	}
+	if (factoryB != NULL)
+	{
+		delete factoryB;
+		factoryB = NULL;
+	}
+	if (productB != NULL)
+	{
+		delete productB;
+		productB = NULL;
+	}
+	return;
+};
 
 //4、抽象工厂
 namespace absfac {
@@ -272,7 +322,59 @@ namespace absfac {
 		}
 	};
 }
+void absfacTest() {
+	//抽象工厂测试
+	absfac::Factory *factoryObj1 = new absfac::Factory1();
+	absfac::ProductA *productObjA1 = factoryObj1->CreateProductA();
+	absfac::ProductB *productObjB1 = factoryObj1->CreateProductB();
 
+	productObjA1->Show();
+	productObjB1->Show();
+
+	absfac::Factory *factoryObj2 = new absfac::Factory2();
+	absfac::ProductA *productObjA2 = factoryObj2->CreateProductA();
+	absfac::ProductB *productObjB2 = factoryObj2->CreateProductB();
+
+	productObjA2->Show();
+	productObjB2->Show();
+
+	if (factoryObj1 != NULL)
+	{
+		delete factoryObj1;
+		factoryObj1 = NULL;
+	}
+
+	if (productObjA1 != NULL)
+	{
+		delete productObjA1;
+		productObjA1 = NULL;
+	}
+
+	if (productObjB1 != NULL)
+	{
+		delete productObjB1;
+		productObjB1 = NULL;
+	}
+
+	if (factoryObj2 != NULL)
+	{
+		delete factoryObj2;
+		factoryObj2 = NULL;
+	}
+
+	if (productObjA2 != NULL)
+	{
+		delete productObjA2;
+		productObjA2 = NULL;
+	}
+
+	if (productObjB2 != NULL)
+	{
+		delete productObjB2;
+		productObjB2 = NULL;
+	}
+	return;
+};
 
 //5、建造者
 namespace bdr {
@@ -382,6 +484,21 @@ namespace bdr {
 		m_Builder->BuildRightHand();
 	}
 }
+void bdrTest() {
+	//建造者测试
+	bdr::Builder *builderObj = new bdr::FatManBuilder();
+	bdr::Director directorObj(builderObj);
+	directorObj.CreateMan();
+	bdr::Man *manObj = builderObj->GetMan();
+	if (manObj == NULL)
+		return;
+	manObj->ShowMan();
+	delete manObj;
+	manObj = NULL;
+	delete builderObj;
+	builderObj = NULL;
+	return;
+};
 
 //6、代理模式
 namespace prx {
@@ -431,7 +548,13 @@ namespace prx {
 	};
 
 }
-
+void prxTest() {
+	//代理模式测试
+	prx::CSubject *pSubject = new prx::CProxy();
+	pSubject->Request();
+	SAFE_DELETE(pSubject);
+	return;
+};
 
 //7、适配器模式
 namespace adp{
@@ -465,6 +588,14 @@ namespace adp{
 		}
 	};
 }
+void adpTest() {
+	//适配器测试
+	adp::Target *targetObj = new adp::Adapter();
+	targetObj->Request();
+	delete targetObj;
+	targetObj = NULL;
+	return;
+};
 
 //8、桥接模式
 namespace bdg{
@@ -500,134 +631,913 @@ namespace bdg{
 		}
 	};
 } 
+void bdgTest() {
+	//桥接模式测试
+	bdg::Implementor *pImplObj = new bdg::ConcreteImpementor();
+	bdg::Abstraction *pAbsObj = new bdg::RedfinedAbstraction(pImplObj);
+	pAbsObj->Operation();
+	delete pImplObj;
+	pImplObj = NULL;
+	delete pAbsObj;
+	pAbsObj = NULL;
+	return;
+};
+
+//9、装饰模式
+namespace dec {
+	class Component
+	{
+	public:
+		virtual void Operation() = 0;
+	};
+	class ConcreteComponent : public Component
+	{
+	public:
+		void Operation()
+		{
+			cout << "I am no decoratored ConcreteComponent" << endl;
+		}
+	};
+	class Decorator : public Component
+	{
+	public:
+		Decorator(Component *pComponent) : m_pComponentObj(pComponent) {}
+		void Operation()
+		{
+			if (m_pComponentObj != NULL)
+			{
+				m_pComponentObj->Operation();
+			}
+		}
+	protected:
+		Component *m_pComponentObj;
+	};
+	class ConcreteDecoratorA : public Decorator
+	{
+	public:
+		ConcreteDecoratorA(Component *pDecorator) : Decorator(pDecorator) {}
+		void Operation()
+		{
+			AddedBehavior();
+			Decorator::Operation();
+		}
+		void  AddedBehavior()
+		{
+			cout << "This is added behavior A." << endl;
+		}
+	};
+	class ConcreteDecoratorB : public Decorator
+	{
+	public:
+		ConcreteDecoratorB(Component *pDecorator) : Decorator(pDecorator) {}
+		void Operation()
+		{
+			AddedBehavior();
+			Decorator::Operation();
+		}
+		void  AddedBehavior()
+		{
+			cout << "This is added behavior B." << endl;
+		}
+	};
+}
+void decTest() {
+	//装饰模式测试
+	dec::Component *pComponentObj = new dec::ConcreteComponent();
+	dec::Decorator *pDecoratorAOjb = new dec::ConcreteDecoratorA(pComponentObj);
+	pDecoratorAOjb->Operation();
+	cout << "=============================================" << endl;
+	dec::Decorator *pDecoratorBOjb = new dec::ConcreteDecoratorB(pComponentObj);
+	pDecoratorBOjb->Operation();
+	cout << "=============================================" << endl;
+	dec::Decorator *pDecoratorBAOjb = new dec::ConcreteDecoratorB(pDecoratorAOjb);
+	pDecoratorBAOjb->Operation();
+	cout << "=============================================" << endl;
+	delete pDecoratorBAOjb;
+	pDecoratorBAOjb = NULL;
+	delete pDecoratorBOjb;
+	pDecoratorBOjb = NULL;
+	delete pDecoratorAOjb;
+	pDecoratorAOjb = NULL;
+	delete pComponentObj;
+	pComponentObj = NULL;
+	return;
+};
+
+//10、外观模式
+namespace fcd {
+	// 语法分析子系统
+	class CSyntaxParser
+	{
+	public:
+		void SyntaxParser()
+		{
+			cout << "Syntax Parser" << endl;
+		}
+	};
+
+	// 生成中间代码子系统
+	class CGenMidCode
+	{
+	public:
+		void GenMidCode()
+		{
+			cout << "Generate middle code" << endl;
+		}
+	};
+
+	// 生成汇编代码子系统
+	class CGenAssemblyCode
+	{
+	public:
+		void GenAssemblyCode()
+		{
+			cout << "Generate assembly code" << endl;
+		}
+	};
+
+	// 链接生成可执行应用程序或库子系统
+	class CLinkSystem
+	{
+	public:
+		void LinkSystem()
+		{
+			cout << "Link System" << endl;
+		}
+	};
+
+	class Facade
+	{
+	public:
+		void Compile()
+		{
+			CSyntaxParser syntaxParser;
+			CGenMidCode genMidCode;
+			CGenAssemblyCode genAssemblyCode;
+			CLinkSystem linkSystem;
+			syntaxParser.SyntaxParser();
+			genMidCode.GenMidCode();
+			genAssemblyCode.GenAssemblyCode();
+			linkSystem.LinkSystem();
+		}
+	};
+}
+void fcdTest() {
+	fcd::Facade facade;
+	facade.Compile();
+	return;
+}
+
+//11、享元模式
+namespace fyw {
+	typedef struct pointTag
+	{
+		int x;
+		int y;
+
+		pointTag() {}
+		pointTag(int a, int b)
+		{
+			x = a;
+			y = b;
+		}
+
+		bool operator <(const pointTag& other) const
+		{
+			if (x < other.x)
+			{
+				return true;
+			}
+			else if (x == other.x)
+			{
+				return y < other.y;
+			}
+
+			return false;
+		}
+	}POINT;
+
+	typedef enum PieceColorTag
+	{
+		BLACK,
+		WHITE
+	}PIECECOLOR;
+
+	class CPiece
+	{
+	public:
+		CPiece(PIECECOLOR color) : m_color(color) {}
+		PIECECOLOR GetColor() { return m_color; }
+
+		// Set the external state
+		void SetPoint(POINT point) { m_point = point; }
+		POINT GetPoint() { return m_point; }
+
+	protected:
+		// Internal state
+		PIECECOLOR m_color;
+
+		// external state
+		POINT m_point;
+	};
+
+	class CGomoku : public CPiece
+	{
+	public:
+		CGomoku(PIECECOLOR color) : CPiece(color) {}
+	};
+
+	class CPieceFactory
+	{
+	public:
+		CPiece *GetPiece(PIECECOLOR color)
+		{
+			CPiece *pPiece = NULL;
+			if (m_vecPiece.empty())
+			{
+				pPiece = new CGomoku(color);
+				m_vecPiece.push_back(pPiece);
+			}
+			else
+			{
+				for (vector<CPiece *>::iterator it = m_vecPiece.begin(); it != m_vecPiece.end(); ++it)
+				{
+					if ((*it)->GetColor() == color)
+					{
+						pPiece = *it;
+						break;
+					}
+				}
+				if (pPiece == NULL)
+				{
+					pPiece = new CGomoku(color);
+					m_vecPiece.push_back(pPiece);
+				}
+			}
+			return pPiece;
+		}
+
+		~CPieceFactory()
+		{
+			for (vector<CPiece *>::iterator it = m_vecPiece.begin(); it != m_vecPiece.end(); ++it)
+			{
+				if (*it != NULL)
+				{
+					delete *it;
+					*it = NULL;
+				}
+			}
+		}
+
+	private:
+		vector<CPiece *> m_vecPiece;
+	};
+
+	class CChessboard
+	{
+	public:
+		void Draw(CPiece *piece)
+		{
+			if (piece->GetColor())
+			{
+				cout << "Draw a White" << " at (" << piece->GetPoint().x << "," << piece->GetPoint().y << ")" << endl;
+			}
+			else
+			{
+				cout << "Draw a Black" << " at (" << piece->GetPoint().x << "," << piece->GetPoint().y << ")" << endl;
+			}
+			m_mapPieces.insert(pair<POINT, CPiece *>(piece->GetPoint(), piece));
+		}
+
+		void ShowAllPieces()
+		{
+			for (map<POINT, CPiece *>::iterator it = m_mapPieces.begin(); it != m_mapPieces.end(); ++it)
+			{
+				if (it->second->GetColor())
+				{
+					cout << "(" << it->first.x << "," << it->first.y << ") has a White chese." << endl;
+				}
+				else
+				{
+					cout << "(" << it->first.x << "," << it->first.y << ") has a Black chese." << endl;
+				}
+			}
+		}
+
+	private:
+		map<POINT, CPiece *> m_mapPieces;
+	};
+}
+void fywTest() {
+	fyw::CPieceFactory *pPieceFactory = new fyw::CPieceFactory();
+	fyw::CChessboard *pCheseboard = new fyw::CChessboard();
+
+	// The player1 get a white piece from the pieces bowl
+	fyw::CPiece *pPiece = pPieceFactory->GetPiece(fyw::WHITE);
+	pPiece->SetPoint(fyw::POINT(2, 3));
+	pCheseboard->Draw(pPiece);
+
+	// The player2 get a black piece from the pieces bowl
+	pPiece = pPieceFactory->GetPiece(fyw::BLACK);
+	pPiece->SetPoint(fyw::POINT(4, 5));
+	pCheseboard->Draw(pPiece);
+
+	// The player1 get a white piece from the pieces bowl
+	pPiece = pPieceFactory->GetPiece(fyw::WHITE);
+	pPiece->SetPoint(fyw::POINT(2, 4));
+	pCheseboard->Draw(pPiece);
+
+	// The player2 get a black piece from the pieces bowl
+	pPiece = pPieceFactory->GetPiece(fyw::BLACK);
+	pPiece->SetPoint(fyw::POINT(3, 5));
+	pCheseboard->Draw(pPiece);
+
+	/*......*/
+
+	//Show all cheses
+	cout << "Show all cheses" << endl;
+	pCheseboard->ShowAllPieces();
+
+	if (pCheseboard != NULL)
+	{
+		delete pCheseboard;
+		pCheseboard = NULL;
+	}
+	if (pPieceFactory != NULL)
+	{
+		delete pPieceFactory;
+		pPieceFactory = NULL;
+	}
+}
+
+//12、组合模式
+namespace cmp {
+	class Component
+	{
+	public:
+		Component(string name) : m_strCompname(name) {}
+		virtual ~Component() {}
+		virtual void Operation() = 0;
+		virtual void Add(Component *) = 0;
+		virtual void Remove(Component *) = 0;
+		virtual Component *GetChild(int) = 0;
+		virtual string GetName()
+		{
+			return m_strCompname;
+		}
+		virtual void Print() = 0;
+	protected:
+		string m_strCompname;
+	};
+	class Leaf : public Component
+	{
+	public:
+		Leaf(string name) : Component(name)
+		{}
+		void Operation()
+		{
+			cout << "I'm " << m_strCompname << endl;
+		}
+		void Add(Component *pComponent) {}
+		void Remove(Component *pComponent) {}
+		Component *GetChild(int index)
+		{
+			return NULL;
+		}
+		void Print() {}
+	};
+	class Composite : public Component
+	{
+	public:
+		Composite(string name) : Component(name)
+		{}
+		~Composite()
+		{
+			vector<Component *>::iterator it = m_vecComp.begin();
+			while (it != m_vecComp.end())
+			{
+				if (*it != NULL)
+				{
+					cout << "----delete " << (*it)->GetName() << "----" << endl;
+					delete *it;
+					*it = NULL;
+				}
+				m_vecComp.erase(it);
+				it = m_vecComp.begin();
+			}
+		}
+		void Operation()
+		{
+			cout << "I'm " << m_strCompname << endl;
+		}
+		void Add(Component *pComponent)
+		{
+			m_vecComp.push_back(pComponent);
+		}
+		void Remove(Component *pComponent)
+		{
+			for (vector<Component *>::iterator it = m_vecComp.begin(); it != m_vecComp.end(); ++it)
+			{
+				if ((*it)->GetName() == pComponent->GetName())
+				{
+					if (*it != NULL)
+					{
+						delete *it;
+						*it = NULL;
+					}
+					m_vecComp.erase(it);
+					break;
+				}
+			}
+		}
+		Component *GetChild(int index)
+		{
+			if (index > m_vecComp.size())
+			{
+				return NULL;
+			}
+			return m_vecComp[index - 1];
+		}
+		void Print()
+		{
+			for (vector<Component *>::iterator it = m_vecComp.begin(); it != m_vecComp.end(); ++it)
+			{
+				cout << (*it)->GetName() << endl;
+			}
+		}
+	private:
+		vector<Component *> m_vecComp;
+	};
+}
+void cmpTest() {
+	cmp::Component *pNode = new cmp::Composite("Beijing Head Office");
+	cmp::Component *pNodeHr = new cmp::Leaf("Beijing Human Resources Department");
+	cmp::Component *pSubNodeSh = new cmp::Composite("Shanghai Branch");
+	cmp::Component *pSubNodeCd = new cmp::Composite("Chengdu Branch");
+	cmp::Component *pSubNodeBt = new cmp::Composite("Baotou Branch");
+	pNode->Add(pNodeHr);
+	pNode->Add(pSubNodeSh);
+	pNode->Add(pSubNodeCd);
+	pNode->Add(pSubNodeBt);
+	pNode->Print();
+	cmp::Component *pSubNodeShHr = new cmp::Leaf("Shanghai Human Resources Department");
+	cmp::Component *pSubNodeShCg = new cmp::Leaf("Shanghai Purchasing Department");
+	cmp::Component *pSubNodeShXs = new cmp::Leaf("Shanghai Sales department");
+	cmp::Component *pSubNodeShZb = new cmp::Leaf("Shanghai Quality supervision Department");
+	pSubNodeSh->Add(pSubNodeShHr);
+	pSubNodeSh->Add(pSubNodeShCg);
+	pSubNodeSh->Add(pSubNodeShXs);
+	pSubNodeSh->Add(pSubNodeShZb);
+	pNode->Print();
+	// 公司不景气，需要关闭上海质量监督部门
+	pSubNodeSh->Remove(pSubNodeShZb);
+	if (pNode != NULL)
+	{
+		delete pNode;
+		pNode = NULL;
+	}
+	return;
+}
+
+//13、模板方法
+namespace tmp {
+	class AbstractClass
+	{
+	public:
+		void TemplateMethod()
+		{
+			PrimitiveOperation1();
+			cout << "TemplateMethod" << endl;
+			PrimitiveOperation2();
+		}
+
+	protected:
+		virtual void PrimitiveOperation1()
+		{
+			cout << "Default Operation1" << endl;
+		}
+
+		virtual void PrimitiveOperation2()
+		{
+			cout << "Default Operation2" << endl;
+		}
+	};
+
+	class ConcreteClassA : public AbstractClass
+	{
+	protected:
+		virtual void PrimitiveOperation1()
+		{
+			cout << "ConcreteA Operation1" << endl;
+		}
+
+		virtual void PrimitiveOperation2()
+		{
+			cout << "ConcreteA Operation2" << endl;
+		}
+	};
+
+	class ConcreteClassB : public AbstractClass
+	{
+	protected:
+		virtual void PrimitiveOperation1()
+		{
+			cout << "ConcreteB Operation1" << endl;
+		}
+
+		virtual void PrimitiveOperation2()
+		{
+			cout << "ConcreteB Operation2" << endl;
+		}
+	};
+}
+void tmpTest() {
+	tmp::AbstractClass *pAbstractA = new tmp::ConcreteClassA;
+	pAbstractA->TemplateMethod();
+
+	tmp::AbstractClass *pAbstractB = new tmp::ConcreteClassB;
+	pAbstractB->TemplateMethod();
+
+	if (pAbstractA) delete pAbstractA;
+	if (pAbstractB) delete pAbstractB;
+	return;
+}
+
+//14、策略模式
+namespace stg{
+	// The abstract strategy
+	class Strategy
+	{
+	public:
+		virtual void AlgorithmInterface() = 0;
+	};
+
+	class ConcreteStrategyA : public Strategy
+	{
+	public:
+		void AlgorithmInterface()
+		{
+			cout << "I am from ConcreteStrategyA." << endl;
+		}
+	};
+
+	class ConcreteStrategyB : public Strategy
+	{
+	public:
+		void AlgorithmInterface()
+		{
+			cout << "I am from ConcreteStrategyB." << endl;
+		}
+	};
+
+	class ConcreteStrategyC : public Strategy
+	{
+	public:
+		void AlgorithmInterface()
+		{
+			cout << "I am from ConcreteStrategyC." << endl;
+		}
+	};
+
+	class Context
+	{
+	public:
+		Context(Strategy *pStrategyArg) : pStrategy(pStrategyArg)
+		{
+		}
+		void ContextInterface()
+		{
+			pStrategy->AlgorithmInterface();
+		}
+	private:
+		Strategy *pStrategy;
+	};
+}
+void stgTest() {
+	// Create the Strategy
+	stg::Strategy *pStrategyA = new stg::ConcreteStrategyA;
+	stg::Strategy *pStrategyB = new stg::ConcreteStrategyB;
+	stg::Strategy *pStrategyC = new stg::ConcreteStrategyC;
+	stg::Context *pContextA = new stg::Context(pStrategyA);
+	stg::Context *pContextB = new stg::Context(pStrategyB);
+	stg::Context *pContextC = new stg::Context(pStrategyC);
+	pContextA->ContextInterface();
+	pContextB->ContextInterface();
+	pContextC->ContextInterface();
+
+	if (pStrategyA) delete pStrategyA;
+	if (pStrategyB) delete pStrategyB;
+	if (pStrategyC) delete pStrategyC;
+
+	if (pContextA) delete pContextA;
+	if (pContextB) delete pContextB;
+	if (pContextC) delete pContextC;
+	return;
+};
+
+//15、命令模式
+namespace cmd {
+#define SAFE_DELETE(p) if (p) { delete p; p = NULL; }
+
+	class Receiver
+	{
+	public:
+		void Action()
+		{
+			cout << "Receiver->Action" << endl;
+		}
+	};
+
+	class Command
+	{
+	public:
+		virtual void Execute() = 0;
+	};
+
+	class ConcreteCommand : public Command
+	{
+	public:
+		ConcreteCommand(Receiver *pReceiver) : m_pReceiver(pReceiver) {}
+		void Execute()
+		{
+			m_pReceiver->Action();
+		}
+	private:
+		Receiver *m_pReceiver;
+	};
+
+	class Invoker
+	{
+	public:
+		Invoker(Command *pCommand) : m_pCommand(pCommand) {}
+		void Invoke()
+		{
+			m_pCommand->Execute();
+		}
+	private:
+		Command *m_pCommand;
+	};
+};
+void cmdTest() {
+	cmd::Receiver *pReceiver = new cmd::Receiver();
+	cmd::Command *pCommand = new cmd::ConcreteCommand(pReceiver);
+	cmd::Invoker *pInvoker = new cmd::Invoker(pCommand);
+	pInvoker->Invoke();
+	SAFE_DELETE(pInvoker);
+	SAFE_DELETE(pCommand);
+	SAFE_DELETE(pReceiver);
+	return;
+}
+
+//16、职责链模式
+namespace cor {
+#define SAFE_DELETE(p) if (p) { delete p; p = NULL; }
+
+	class HolidayRequest
+	{
+	public:
+		HolidayRequest(int hour) : m_iHour(hour) {}
+		int GetHour() { return m_iHour; }
+	private:
+		int m_iHour;
+	};
+
+	// The holiday request handler interface
+	class Manager
+	{
+	public:
+		virtual bool HandleRequest(HolidayRequest *pRequest) = 0;
+	};
+
+	// Project manager
+	class PM : public Manager
+	{
+	public:
+		PM(Manager *handler) : m_pHandler(handler) {}
+		bool HandleRequest(HolidayRequest *pRequest)
+		{
+			if (pRequest->GetHour() <= 2 || m_pHandler == NULL)
+			{
+				cout << "PM said:OK." << endl;
+				return true;
+			}
+			return m_pHandler->HandleRequest(pRequest);
+		}
+	private:
+		Manager *m_pHandler;
+	};
+
+	// Department manager
+	class DM : public Manager
+	{
+	public:
+		DM(Manager *handler) : m_pHandler(handler) {}
+		bool HandleRequest(HolidayRequest *pRequest)
+		{
+			cout << "DM said:OK." << endl;
+			return true;
+		}
+
+		// The department manager is in?
+		bool IsIn()
+		{
+			return true;
+		}
+	private:
+		Manager *m_pHandler;
+	};
+
+	// Project supervisor
+	class PS : public Manager
+	{
+	public:
+		PS(Manager *handler) : m_pHandler(handler) {}
+		bool HandleRequest(HolidayRequest *pRequest)
+		{
+			DM *pDM = dynamic_cast<DM *>(m_pHandler);
+			if (pDM != NULL)
+			{
+				if (pDM->IsIn())
+				{
+					return pDM->HandleRequest(pRequest);
+				}
+			}
+			cout << "PS said:OK." << endl;
+			return true;
+		}
+	private:
+		Manager *m_pHandler;
+	};
+}
+void corTest() {
+	cor::DM *pDM = new cor::DM(NULL);
+	cor::PS *pPS = new cor::PS(pDM);
+	cor::PM *pPM = new cor::PM(pPS);
+	cor::HolidayRequest *pHolidayRequest = new cor::HolidayRequest(10);
+	pPM->HandleRequest(pHolidayRequest);
+	SAFE_DELETE(pHolidayRequest);
+
+	pHolidayRequest = new cor::HolidayRequest(2);
+	pPM->HandleRequest(pHolidayRequest);
+
+	SAFE_DELETE(pDM);
+	SAFE_DELETE(pPS);
+	SAFE_DELETE(pPM);
+	SAFE_DELETE(pHolidayRequest);
+	return;
+}
+
+//17、状态模式-----
+namespace ste {
+
+};
+void steTest() {
+	return;
+};
+
+//18、观察者模式
+namespace obs {
+
+};
+void obsTest() {
+	return;
+};
+
+
+//中介者模式
+namespace mdi {
+
+};
+void mdiTest() {
+	return;
+};
+
+//迭代器模式
+namespace itr {
+
+};
+void itrTest() {
+	return;
+};
+
+//访问者模式
+namespace vtr {
+
+};
+void vtrTest() {
+	return;
+};
+
+//备忘录模式
+namespace mem {
+
+};
+void memTest() {
+	return;
+};
+
+//解释器模式
+namespace itp {
+
+};
+void itpTest() {
+	return;
+};
+
 
 int main(int argc , char *argv [])
 {
-	//单例模式测试
-    Singleton *singletonObj = Singleton ::GetInstance();
-    cout<<singletonObj->GetTest()<<endl;
-    Singleton ::DestoryInstance();
+	cout << "单例模式" << endl;
+	sngTest();
+	system("pause");
 
-	//原型模式测试
-	ConcretePrototype * conProA = new ConcretePrototype();
-	ConcretePrototype * conProB = conProA->Clone();
-	delete conProA;
-	conProA = NULL;
-	delete conProB;
-	conProB = NULL;
+	cout << "原型模式" << endl;
+	ptpTest();
+	system("pause");
 
-	//工厂方法测试
-	fac::Factory *factoryA = new fac::FactoryA();
-	fac::Product *productA = factoryA->CreateProduct();
-	productA->Show();
-	fac::Factory *factoryB = new fac::FactoryB();
-	fac::Product *productB = factoryB->CreateProduct();
-	productB->Show();
-	if (factoryA != NULL)
-	{
-		delete factoryA;
-		factoryA = NULL;
-	}
-	if (productA != NULL)
-	{
-		delete productA;
-		productA = NULL;
-	}
-	if (factoryB != NULL)
-	{
-		delete factoryB;
-		factoryB = NULL;
-	}
-	if (productB != NULL)
-	{
-		delete productB;
-		productB = NULL;
-	}
+	cout << "工厂方法" << endl;
+	facTest();
+	system("pause");
 
-	//抽象工厂测试
-	absfac::Factory *factoryObj1 = new absfac::Factory1();
-	absfac::ProductA *productObjA1 = factoryObj1->CreateProductA();
-	absfac::ProductB *productObjB1 = factoryObj1->CreateProductB();
+	cout << "抽象工厂" << endl;
+	absfacTest();
+	system("pause");
 
-	productObjA1->Show();
-	productObjB1->Show();
+	cout << "建造者" << endl;
+	bdrTest();
+	system("pause");
 
-	absfac::Factory *factoryObj2 = new absfac::Factory2();
-	absfac::ProductA *productObjA2 = factoryObj2->CreateProductA();
-	absfac::ProductB *productObjB2 = factoryObj2->CreateProductB();
+	cout << "代理模式" << endl;
+	prxTest();
+	system("pause");
 
-	productObjA2->Show();
-	productObjB2->Show();
+	cout << "适配器模式" << endl;
+	adpTest();
+	system("pause");
 
-	if (factoryObj1 != NULL)
-	{
-		delete factoryObj1;
-		factoryObj1 = NULL;
-	}
+	cout << "桥接模式" << endl;
+	bdgTest();
+	system("pause");
 
-	if (productObjA1 != NULL)
-	{
-		delete productObjA1;
-		productObjA1 = NULL;
-	}
+	cout << "装饰模式" << endl;
+	decTest();
+	system("pause");
 
-	if (productObjB1 != NULL)
-	{
-		delete productObjB1;
-		productObjB1 = NULL;
-	}
+	cout << "外观模式" << endl;
+	fcdTest();
+	system("pause");
 
-	if (factoryObj2 != NULL)
-	{
-		delete factoryObj2;
-		factoryObj2 = NULL;
-	}
+	cout << "享元模式" << endl;
+	fywTest();
+	system("pause");
 
-	if (productObjA2 != NULL)
-	{
-		delete productObjA2;
-		productObjA2 = NULL;
-	}
+	cout << "组合模式" << endl;
+	cmpTest();
+	system("pause");
 
-	if (productObjB2 != NULL)
-	{
-		delete productObjB2;
-		productObjB2 = NULL;
-	}
+	cout << "模板方法" << endl;
+	tmpTest();
+	system("pause");
 
-	//建造者测试
-	bdr::Builder *builderObj = new bdr::FatManBuilder();
-	bdr::Director directorObj(builderObj);
-	directorObj.CreateMan();
-	bdr::Man *manObj = builderObj->GetMan();
-	if (manObj == NULL)
-		return 0;
-	manObj->ShowMan();
-	delete manObj; 
-	manObj = NULL;
-	delete builderObj;
-	builderObj = NULL;
+	cout << "策略模式" << endl;
+	stgTest();
+	system("pause");
 
+	cout << "命令模式" << endl;
+	cmdTest();
+	system("pause");
 
-	//代理模式测试
-	prx::CSubject *pSubject = new prx::CProxy();
-	pSubject->Request();
-	SAFE_DELETE(pSubject);
+	cout << "职责链模式" << endl;
+	corTest();
+	system("pause");
 
-	//适配器测试
-	adp::Target *targetObj = new adp::Adapter();
-    targetObj->Request();
-    delete targetObj;
-    targetObj = NULL;
+	cout << "状态模式" << endl;
+	steTest();
+	system("pause");
 
-	//桥接模式测试
-	bdg::Implementor *pImplObj = new bdg::ConcreteImpementor();
-    bdg::Abstraction *pAbsObj = new bdg::RedfinedAbstraction(pImplObj);
-    pAbsObj->Operation();
-    delete pImplObj;
-    pImplObj = NULL;
-    delete pAbsObj;
-    pAbsObj = NULL;
+	cout << "观察者模式" << endl;
+	obsTest();
+	system("pause");
+
+	cout << "中介者模式" << endl;
+	mdiTest();
+	system("pause");
+
+	cout << "迭代器模式" << endl;
+	itrTest();
+	system("pause");
+
+	cout << "访问者模式" << endl;
+	vtrTest();
+	system("pause");
+
+	cout << "备忘录模式" << endl;
+	memTest();
+	system("pause");
+
+	cout << "解释器模式" << endl;
+	itpTest();
+	system("pause");
 
     return 0;
 }
