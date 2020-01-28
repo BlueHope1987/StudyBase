@@ -1830,13 +1830,13 @@ namespace itr {
 		if (pNode == NULL || m_pHead == NULL || m_pTail == NULL)
 		{
 			return;
-		}
+		};
 
 		if (pNode == m_pHead) // If the deleting node is head node
 		{
 			Node *pNewHead = m_pHead->pNext;
 			m_pHead = pNewHead;
-		}
+		};
 		else
 		{
 			// To get the deleting node's previous node
@@ -1850,7 +1850,7 @@ namespace itr {
 				{
 					break;
 				}
-			}
+			};
 
 			// To get the deleting node's next node
 			Node *pNextNode = pNode->pNext;
@@ -1859,11 +1859,11 @@ namespace itr {
 			if (pNextNode == NULL)
 			{
 				m_pTail = pPreviousNode;
-			}
+			};
 
 			// Relink the list
 			pPreviousNode->pNext = pNextNode;
-		}
+		};
 
 		// Delete the node
 		delete pNode;
@@ -2006,7 +2006,7 @@ namespace vtr {
 	void ConcreteElementA::Accept(Visitor *pVisitor)
 	{
 		pVisitor->VisitConcreteElementA(this);
-	}
+	};
 
 	class ConcreteElementB : public Element
 	{
@@ -2017,7 +2017,7 @@ namespace vtr {
 	void ConcreteElementB::Accept(Visitor *pVisitor)
 	{
 		pVisitor->VisitConcreteElementB(this);
-	}
+	};
 
 	// ObjectStructure类，能枚举它的元素，可以提供一个高层的接口以允许访问者访问它的元素
 	class ObjectStructure
@@ -2034,7 +2034,7 @@ namespace vtr {
 	void ObjectStructure::Attach(Element *pElement)
 	{
 		elements.push_back(pElement);
-	}
+	};
 
 	void ObjectStructure::Detach(Element *pElement)
 	{
@@ -2043,7 +2043,7 @@ namespace vtr {
 		{
 			elements.erase(it);
 		}
-	}
+	};
 
 	void ObjectStructure::Accept(Visitor *pVisitor)
 	{
