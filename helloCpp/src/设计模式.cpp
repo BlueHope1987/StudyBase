@@ -68,6 +68,8 @@ GoF 的 23 种设计模式的分类和功能
 
 #include <list>
 
+#include <algorithm>
+
 using namespace std;
 
 //1、单例模式
@@ -1836,7 +1838,7 @@ namespace itr {
 		{
 			Node *pNewHead = m_pHead->pNext;
 			m_pHead = pNewHead;
-		};
+		}
 		else
 		{
 			// To get the deleting node's previous node
