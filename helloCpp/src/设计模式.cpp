@@ -2214,6 +2214,7 @@ void itpTest() {
 };
 
 
+//主函数 测试
 int main(int argc, char *argv[])
 {
 	cout << "单例模式" << endl;
