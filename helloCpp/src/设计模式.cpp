@@ -2080,7 +2080,7 @@ void vtrTest() {
 	return;
 };
 
-//备忘录模式-----
+//备忘录模式
 namespace mem {
 	struct State
 	{
