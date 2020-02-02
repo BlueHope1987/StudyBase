@@ -2213,8 +2213,7 @@ void itpTest() {
 	return;
 };
 
-
-//主函数 测试
+//主函数 逐项测试上列设计模式
 int main(int argc, char *argv[])
 {
 	cout << "单例模式" << endl;
