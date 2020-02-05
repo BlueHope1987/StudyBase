@@ -65,6 +65,7 @@ GoF 的 23 种设计模式的分类和功能
 #include <vector>
 
 #include <string>
+#include <cstring>
 
 #include <list>
 
@@ -2477,7 +2478,7 @@ void itpTest() {
      itp::InstructionHandler *pInstructionHandler = new itp::InstructionHandler(pInstructionStr);
      pInstructionHandler->Handle();
      pInstructionHandler->Output();
-     itp::SAFE_DELETE(pInstructionHandler);
+     SAFE_DELETE(pInstructionHandler);
 	return;
 };
 
