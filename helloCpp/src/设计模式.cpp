@@ -63,12 +63,9 @@ GoF 的 23 种设计模式的分类和功能
 #include <map>
 #include <vector>
 #include <string>
-#include <cstring>
-
+//#include <cstring>
 #include <list>
-
 #include <algorithm>
-
 using namespace std;
 
 //1、单例模式
