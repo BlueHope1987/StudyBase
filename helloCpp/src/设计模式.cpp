@@ -1,60 +1,60 @@
-//GBK���뱣���Է�ֹ"�������л��з�"����
+﻿//GBK编码保存以防止"常量中有换行符"问题
 /*
 http://c.biancheng.net/view/1320.html
-GoF �� 23 �����ģʽ�ķ���͹���
+GoF 的 23 种设计模式的分类和功能
 
-1. ����Ŀ������
-����ģʽ���������ʲô���������֣����ַ�ʽ�ɷ�Ϊ������ģʽ���ṹ��ģʽ����Ϊ��ģʽ 3 �֡�
-������ģʽ�����������������������󡱣�������Ҫ�ص��ǡ�������Ĵ�����ʹ�÷��롱��GoF ���ṩ�˵�����ԭ�͡��������������󹤳��������ߵ� 5 �ִ�����ģʽ��
-�ṹ��ģʽ������������ν�������ĳ�ֲ�����ɸ���Ľṹ��GoF ���ṩ�˴��������������Žӡ�װ�Ρ���ۡ���Ԫ����ϵ� 7 �ֽṹ��ģʽ��
-��Ϊ��ģʽ����������������֮�������໥Э����ͬ��ɵ��������޷�������ɵ������Լ���������ְ��GoF ���ṩ��ģ�巽�������ԡ����ְ������״̬���۲��ߡ��н��ߡ��������������ߡ�����¼���������� 11 ����Ϊ��ģʽ��
-2. �������÷�Χ����
-����ģʽ����Ҫ�������ϻ�����Ҫ���ڶ��������֣����ַ�ʽ�ɷ�Ϊ��ģʽ�Ͷ���ģʽ���֡�
-��ģʽ�����ڴ�����������֮��Ĺ�ϵ����Щ��ϵͨ���̳����������Ǿ�̬�ģ��ڱ���ʱ�̱�ȷ�������ˡ�GoF�еĹ������������ࣩ��������ģ�巽�������������ڸ�ģʽ��
-����ģʽ�����ڴ�������֮��Ĺ�ϵ����Щ��ϵ����ͨ����ϻ�ۺ���ʵ�֣�������ʱ���ǿ��Ա仯�ģ����߶�̬�ԡ�GoF �г������� 4 �֣������Ķ��Ƕ���ģʽ��
+1. 根据目的来分
+根据模式是用来完成什么工作来划分，这种方式可分为创建型模式、结构型模式和行为型模式 3 种。
+创建型模式：用于描述“怎样创建对象”，它的主要特点是“将对象的创建与使用分离”。GoF 中提供了单例、原型、工厂方法、抽象工厂、建造者等 5 种创建型模式。
+结构型模式：用于描述如何将类或对象按某种布局组成更大的结构，GoF 中提供了代理、适配器、桥接、装饰、外观、享元、组合等 7 种结构型模式。
+行为型模式：用于描述类或对象之间怎样相互协作共同完成单个对象都无法单独完成的任务，以及怎样分配职责。GoF 中提供了模板方法、策略、命令、职责链、状态、观察者、中介者、迭代器、访问者、备忘录、解释器等 11 种行为型模式。
+2. 根据作用范围来分
+根据模式是主要用于类上还是主要用于对象上来分，这种方式可分为类模式和对象模式两种。
+类模式：用于处理类与子类之间的关系，这些关系通过继承来建立，是静态的，在编译时刻便确定下来了。GoF中的工厂方法、（类）适配器、模板方法、解释器属于该模式。
+对象模式：用于处理对象之间的关系，这些关系可以通过组合或聚合来实现，在运行时刻是可以变化的，更具动态性。GoF 中除了以上 4 种，其他的都是对象模式。
 
-�� 1 �������� 23 �����ģʽ�ķ��ࡣ
+表 1 介绍了这 23 种设计模式的分类。
 
-��1GoF �� 23 �����ģʽ�ķ����
-��Χ\Ŀ��   ������ģʽ  �ṹ��ģʽ    ��Ϊ��ģʽ
+表1GoF 的 23 种设计模式的分类表
+范围\目的   创建型模式  结构型模式    行为型模式
 
-��ģʽ  ��������    (�ࣩ������    ģ�巽����������
+类模式  工厂方法    (类）适配器    模板方法、解释器
 
-����ģʽ	����	    ����          ����
-			ԭ��   (����������      ����
-		   ���󹤳�       �Ž�       ְ����
-		  ������          װ��        ״̬
-						 ���        �۲���
-						 ��Ԫ        �н���
-						 ���        ������
-									������
-									����¼
+对象模式	单例	    代理          策略
+			原型   (对象）适配器      命令
+		   抽象工厂       桥接       职责链
+		  建造者          装饰        状态
+						 外观        观察者
+						 享元        中介者
+						 组合        迭代器
+									访问者
+									备忘录
 
-3. GoF��23�����ģʽ�Ĺ���
-ǰ��˵���� GoF �� 23 �����ģʽ�ķ��࣬���ڶԸ���ģʽ�Ĺ��ܽ��н��ܡ�
-������Singleton��ģʽ��ĳ����ֻ������һ��ʵ���������ṩ��һ��ȫ�ַ��ʵ㹩�ⲿ��ȡ��ʵ��������չ�����޶���ģʽ��
-ԭ�ͣ�Prototype��ģʽ����һ��������Ϊԭ�ͣ�ͨ��������и��ƶ���¡�������ԭ�����Ƶ���ʵ����
-����������Factory Method��ģʽ������һ�����ڴ�����Ʒ�Ľӿڣ��������������ʲô��Ʒ��
-���󹤳���AbstractFactory��ģʽ���ṩһ��������Ʒ��Ľӿڣ���ÿ�������������һϵ����صĲ�Ʒ��
-�����ߣ�Builder��ģʽ����һ�����Ӷ���ֽ�ɶ����Լ򵥵Ĳ��֣�Ȼ����ݲ�ͬ��Ҫ�ֱ𴴽����ǣ���󹹽��ɸø��Ӷ���
-������Proxy��ģʽ��Ϊĳ�����ṩһ�ִ����Կ��ƶԸö���ķ��ʡ����ͻ���ͨ��������ӵط��ʸö��󣬴Ӷ����ơ���ǿ���޸ĸö����һЩ���ԡ�
-��������Adapter��ģʽ����һ����Ľӿ�ת���ɿͻ�ϣ��������һ���ӿڣ�ʹ��ԭ�����ڽӿڲ����ݶ�����һ��������Щ����һ������
-�Žӣ�Bridge��ģʽ����������ʵ�ַ��룬ʹ���ǿ��Զ����仯����������Ϲ�ϵ����̳й�ϵ��ʵ�֣��Ӷ������˳����ʵ���������ɱ�ά�ȵ���϶ȡ�
-װ�Σ�Decorator��ģʽ����̬�ĸ���������һЩְ�𣬼����������Ĺ��ܡ�
-��ۣ�Facade��ģʽ��Ϊ������ӵ���ϵͳ�ṩһ��һ�µĽӿڣ�ʹ��Щ��ϵͳ�������ױ����ʡ�
-��Ԫ��Flyweight��ģʽ�����ù�����������Ч��֧�ִ���ϸ���ȶ���ĸ��á�
-��ϣ�Composite��ģʽ����������ϳ���״��νṹ��ʹ�û��Ե����������϶������һ�µķ����ԡ�
-ģ�巽����TemplateMethod��ģʽ������һ�������е��㷨�Ǽܣ������㷨��һЩ�����ӳٵ������У�ʹ��������Բ��ı���㷨�ṹ��������ض�����㷨��ĳЩ�ض����衣
-���ԣ�Strategy��ģʽ��������һϵ���㷨������ÿ���㷨��װ������ʹ���ǿ����໥�滻�����㷨�ĸı䲻��Ӱ��ʹ���㷨�Ŀͻ���
-���Command��ģʽ����һ�������װΪһ������ʹ������������κ�ִ����������ηָ��
-ְ������Chain of Responsibility��ģʽ������������е�һ�����󴫵���һ������ֱ��������ӦΪֹ��ͨ�����ַ�ʽȥ������֮�����ϡ�
-״̬��State��ģʽ������һ�����������ڲ�״̬�����ı�ʱ�ı�����Ϊ������
-�۲��ߣ�Observer��ģʽ�������������һ�Զ��ϵ����һ���������ı�ʱ�������ָı�֪ͨ������������󣬴Ӷ�Ӱ�������������Ϊ��
-�н��ߣ�Mediator��ģʽ������һ���н��������ԭ�ж���֮��Ľ�����ϵ������ϵͳ�ж�������϶ȣ�ʹԭ�ж���֮�䲻���໥�˽⡣
-��������Iterator��ģʽ���ṩһ�ַ�����˳����ʾۺ϶����е�һϵ�����ݣ�������¶�ۺ϶�����ڲ���ʾ��
-�����ߣ�Visitor��ģʽ���ڲ��ı伯��Ԫ�ص�ǰ���£�Ϊһ�������е�ÿ��Ԫ���ṩ���ַ��ʷ�ʽ����ÿ��Ԫ���ж�������߶�����ʡ�
-����¼��Memento��ģʽ���ڲ��ƻ���װ�Ե�ǰ���£���ȡ������һ��������ڲ�״̬���Ա��Ժ�ָ�����
-��������Interpreter��ģʽ���ṩ��ζ������Ե��ķ����Լ������Ծ��ӵĽ��ͷ���������������
+3. GoF的23种设计模式的功能
+前面说明了 GoF 的 23 种设计模式的分类，现在对各个模式的功能进行介绍。
+单例（Singleton）模式：某个类只能生成一个实例，该类提供了一个全局访问点供外部获取该实例，其拓展是有限多例模式。
+原型（Prototype）模式：将一个对象作为原型，通过对其进行复制而克隆出多个和原型类似的新实例。
+工厂方法（Factory Method）模式：定义一个用于创建产品的接口，由子类决定生产什么产品。
+抽象工厂（AbstractFactory）模式：提供一个创建产品族的接口，其每个子类可以生产一系列相关的产品。
+建造者（Builder）模式：将一个复杂对象分解成多个相对简单的部分，然后根据不同需要分别创建它们，最后构建成该复杂对象。
+代理（Proxy）模式：为某对象提供一种代理以控制对该对象的访问。即客户端通过代理间接地访问该对象，从而限制、增强或修改该对象的一些特性。
+适配器（Adapter）模式：将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类能一起工作。
+桥接（Bridge）模式：将抽象与实现分离，使它们可以独立变化。它是用组合关系代替继承关系来实现，从而降低了抽象和实现这两个可变维度的耦合度。
+装饰（Decorator）模式：动态的给对象增加一些职责，即增加其额外的功能。
+外观（Facade）模式：为多个复杂的子系统提供一个一致的接口，使这些子系统更加容易被访问。
+享元（Flyweight）模式：运用共享技术来有效地支持大量细粒度对象的复用。
+组合（Composite）模式：将对象组合成树状层次结构，使用户对单个对象和组合对象具有一致的访问性。
+模板方法（TemplateMethod）模式：定义一个操作中的算法骨架，而将算法的一些步骤延迟到子类中，使得子类可以不改变该算法结构的情况下重定义该算法的某些特定步骤。
+策略（Strategy）模式：定义了一系列算法，并将每个算法封装起来，使它们可以相互替换，且算法的改变不会影响使用算法的客户。
+命令（Command）模式：将一个请求封装为一个对象，使发出请求的责任和执行请求的责任分割开。
+职责链（Chain of Responsibility）模式：把请求从链中的一个对象传到下一个对象，直到请求被响应为止。通过这种方式去除对象之间的耦合。
+状态（State）模式：允许一个对象在其内部状态发生改变时改变其行为能力。
+观察者（Observer）模式：多个对象间存在一对多关系，当一个对象发生改变时，把这种改变通知给其他多个对象，从而影响其他对象的行为。
+中介者（Mediator）模式：定义一个中介对象来简化原有对象之间的交互关系，降低系统中对象间的耦合度，使原有对象之间不必相互了解。
+迭代器（Iterator）模式：提供一种方法来顺序访问聚合对象中的一系列数据，而不暴露聚合对象的内部表示。
+访问者（Visitor）模式：在不改变集合元素的前提下，为一个集合中的每个元素提供多种访问方式，即每个元素有多个访问者对象访问。
+备忘录（Memento）模式：在不破坏封装性的前提下，获取并保存一个对象的内部状态，以便以后恢复它。
+解释器（Interpreter）模式：提供如何定义语言的文法，以及对语言句子的解释方法，即解释器。
 
 */
 //https://blog.csdn.net/CoderAldrich/article/details/83272866
@@ -68,7 +68,7 @@ GoF �� 23 �����ģʽ�ķ���͹���
 #include <algorithm>
 using namespace std;
 
-//1������ģʽ
+//1、单例模式
 namespace sng {
 	class Singleton
 	{
@@ -105,14 +105,14 @@ namespace sng {
 	Singleton *Singleton::m_Instance = NULL;
 }
 void sngTest() {
-	//����ģʽ����
+	//单例模式测试
 	sng::Singleton *singletonObj = sng::Singleton::GetInstance();
 	cout << singletonObj->GetTest() << endl;
 	sng::Singleton::DestoryInstance();
 	return;
 };
 
-//2��ԭ��ģʽ
+//2、原型模式
 namespace ptp {
 	class Prototype
 	{
@@ -128,16 +128,16 @@ namespace ptp {
 		ConcretePrototype() :m_counter(0) {}
 		virtual ~ConcretePrototype() {}
 
-		//�������캯��
+		//拷贝构造函数
 		ConcretePrototype(const ConcretePrototype & rhs)
 		{
 			m_counter = rhs.m_counter;
 		}
 
-		//��������
+		//复制自身
 		virtual ConcretePrototype * Clone()
 		{
-			//���ÿ������캯��
+			//调用拷贝构造函数
 			return new ConcretePrototype(*this);
 		}
 
@@ -146,7 +146,7 @@ namespace ptp {
 	};
 }
 void ptpTest() {
-	//ԭ��ģʽ����
+	//原型模式测试
 	ptp::ConcretePrototype * conProA = new ptp::ConcretePrototype();
 	ptp::ConcretePrototype * conProB = conProA->Clone();
 	delete conProA;
@@ -156,7 +156,7 @@ void ptpTest() {
 	return;
 };
 
-//3����������
+//3、工厂方法
 namespace fac {
 	class Product
 	{
@@ -207,7 +207,7 @@ namespace fac {
 	};
 }
 void facTest() {
-	//������������
+	//工厂方法测试
 	fac::Factory *factoryA = new fac::FactoryA();
 	fac::Product *productA = factoryA->CreateProduct();
 	productA->Show();
@@ -237,7 +237,7 @@ void facTest() {
 	return;
 };
 
-//4�����󹤳�
+//4、抽象工厂
 namespace absfac {
 	class ProductA
 	{
@@ -324,7 +324,7 @@ namespace absfac {
 	};
 }
 void absfacTest() {
-	//���󹤳�����
+	//抽象工厂测试
 	absfac::Factory *factoryObj1 = new absfac::Factory1();
 	absfac::ProductA *productObjA1 = factoryObj1->CreateProductA();
 	absfac::ProductB *productObjB1 = factoryObj1->CreateProductB();
@@ -377,7 +377,7 @@ void absfacTest() {
 	return;
 };
 
-//5��������
+//5、建造者
 namespace bdr {
 	typedef enum MANTYPETag
 	{
@@ -486,7 +486,7 @@ namespace bdr {
 	}
 }
 void bdrTest() {
-	//�����߲���
+	//建造者测试
 	bdr::Builder *builderObj = new bdr::FatManBuilder();
 	bdr::Director directorObj(builderObj);
 	directorObj.CreateMan();
@@ -501,7 +501,7 @@ void bdrTest() {
 	return;
 };
 
-//6������ģʽ
+//6、代理模式
 namespace prx {
 #define SAFE_DELETE(p) if (p) { delete p; p = NULL;}
 
@@ -550,14 +550,14 @@ namespace prx {
 
 }
 void prxTest() {
-	//����ģʽ����
+	//代理模式测试
 	prx::CSubject *pSubject = new prx::CProxy();
 	pSubject->Request();
 	SAFE_DELETE(pSubject);
 	return;
 };
 
-//7��������ģʽ
+//7、适配器模式
 namespace adp {
 	// Targets
 	class Target
@@ -590,7 +590,7 @@ namespace adp {
 	};
 }
 void adpTest() {
-	//����������
+	//适配器测试
 	adp::Target *targetObj = new adp::Adapter();
 	targetObj->Request();
 	delete targetObj;
@@ -598,7 +598,7 @@ void adpTest() {
 	return;
 };
 
-//8���Ž�ģʽ
+//8、桥接模式
 namespace bdg {
 	class Implementor
 	{
@@ -633,7 +633,7 @@ namespace bdg {
 	};
 }
 void bdgTest() {
-	//�Ž�ģʽ����
+	//桥接模式测试
 	bdg::Implementor *pImplObj = new bdg::ConcreteImpementor();
 	bdg::Abstraction *pAbsObj = new bdg::RedfinedAbstraction(pImplObj);
 	pAbsObj->Operation();
@@ -644,7 +644,7 @@ void bdgTest() {
 	return;
 };
 
-//9��װ��ģʽ
+//9、装饰模式
 namespace dec {
 	class Component
 	{
@@ -703,7 +703,7 @@ namespace dec {
 	};
 }
 void decTest() {
-	//װ��ģʽ����
+	//装饰模式测试
 	dec::Component *pComponentObj = new dec::ConcreteComponent();
 	dec::Decorator *pDecoratorAOjb = new dec::ConcreteDecoratorA(pComponentObj);
 	pDecoratorAOjb->Operation();
@@ -725,9 +725,9 @@ void decTest() {
 	return;
 };
 
-//10�����ģʽ
+//10、外观模式
 namespace fcd {
-	// �﷨������ϵͳ
+	// 语法分析子系统
 	class CSyntaxParser
 	{
 	public:
@@ -737,7 +737,7 @@ namespace fcd {
 		}
 	};
 
-	// �����м������ϵͳ
+	// 生成中间代码子系统
 	class CGenMidCode
 	{
 	public:
@@ -747,7 +747,7 @@ namespace fcd {
 		}
 	};
 
-	// ���ɻ�������ϵͳ
+	// 生成汇编代码子系统
 	class CGenAssemblyCode
 	{
 	public:
@@ -757,7 +757,7 @@ namespace fcd {
 		}
 	};
 
-	// �������ɿ�ִ��Ӧ�ó�������ϵͳ
+	// 链接生成可执行应用程序或库子系统
 	class CLinkSystem
 	{
 	public:
@@ -789,7 +789,7 @@ void fcdTest() {
 	return;
 }
 
-//11����Ԫģʽ
+//11、享元模式
 namespace fyw {
 	typedef struct pointTag
 	{
@@ -971,7 +971,7 @@ void fywTest() {
 	}
 }
 
-//12�����ģʽ
+//12、组合模式
 namespace cmp {
 	class Component
 	{
@@ -1090,7 +1090,7 @@ void cmpTest() {
 	pSubNodeSh->Add(pSubNodeShXs);
 	pSubNodeSh->Add(pSubNodeShZb);
 	pNode->Print();
-	// ��˾����������Ҫ�ر��Ϻ������ල����
+	// 公司不景气，需要关闭上海质量监督部门
 	pSubNodeSh->Remove(pSubNodeShZb);
 	if (pNode != NULL)
 	{
@@ -1100,7 +1100,7 @@ void cmpTest() {
 	return;
 }
 
-//13��ģ�巽��
+//13、模板方法
 namespace tmp {
 	class AbstractClass
 	{
@@ -1164,7 +1164,7 @@ void tmpTest() {
 	return;
 }
 
-//14������ģʽ
+//14、策略模式
 namespace stg {
 	// The abstract strategy
 	class Strategy
@@ -1236,7 +1236,7 @@ void stgTest() {
 	return;
 };
 
-//15������ģʽ
+//15、命令模式
 namespace cmd {
 #define SAFE_DELETE(p) if (p) { delete p; p = NULL; }
 
@@ -1290,7 +1290,7 @@ void cmdTest() {
 	return;
 }
 
-//16��ְ����ģʽ
+//16、职责链模式
 namespace cor {
 #define SAFE_DELETE(p) if (p) { delete p; p = NULL; }
 
@@ -1388,7 +1388,7 @@ void corTest() {
 	return;
 }
 
-//17��״̬ģʽ
+//17、状态模式
 namespace ste {
 	class Context;
 
@@ -1453,7 +1453,7 @@ void steTest() {
 	return;
 };
 
-//18���۲���ģʽ
+//18、观察者模式
 namespace obs {
 	class Observer
 	{
@@ -1565,7 +1565,7 @@ void obsTest() {
 };
 
 
-//�н���ģʽ
+//中介者模式
 namespace mdi {
 #define SAFE_DELETE(p) if (p) { delete p; p = NULL; }
 
@@ -1684,7 +1684,7 @@ void mdiTest() {
 	return;
 };
 
-//������ģʽ
+//迭代器模式
 namespace itr {
 
 	typedef struct tagNode
@@ -1942,7 +1942,7 @@ void itrTest() {
 	return;
 };
 
-//������ģʽ
+//访问者模式
 namespace vtr {
 	class ConcreteElementA;
 	class ConcreteElementB;
@@ -1963,12 +1963,12 @@ namespace vtr {
 
 	void ConcreteVisitor1::VisitConcreteElementA(ConcreteElementA *pElementA)
 	{
-		// ���ڸ��ݴ�������pElementA�����Զ�ConcreteElementA�е�element���в���
+		// 现在根据传进来的pElementA，可以对ConcreteElementA中的element进行操作
 	}
 
 	void ConcreteVisitor1::VisitConcreteElementB(ConcreteElementB *pElementB)
 	{
-		// ���ڸ��ݴ�������pElementB�����Զ�ConcreteElementB�е�element���в���
+		// 现在根据传进来的pElementB，可以对ConcreteElementB中的element进行操作
 	}
 
 	class ConcreteVisitor2 : public Visitor
@@ -2017,7 +2017,7 @@ namespace vtr {
 		pVisitor->VisitConcreteElementB(this);
 	};
 
-	// ObjectStructure�࣬��ö������Ԫ�أ������ṩһ���߲�Ľӿ������������߷�������Ԫ��
+	// ObjectStructure类，能枚举它的元素，可以提供一个高层的接口以允许访问者访问它的元素
 	class ObjectStructure
 	{
 	public:
@@ -2045,7 +2045,7 @@ namespace vtr {
 
 	void ObjectStructure::Accept(Visitor *pVisitor)
 	{
-		// Ϊÿһ��element����visitor�����ж�Ӧ�Ĳ���
+		// 为每一个element设置visitor，进行对应的操作
 		for (vector<Element *>::const_iterator it = elements.begin(); it != elements.end(); ++it)
 		{
 			(*it)->Accept(pVisitor);
@@ -2076,7 +2076,7 @@ void vtrTest() {
 	return;
 };
 
-//����¼ģʽ
+//备忘录模式
 namespace mem {
 	struct State
 	{
@@ -2201,7 +2201,7 @@ void memTest() {
 	return;
 };
 
-//������ģʽ
+//解释器模式
 namespace itp {
 	#define MAX_SIZE 256
 	#define SAFE_DELETE(p) if (p) { delete p; p = NULL; }
@@ -2289,23 +2289,23 @@ namespace itp {
 	
 			if (!_wcsicmp(m_pDirection, DOWN))
 			{
-				wcscat_s(pResult, MAX_SIZE, L"����");
+				wcscat_s(pResult, MAX_SIZE, L"向下");
 			}
 			else if (!_wcsicmp(m_pDirection, UP))
 			{
-				wcscat_s(pResult, MAX_SIZE, L"����");
+				wcscat_s(pResult, MAX_SIZE, L"向上");
 			}
 			else if (!_wcsicmp(m_pDirection, LEFT))
 			{
-				wcscat_s(pResult, MAX_SIZE, L"����");
+				wcscat_s(pResult, MAX_SIZE, L"向左");
 			}
 			else if (!_wcsicmp(m_pDirection, RIGHT))
 			{
-				wcscat_s(pResult, MAX_SIZE, L"����");
+				wcscat_s(pResult, MAX_SIZE, L"向右");
 			}
 			else
 			{
-				wcscat_s(pResult, MAX_SIZE, L"��Чָ��");
+				wcscat_s(pResult, MAX_SIZE, L"无效指令");
 			}
 	
 			SAFE_DELETE(m_pDirection);
@@ -2328,15 +2328,15 @@ namespace itp {
 	
 			if (!_wcsicmp(m_pAction, MOVE))
 			{
-				wcscat_s(pResult, MAX_SIZE, L"�ƶ�");
+				wcscat_s(pResult, MAX_SIZE, L"移动");
 			}
 			else if (!_wcsicmp(m_pAction, WALK))
 			{
-				wcscat_s(pResult, MAX_SIZE, L"�߶�");
+				wcscat_s(pResult, MAX_SIZE, L"走动");
 			}
 			else
 			{
-				wcscat_s(pResult, MAX_SIZE, L"��Чָ��");
+				wcscat_s(pResult, MAX_SIZE, L"无效指令");
 			}
 	
 			SAFE_DELETE(m_pAction);
@@ -2477,98 +2477,100 @@ void itpTest() {
 	return;
 };
 
-//������ ��������������ģʽ
+//主函数 逐项测试上列设计模式
 int main(int argc, char *argv[])
 {
-	cout << "����ģʽ" << endl;
+	setlocale(LC_ALL, "zh_CN.UTF-8");
+
+	cout << "单例模式" << endl;
 	sngTest();
 	system("pause");
 
-	cout << "ԭ��ģʽ" << endl;
+	cout << "原型模式" << endl;
 	ptpTest();
 	system("pause");
 
-	cout << "��������" << endl;
+	cout << "工厂方法" << endl;
 	facTest();
 	system("pause");
 
-	cout << "���󹤳�" << endl;
+	cout << "抽象工厂" << endl;
 	absfacTest();
 	system("pause");
 
-	cout << "������" << endl;
+	cout << "建造者" << endl;
 	bdrTest();
 	system("pause");
 
-	cout << "����ģʽ" << endl;
+	cout << "代理模式" << endl;
 	prxTest();
 	system("pause");
 
-	cout << "������ģʽ" << endl;
+	cout << "适配器模式" << endl;
 	adpTest();
 	system("pause");
 
-	cout << "�Ž�ģʽ" << endl;
+	cout << "桥接模式" << endl;
 	bdgTest();
 	system("pause");
 
-	cout << "װ��ģʽ" << endl;
+	cout << "装饰模式" << endl;
 	decTest();
 	system("pause");
 
-	cout << "���ģʽ" << endl;
+	cout << "外观模式" << endl;
 	fcdTest();
 	system("pause");
 
-	cout << "��Ԫģʽ" << endl;
+	cout << "享元模式" << endl;
 	fywTest();
 	system("pause");
 
-	cout << "���ģʽ" << endl;
+	cout << "组合模式" << endl;
 	cmpTest();
 	system("pause");
 
-	cout << "ģ�巽��" << endl;
+	cout << "模板方法" << endl;
 	tmpTest();
 	system("pause");
 
-	cout << "����ģʽ" << endl;
+	cout << "策略模式" << endl;
 	stgTest();
 	system("pause");
 
-	cout << "����ģʽ" << endl;
+	cout << "命令模式" << endl;
 	cmdTest();
 	system("pause");
 
-	cout << "ְ����ģʽ" << endl;
+	cout << "职责链模式" << endl;
 	corTest();
 	system("pause");
 
-	cout << "״̬ģʽ" << endl;
+	cout << "状态模式" << endl;
 	steTest();
 	system("pause");
 
-	cout << "�۲���ģʽ" << endl;
+	cout << "观察者模式" << endl;
 	obsTest();
 	system("pause");
 
-	cout << "�н���ģʽ" << endl;
+	cout << "中介者模式" << endl;
 	mdiTest();
 	system("pause");
 
-	cout << "������ģʽ" << endl;
+	cout << "迭代器模式" << endl;
 	itrTest();
 	system("pause");
 
-	cout << "������ģʽ" << endl;
+	cout << "访问者模式" << endl;
 	vtrTest();
 	system("pause");
 
-	cout << "����¼ģʽ" << endl;
+	cout << "备忘录模式" << endl;
 	memTest();
 	system("pause");
 
-	cout << "������ģʽ" << endl;
+	cout << "解释器模式" << endl;
 	itpTest();
 	system("pause");
 
