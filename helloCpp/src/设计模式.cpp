@@ -2481,8 +2481,10 @@ void itpTest() {
 int main(int argc, char *argv[])
 {
 	setlocale(LC_ALL, "zh_CN.UTF-8");
+	//gcc使用zh_CN.GBK，或者zh_CN.UTF-8，VC++使用Chinese_People's Republic of China.936或者65001
+	//ref:http://www.bubuko.com/infodetail-2914605.html
 
-	cout << "单例模式" << endl;
+	wcout << "单例模式" << endl;
 	sngTest();
 	system("pause");
 
