@@ -488,7 +488,7 @@ R:C W:B
     题目中：
     每个地址项大小为4字节，磁盘索引块和磁盘数据块大小均为1KB字节，那么每个索引块中的项目数目就是1024/4=256个。5个为直接地址索引，那么对应的文件大小是5*1K=5KB；一级间接索引数据块大小为2*256*1K=512KB，二级索引的数据块大小就是1*256*256*1K=65536K。
     那么题目逻辑块号如图是从0编号的，0-4是直接索引，5-516是一级索引，517-66052是二级索引。
-<img src=“imgs/2002021801.jpg”>
+<img src=“imgs/2020021801.jpg”>
     答案是C。
 
     /proc目录，保存了当前系统所有的详细信息，包括进程、文件系统、硬件等。而且还可以通过/proc来即时修改系统中的某些参数。
@@ -520,7 +520,61 @@ R:A W:C N:调制技术
     注意官方答案和官方教程是A答案，实际答案应该为C。频率相同。
     如果有一样的试题出现，建议还是选A。
 
-
     IP地址根据子网掩码被分为独立的网络地址和主机地址。但是，与子网划分把大网络分成若干小网络相反，超网是把一些小网络组合成一个大网络。由16个C类网络，可以设置成子网掩码255.255.240.0。
 
+
+20200219 每日一练 66
+https://uc.educity.cn/tiku/testReport.html?id=6212776
+
+阵列处理机属于（）计算机。
+A.SISD B.SIMD C.MISD D.MIMD
+R:B W:D
+    根据阵列机的定义，它将大量重复设置的处理单元互连构成阵列，在单一个控制部件的控制下，向各处理单元分配各自的数据，用以达到并行的执行同一条指令的目的。因此，阵列处理机是单指令流多数据流（SIMD）计算机。
+
     
+The metric assigned to each network depends on the type of protocol. Some simple protocol， like RIP， treats each network as equals. The（  ）of passing through each network is the same; it is one（  ）count. So if a packet passes through 10 network to reach the destination， the total cost is 10 hop counts. Other protocols， such as OSPF， allow the administrator to assign a cost for passing through a network based on the type of service required. A（  ）through a network can have different costs (metrics). For example， if maximum（  ）is the desired type of service， a satellite link has a lower metric than a fiber-optic line. On the other hand， if minimum（  ）is the desired type of service， a fiber-optic line has a lower metric than a satellite line. OSPF allow each router to have several routing table based on the required type of service.
+A.number B.connection C.diagram D.cost
+A.process B.hop C.route D.flow
+A.flow B.window C.route D.cost
+A.packet B.throughput C.error D.number
+A.delay B.stream C.packet D.cost
+R:DBCBA W:BCCBA N:RIP路由协议
+    
+	赋予每一个网络的路由度量依赖于协议的类型。对于像RIP这样的简单协议，可以认为每个网络都是相同的，因而通过每一个网络的费用也都是相同的，其费用为1。所以，如果一个分组经过10个网络到达目标，则总的费用就是10跳。其他的协议，例如OSPF，允许网络管理员根据要求的服务类型赋予所通过的网络一个度量值。通过一个网络的路由可以具有不同的费用。例如，若期望的服务类型为最大吞吐率，则卫星链路比光纤线路的费用低。另一方面，如果期望的服务类型为最小延迟，则光纤线路比卫星线路的费用低。OSPF协议允许每一个路由器根据需要的服务类型设置几个不同的路由表。
+
+
+    主域名服务器包含域的授权信息，具有域名数据库，同时一个域有且只有一个主域名服务器。辅助域名服务器是备份服务器，包含域的授权地址信息，域名信息是从主域名服务器通过域区数据传送获得。转发域名服务器负责非本地域名的本地查询。
+
+    ARP协议的作用是由IP地址求MAC地址，其协议数据单元格式如下图所示：
+<img src="imgs/2020021901.jpg">
+    当源主机要发送一个数据帧时，必须在本地的ARP表中查找目标主机的MAC（硬件）地址。如果ARP表查不到，就广播一个ARP请求分组，这种分组可到达同一子网中的所有主机，它的含义是；“如果你的IP（协议）地址是这个，请回答你的MAC地址是什么。”收到该分组的主机一方面可以用分组中〔发送结点的）的两个源地址更新自己的ARP表，另一方面用自己的IP地址与目标IP地址字段比较，若相符则发回一个ARP响应分组，向发送方报告自己的MAC地址，若不相符则不予回答。ARP请求通过广播帧发送，ARP响应通过单播帧发送给源站。
+
+IPSec的加密和认证过程中所使用的密钥由（  ）机制来生成和分发。
+A.ESP B.IKE C.TGS D.AH
+R:B W:A N:VPN配置
+    本题考查IPSec相关知识。
+    IPSec密钥管理利用IKE（Internet密钥交换协议）机制实现，IKE解决了在不安全的网络环境（如Internet）中安全地建立或更新共享密钥的问题。
+
+    TCP协议：复位RST：RST=1，表明TCP连接出现严重错误，需要释放连接，重新建立。
+
+内存按字节编址从B3000H到DABFFH的区域，其存储容量为（  ）。
+A.123KB B.159KB C.163KB D.194KB
+R:B W:D N:主存储器
+    主存按字节编址，每个字节占有一个地址，通常采用16进制（H）表示。例如：按字节编址，地址从B3000H到DABFFH，则表示有（DABFF－B3000）＋1个字节，即27C00H个字节，159KB。
+
+    有2种方法求十进制
+    方法一：27C00（16进制）转为2进制数是0010 0111 1100 0000 0000
+    再把这个2进制数换成10进制数是162816
+    方法二：用按权展开来处理2*16的4次方+7*16的3次方+12*16的2次方=162,816
+    162816/1024=159K
+    两种方法计算量都不小，你挑个你喜欢的算即可
+
+    在Linux中，文件/etc/hosts解析主机域名。 /etc/host.conf说明解析的顺序。
+
+	CP协议基础知识。TCP用三次握手过程建立连接，首先是发起方发送一个SYN标志置位的段，其中的发送顺序号为某个值X，称为初始顺序号（Initial Sequence Number，ISN），接收方以SYN和ACK标志置位的段响应，其中的应答顺序号应为X＋1（表示期望从第X＋1个字节处开始接收数据），发送顺序号为某个值Y（接收端指定的ISN）。这个段到达发起端后，发起端以ACK标志置位，应答顺序号为Y＋1的段回答，连接就正式建立了，连接建立的同时发起方还可以发送数据，参见下图。
+<img src="imgs/2020021902.png">
+
+	WLAN基础知识。自从1997年IEEE802.11标准实施以来，先后有二十多个标准出台，其中802.11a、802.11b和802.11g采用了不同的通信技术，使得数据传输速率不断提升。但是与有线网络相比，仍然存在一定差距。随着2009年9月11日IEEE 802.11n标准的正式发布，这一差距正在缩小，有望使得一些杀手级的应用能够在WLAN平台上畅行无阻。
+	802.11n可以将WLAN的传输速率由目前802.11a/802.11g的54Mb/s提高到300Mb/s，甚至600Mb/s。这个成就主要得益于MIMO与OFDM技术的结合。应用先进的无线通信技术，不但提高了传输速率，也极大地提升了传输质量。
+
+
