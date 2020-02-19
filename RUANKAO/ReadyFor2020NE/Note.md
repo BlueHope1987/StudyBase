@@ -578,3 +578,54 @@ R:B W:D N:主存储器
 	802.11n可以将WLAN的传输速率由目前802.11a/802.11g的54Mb/s提高到300Mb/s，甚至600Mb/s。这个成就主要得益于MIMO与OFDM技术的结合。应用先进的无线通信技术，不但提高了传输速率，也极大地提升了传输质量。
 
 
+20200220 每日一练 54
+https://uc.educity.cn/tiku/testReport.html?id=6239740
+
+IEEE 802.1x是一种基于（  ）认证协议。
+A.用户ID B.报文 C.MAC地址 D.SSID
+R:C W:B
+    802.1x协议是基于Client/Server的访问控制和认证协议。它可以限制未经授权的用户/设备通过接入端口(access port)访问LAN/WLAN。在获得交换机或LAN提供的各种业务之前，802.1x对连接到交换机端口上的用户/设备MAC地址进行认证。在认证通过之前，802.1x只允许EAPoL（基于局域网的扩展认证协议）数据通过设备连接的交换机端口；认证通过以后，正常的数据可以顺利地通过以太网端口。
+    C选项比A选项更优的是，A选项应该加上用户ID和密码。802.1x协议也可以扩展到基于MAC地址的认证。
+
+Network security consists of policies and practices to prevent and monitor（  ）access,misuse, modification, or denial of a computer network and network-accessible resources.Network security involves the authorization of access to data in a network, which is controlled by the network（  ）.Users choose or are assigned an ID and password or other authenticating information that allows them to access to information and programs within their authority.Network security secures the network, as well as protecting and overseeing operations being done. The most common and simple way of protecting a network resource is by assigning it a （  ）name and a corresponding password. Network security starts with authentication. Once authenticated,a（  ）enforces access policies such as what services are allowed to be accessed by the network users.Though effective to prevent unauthorized access, this component may fail to check potentially harmful content such as computer（  ）or Trojans being transmitted over the network.
+A.unauthorized  B.harmful C.dangerous D.frequent
+A.user B.agent C.server D.administrator
+A.complex B.unique C.catchy D.long 
+A.firewall B.proxy C.gateway D.host
+A.spams B.malwares C.worms D.programs
+R:ADBAC W:ADAXX
+    网络安全包括防止和监视（）计算机网络和网络可访问资源的访问，滥用，修改或拒绝的策略和实践。网络安全涉及对网络中数据的访问的授权，该访问由网络控制（）。用户选择或分配一个ID，密码或其他身份验证信息，使他们能够访问其权限范围内的信息和程序。网络安全性保护网络安全，并保护和监督正在进行的操作。保护网络资源最常见，最简单的方法是为其分配一个（）名称和一个相应的密码。网络安全始于身份验证。一旦通过身份验证，（）将强制执行访问策略，例如允许网络用户访问哪些服务。尽管有效地防止了未经授权的访问，但此组件可能无法检查通过计算机传输的潜在有害内容，例如计算机（）或特洛伊木马程序网络。
+
+100BASE-FX采用4B/5B和NRZ-I编码，这种编码方式的效率为 （） 。
+A.50% B.60% C.80% D.100%
+R:C W:B N:数字编码和编码效率
+	在快速以太网中，不能使用曼彻斯特编码。因为曼码的编码效率是50%，即100Mb/s的数据速率要求200M的波特率。为了提高编码的效率，降低电路的频率（成本），在高速网络中采用4B/5B编码法，这种编码方法的原理如图3所示
+<img src="imgs/2020022001.jpg">
+	这是一种两级编码方案。基本的编码方法是“见1就翻不归零码”（NRZ-I代码序列中1的个数越多，越能提供同步信息，但如果遇到长串的0，则不能提供同步信息。所以在发送到传送介质去之前需经过一次4B/5B编码的变换，发送器扫描发送的比特序列，4位分为一组，然后按照表1的对应规则变换成5位的代码。
+<img src="imgs/2020022002.jpg">
+	5位二进制代码共有32种状态，在表1选用的5位代码中1的个数不的个数都不少于两个。这样就保证了在介质上传输的代码能够提供足够多的同步信息。
+	4B/5B编码的效串为4/5=80%，对于100M的数据速率，需要的波特率为100M÷80%=125M波特。
+
+    VLAN把交换机划分成多个逻辑上独立的区域。
+    VLAN可以跨越交换机。
+    vlan可以按交换机端口划分 ，但不是只能。*
+    VLAN隔离了广播，可以缩小广播风暴的范围。 
+
+下图中画出了曼彻斯特编码和差分曼彻斯特编码的波形图，实际传送的比特串为（  ）。
+<img src="imgs/2020022003.jpg">
+A.1 0 1 0 1 1 0 0
+B.0 1 1 1 0 0 1 0
+C.0 1 0 1 0 0 1 1
+D.1 0 0 0 1 1 0 1
+R:C N:数字编码和编码效率
+	曼彻斯特编码是一种双相码，用低到高的电平转换表示1，用高到低的电平转换表示0（注意：某种教程中关于此部分内容有相反的描述，也是正确的），因此它也可以实现自同步，常用于以太网（802.3 10M以太网）。
+	差分曼彻斯特编码是在曼彻斯特编码的基础上加上了翻转特性，遇0翻转，遇1不变，常用于令牌环网。要注意的一个知识点是：使用曼码和差分曼码时，每传输1bit的信息，就要求线路上有2次电平状态变化（2 Baud），因此要实现100Mbps的传输速率，就需要有200MHz的带宽，即编码效率只有50%。
+
+    快速以太网标准100BASE-TX采用的传输介质是5类无屏蔽双绞线〔UTP）， TX表示Twisted Pair。
+
+    DHCP服务器通过option可以指定给客户端对应的一些ip配置信息。如DNS服务器地址，默认网关地址等。但是Web服务器地址与DHCP并没有什么直接的联系。
+
+    若需要把DHCP协议获取IP地址的主机划分为不同的类别进行管理，常见的做法是把网络中的服务器配置保留地址，把固定用户划分到约期较长的类别，把移动用户划分到租约期较短的类别。
+
+在Linux中，ls –c命令可将文件以修改时间顺序显示。
+
