@@ -636,6 +636,7 @@ R:C N:数字编码和编码效率
 
 
 20200221 每日一练 55
+https://uc.educity.cn/tiku/testReport.html?id=6272515
 
 100BASE-FX支持2芯的多模或单模光纤。100BASE-FX主要是用做高速主干网，从节点到集线器（HUB）的距离可以达到2km，是一种全双工系统。
 
