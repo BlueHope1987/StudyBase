@@ -802,3 +802,58 @@ C.VLAN2 的数据通过 Trunk2，VLAN4 的数据通过 Trunk1   D.VLAN2 的数�
 R:BB W:RC
     默认情况下，端口的权值是128。如果端口权值相同，则选择路径费用小的链路进行传输。在图中所示的配置下，VLAN1和VLAN2在Trunkl上的费用小，VLAN3和VLAN4在Trunk2上的费用小。
     可以理解为两个城市A，B（指两个交换机）；每个城市有出/入城口（指交换机端口）。你开车从A城市到B城市需要交纳出城费用（即端口权值）和路上的油费（即路径花费）。当出城费用一致时，决定你总花费的少要考虑油费使用少的。
+
+
+20200224 每日一练 71
+https://uc.educity.cn/tiku/testReport.html?id=6316417
+
+    MPLS（多协议标记交换）根据标记对分组进行交换，MPLS包头的位置应插入在二层和三层之间（以太帧头与IP头之间），俗称2.5层。
+
+    RISC鼓励尽可能使用较少的寻址方式，这样可以简化实现逻辑、提高效率。相反地，CISC则提倡通过丰富的寻址方式来为用户编程提供更大的灵活性。 
+    RISC:指令长度固定、指令种类尽量少；增加寄存器数目以减少访存次数 ；用硬布线电路实现指令解码，快速完成指令译码。
+
+Routing protocols use different techniques for assigning（  ）to individual networks．Further，  each routing protocol forms a metric aggregation in a different way. Most routing protocols can use multiple paths if the paths have an equal（  ）.Some routing protocols can even use multiple paths when paths have an unequal cost.In either case，load（  ）can improve overall allocation of network bandwidth．When multiple paths are used，there are several ways to distribute the packets. The two most common mechanisms are per-packet load balancing and per-destination load balancing.Per-packet load balancing distributes the（  ）across the possible routes in a manner proportional to the route metrics，Per-destination load balancing distributes packets across the possible routes based on（  ）.
+A.calls  B.metrics  C.links  D.destinations
+A.user  B.distance  C.entity  D.cost
+A.bracketing  B.balancing  C.downloading  D.transmitting
+A.destinations  B.Resources  C.packets  D.sources
+A.destinations  B.resources  C.packets  D.sources
+R:BDBCA W:CDDCA
+    各种路由协议使用不同的技术来为网络赋予度量值。进一步说，每一种路由协议都形成了不同的度量汇聚模式。大部分路由协议在各个通路具有相等费用时可以使用多个通路。某些路由协议甚至在各个通路费用不相等时也可以使用多个通路。在上述任何一种情况下．负载均衡都可以改进网络带宽的全局分配。当使用多个通路时，可以使用多种方法来分配分组。两种最通常的机制是按分组进行负载均衡和按目标进行负载均衡。按分组进行负载均衡是指按照路由度量的比例向各个可能的路由上分配分组。按目标进行负载均衡是指根据目标向各个可能的路由上分配分组。
+
+    水平子系统：目的是实现信息插座和管理子系统（跳线架）间的连接。该子系统由一个工作区的信息插座开始，经水平布置到管理区的内侧配线架的线缆所组成。水平子系统电缆长度要求在90m范围内，它是指从楼层接线间的配线架至工作区的信息插座的实际长度。
+    *错误选项：“实现中央主配线架和各种不同设备之间的连接”
+    干线子系统：作用是通过骨干线缆将主设备间与各楼层配线间体系联接起来，由设备间的配线设备和跳线以及设备间至各楼层配线间的联接电缆构成，由于其通常是顺着大楼的弱电井而下，是与大楼垂直的，因此也称为垂直子系统。
+
+    POP3是邮局协议，用的是TCP的110端口。
+
+    主机A--(e0)-路由器A--路由器B--路由器C-(e0)--主机C
+    路由器C的e0端口状态为down视为路由器无法转发或传送IP数据报，此时会向初始源返回目的站不可达报文。
+	当路由器或主机发现数据包中的问题并没有被前面的ICMP差错报文提到时发送参数问题报文给源站。
+	当数据报到达太快，以至于主机或路由器无法处理时会发出源站抑制报文，直到可以处理时停止发送。
+	检测目的站可可达性与状态（ping命令）使用回显请求和回显应答报文。
+
+    数字用户线路（Digital Subscriber Line，DSL）允许用户在传统电话线上提供高速的传输，用户计算机借助于DSL调制解调器连接到电话线上，通过DSL连接访问互联网络或者企业网络。
+	DSL技术存在多种类型，以下是常见的技术类型：
+	ADSL：非对称DSL，用户的上下行流量不对称，一般具有三个信道，分别为1.544-9Mb/s的高速下行信道，16-640Kb/s的双工信道，64Kb/s的语音信道。
+	SDSL：对称DSL，用户的上下行流量对等，最高可以达到1.544Mb/s。
+	HDSL：高比特率DSL，是在两个线对上提供1.544Mb/s或在三个线对上提供2.048Mb/s对称通信的技术，其最大特点是可以运行在低质量线路上，最大距离为3700-4600m。
+	VDSL：甚高比特率DSL，一种快速非对称DSL业务，可以在一对电话线上提供数据和语音业务。
+
+    127.0.0.1为本地环回地址，可测试本地tcp/ip协议是否正确安装。
+
+对下面4条路由：202.115.129.0/24、202.115.130.0/24、202.115.132.0/24和202.115.133.0/24进行路由汇聚，能覆盖这4条路由的地址是（  ）。
+A.202.115.128.0/21  B.202.115.128.0/22  C.202.115.130.0/22  D.202.115.132.0/23
+R:A N:CIDR和路由汇聚
+    这是一道典型的网络汇聚类试题，用CIDR的思路来解答。CIDR解题思路实际上是VLSM的反向操作，其核心思想是“网络位缩短，找相同位作网络位”202.115.129.0/24、202.115.130.0/24、202.115.132.0/24和202.115.133.0/24四个网络其IP地址全两个8位组都是“202.115”，把IP地址第三个8位组129，130，132，133四个数值二进制展开，分别是10000001、10000010、10000100、10000101，这四个二进制数值前5位都是“10000”，后3位不同，那么在汇聚网络ID中，第三段8位组相同的位作为汇聚网络ID的网络位，亦即汇聚网络ID总共有8+8+5=21位是网络位，剩余3+8=11位都是主机位，求汇聚网络ID时，主机位全0，得到202.115.128.0/21的网络ID。
+
+网络192.21.136.0/24 和192.21.143.0/24汇聚后的地址是(   )。
+A.192.21.136.0/21  B.192.21.136.0/20  C.192.21.136.0/22  D.192.21.128.0/21
+R:A W:B N:CIDR和路由汇聚
+    两个网段中，取出第三个字节，用二进制展开
+    136：1000 1000
+    143：1000 1111
+    这两个字节相比较，只有前5个bit是完全相同的。所以子网掩码就是8+8+5=21
+    同时汇聚后，第三个字节为1000 1000，换成十进制就是136
+    所以汇聚后的地址是192.21.136.0/21
+
