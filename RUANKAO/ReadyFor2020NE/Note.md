@@ -400,7 +400,7 @@ R:B W:D N:奈奎斯特定律
 	R=B log(2)N=2 × 4000 log<sub>2</sub>4=1600b/s=16Kb/s
 
 
-HDLC协议是一种（  ），采用（  ）标志作为帧定界符。
+HDLC协议是一种（  ），采用（  ）标志作为帧定界符。*
 A.面向比特的同步链路控制协议  B.面向字节计数的同步链路控制协议  C.面向字符的同步链路控制协议  D.异步链路控制协议
 A.10000001  B.01111110  C.10101010  D.10101011
 R:AB W:BA N:HDLC协议
@@ -857,3 +857,56 @@ R:A W:B N:CIDR和路由汇聚
     同时汇聚后，第三个字节为1000 1000，换成十进制就是136
     所以汇聚后的地址是192.21.136.0/21
 
+
+20200225 每日一练 70
+https://uc.educity.cn/tiku/testReport.html?id=6320222
+
+    Windows系统除了实现操作系统的各种管理功能之外，同时还提供了面向用户的系统服务应用程序接口，通常称为程序接口（Application Programming Interface），简称API函数。这些函数是Windows提供给应用程序与操作系统的接口、在程序中通过API函数调用，可以实现各种界面丰富、功能灵活的应用程序。所以可以认为API函数是构筑整个windows西哦他那个框架的基础，在它的下面是windows的操作系统核心，而它的上面则是Windows丰富多彩和功能强大的应用程序。其中Winsock是Windows Sockets的缩写，它作为windows和TCP/IP之间的接口，是在网络编程中使用最广泛的应用编程接口。
+	RPC（Remote Procedure Calls）是远程过程调用协议，可以由用户程序使用向网络中的另一台计算机上的程序请求服务。由于使用RPC的程序不必了解支持通信的网络协议的情况，因此RPC提高了程序的互操作性。在RPC中，发出请求的程序是客户程序，而提供服务的程序是服务器，RPC（远程过程调用）是一项广泛用于支持分布式应用程序（不同组件分布在不同计算机上的应用程序）的级数。RPC的主要目的是为组件提供一种相互通信的方式，使这些组件之间能够互相发出请求并传递这些请求的结果。
+	NetBIOS（Network Basic Input/Output system）网络基本输入输出系统是1983年IBM开发的一套网络协议标准。温软的客户机/服务器模式的网络通信系统就是基于NetBIOS协议的。应用程序通过标准的NetBIOS API调用，实现NetBIOS命令和数据在各种协议中传输。
+	而NFS（Network FileSystem）是网络文件系统，最早是有SUN公司所发展出来的，NFS的主要功能是通过网络是不同的计算机系哦他那个和不同的操作系统之间实现文件共享。
+
+在Linux 中，（  ）是默认安装 DHCP服务器的配置文件。
+A./etc/dhcpd.conf  B.conf  C./etc/dhcp.conf  D./var/dhcp  E.conf  F./var/dhcp.conf
+R:A W:F N:Linux系统DHCP服务器配置
+    默认DHCP服务器的配置文件 /etc/dhcpd.conf
+
+使用CIDR技术把4个C类网络110.217.128.0/22、110.217.132.0/22、110.217.136.0/22和110.217.140.0/22汇聚成一个超网，得到的地址是（ 110.217.128.0/20  ）。 N:CIDR和路由汇聚
+    路由汇聚算法是把四个地址全部转为二进制，寻找最大的相同位数作为汇聚后的网络位。
+    110.217.128.0/22
+    110.217.132.0/22
+    110.217.136.0/22
+    110.217.140.0/22
+    其中第三段换成二进制分别为：
+    10000000
+    10000100
+    10001000
+    10001100
+    汇聚后的地址为：110.217.10000000.0/20
+
+
+    FTP服务器使用20和21两个网络端口与FTP客户端进行通信。主动模式下，FTP服务器的21端口用于传输FTP的控制命令，20端口用于传输文件数据。
+    FTP服务器采用用户名anonymous进行匿名登录。
+
+开放最短路径优先协议（OSPF）采用 （） 算法计算最佳路由。
+A.Dynamic-Search  B. Bellman-Ford  C. Dijkstra  D. Spanning-Tree
+R:C N:OSPF路由协议
+    OSPF （RFC2328，1998）是一种链路状态协议，这种协议要求路由器掌握完整的网络拓扑结构，并据此计算出到达目标的最佳路由。OSPF路由器通过向邻居发送一系列数据库描述分组来传送自己的数据库内容。数据库描述分组中包含了一组链路状态公告，每个链路状态公告都描述了一条链路的状态:端口的标识和连接的目标地址。发送和接收数据库描述分组的过程叫做“数据库交换过程”。当数据库交换过程结束时，路由器之间就形成了“邻接”关系。路由更新报文在邻接的路由器之间交换，当网络拓扑发生变化时，数据库的内容随之改变。路由器利用链路状态数据库存储的信息构造有向图，并通过Dijkstra的最短通路优先算法〔Shortest Path First. SPF）计算最小生成树.建立和更新自己的路由表。
+
+    域名查询记录： 查本地HOSTS表，再查本地缓存，然后再查找本地DNS服务器，再根域名服务器，顶级域名服务器、权限域名服务器。
+
+Traditional IP packet forwarding analyzes the （  ）IP address contained in the network layer header of each packet as the packet travels from its source to its final destination. A router analyzes the destination IP address independently at each hop in the network. Dynamic （  ）protocols or static configuration builds the database needed to analyze the destination IP address （the routing table）.The process of implementing traditional IP routing also is called hop-by-hop destination-based （  ）routing. Although successful，and obviously widely deployed，certain restrictions，which have been realized for some time，exist for this method of packet forwarding that diminish its （  ）. New techniques are therefore required to address and expand the functionality of an IP-based network infrastructure.This first chapter concentrates on identifying these restrictions and presents a new archiecture，known as multiprotocol （  ）switching，that provides solutions some of these restrictions.
+A.datagram  B.destination  C.connection  D.service
+A.routing  B.forwarding  C.transmission  D.management
+A.anycast  B.muticast   C.broadcast   D.unicast
+A.reliability   B.flexibility   C.stability   D.capability
+A.cost  B.cast  C.mark  D.label
+R:BADBD N:计算机专业英语
+    传统的IP数据包转发分析目的IP地址，该地址包含在每个从源到最终目的地的网络层数据包的头部。一个路由器的分析目的IP地址，该地址独立在网络中的每跳。动态路由协议或静态配置构建数据库，该数据数据库需要分析目的IP地址(路由表)。实施传统的IP路由的过程也叫作基于目的地的逐条单播路由。虽然成功而且明显得广泛部署，并实现了一段时间，但是必然有某些限制，这种数据包转发方法的存在是减少了灵活性。新技术是因此需要地址和扩展一个基于ip的网络基础设施的功能。第一章集中在识别一种新的架构的限制条件和反馈，该架构众所周知是多协议标签交换，它为其中的一些限制条件提供解决方案。
+
+    某软件设计师自行将他人使用C程序语言开发的控制程序转换为机器语言形式的控制程序，并固化在芯片中，该软件设计师的行为（构成侵权，因为他不享有原软件作品的著作权）。
+    根据《中华人民共和国计算机软件保护条例》的规定，软件著作权人享有翻译权，即将原软件从一种自然语言文字转换成另一种自然语言文字的权利。未经软件著作权人许可，发表或者登记其软件的行为，构成计算机软件侵权。
+
+HDLC协议是一种（  ），采用（  ）标志作为帧定界符。*
+
+    ppp协议是面向字符的。
