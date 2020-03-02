@@ -486,7 +486,7 @@ A.直接地址索引和一级间接地址索引      B.直接地址索引和二�
 C.一级间接地址索引和二级间接地址索引   D.一级间接地址索引和一级间接地址索引
 R:C W:B
 
-    本题主要考查我们对索引文件的理解。索引文件既可以满足文件动态增长的要求，又可以方便而迅速地实现随机存取。对一些大的文件，当索引表的大小超过一个物理块时，会发生索引表的分配问题。一般采用多级（间接索引）技术，这时在由索引表指出的物理块中存放的不是文件而是存放文件信息的物理块地址。这样，如果一个物理块能存储n个地址，则一级间接索引将使可寻址的文件长度变成n<sup>2</sup>块，对于更大的文件可以采用二级甚至三级间接索引。
+    本题主要考查我们对索引文件的理解。索引文件既可以满足文件动态增长的要求，又可以方便而迅速地实现随机存取。对一些大的文件，当索引表的大小超过一个物理块时，会发生索引表的分配问题。一般采用多级（间接索引）技术，这时在由索引表指出的物理块中存放的不是文件而是存放文件信息的物理块地址。这样，如果一个物理块能存储n个地址，则一级间接索引将使可寻址的文件长度变成n ^2 块，对于更大的文件可以采用二级甚至三级间接索引。
 	文件的信息存储需要磁盘数据块。
 	采用索引结构是将逻辑上连续的文件信息存放在不连续的物理块中，操作系统为每个文件建立了一张索引表。索引表记录了文件信息所在的逻辑块号对应的物理块号，并且将索引表的起始地址放在文件的文件目录项中。
 	比如文件目录：文件名W.TXT 起始地址99
@@ -1188,7 +1188,7 @@ A.E-Mail   B.WEB   C.DNS   D.FTP
 R:A W:C N:电子邮件协议
     25—SMTP，110---POP3，一个是发邮件一个是读取邮件的协议。
 
-A transport layer protocol usually has several responsibilities.One is to create a process-to-process communication;UDP uses（  ）numbers to accomplish this. Another  responsibility is to provide control mechanisms at the transport level. UDP does this task at a very minimal level. There is no flow control mechanism and there is no（  ）for received packet. UDP，however， does provide error control to some extent. If UDP detects an error in the received packet， it will silently drop it.<br>
+A transport layer protocol usually has several responsibilities.One is to create a process-to-process communication;UDP uses（  ）numbers to accomplish this. Another  responsibility is to provide control mechanisms at the transport level. UDP does this task at a very minimal level. There is no flow control mechanism and there is no（  ）for received packet. UDP，however， does provide error control to some extent. If UDP detects an error in the received packet， it will silently drop it. 
 The transport layer also provides a connection mechanism for the processes. The （  ） must be able to send streams of data to the transport layer.It is the responsibility of the transport layer at（  ）station to make the connection with the receiver， chop the stream into transportable units，number them， and send them one by one. It is the responsibility of the transport layer at the receiving end to wait until all the different units belonging to the same process have arrived， check and pass those that are（  ）free， and deliver them to the receiving process as a stream.
 A.hop   B.port  C.route  D.packet
 A.connection  B.window  C.acknowledgement  D.destination
@@ -1198,3 +1198,95 @@ A.call   B.state   C.cost  D.error
 R:BCBAD W:BCBCC N:计算机专业英语
     传输层协议通常有几个功能，其中之一就是生成进程与进程之间的通信。UDP使用端口号来实现这个功能。另外一个责任是在传输级实现控制机制。UDP对于这个任务只做很少的工作。没有流量控制，对于接收的报文也没有应答。然而，UDP在一定程度上还是做了差错控制工作。如果UDP在收到的报文中检测到了错误，就直接丢弃。
 	传输层也提供进程之间的连接机制。进程应该能够向传输层发送数据流。与接收站建立连接是发送方传输层的责任，同时把数据流划分成可传输的单元，对其进行编号，然后一个接一个地发送他们。接收方传输层的责任就是等待同一个进程的各个传输单元到达，检查其正确性，让没有错误的通过，并将其组织成数据流提交给接受进程。
+
+20200302 每日一练 65
+https://uc.educity.cn/tiku/testReport.html?id=6398875
+
+    DHCP是基于客户—服务器模型设计的，DHCP客户和DHCP服务器之间通过收发DHCP消息进行通信，如图所示。
+<img src="imgs/2020030201.jpg">
+    DHCP客户端启动时会向网络发出一个Dhcpdiscover包来请求lP地址，其源IP地址为（0.0.0.0）。
+    不论是DHCP客户还是DHCP服务器，都是通过按DHCP消息格式要求来填写各个段的，形成具体的DHCP消息，DHCP使用的传输协议是非面向连接的UDP（用户数据报协议），从DHCP客户发出的DHCP消息送往DHCP服务器的端口67，DHCP服务器发给客户的DHCP消息送往DHCP客户的端口68，由于在取得服务器赋予的IP之前，DHCP客户并没有自己的IP，所以包含DHCP消息的UDP数据报的IP头的源地址段是0.0.0.0，目的地址则是255.255.255.255。
+
+使用netstat-o命令可显示网络（  ）。
+A.IP、ICMP、TCP、UDP协议的统计信息  B.以太网统计信息
+C.以数字格式显示所有连接、地址及端口  D.每个连接的进程ID
+R:D W:C N:Windows网络管理命令
+    Netstat命令中各选项的含义如下： 
+    -a 显示所有socket，包括正在监听的。 
+    -c 每隔1秒就重新显示一遍，直到用户中断它。 
+    -i 显示所有网络接口的信息，格式“netstat -i”。 
+    -n 以网络IP地址代替名称，显示出网络连接情形。 
+    -r显示核心路由表，格式同“route -e”。 
+    -t 显示TCP协议的连接情况 
+    -u 显示UDP协议的连接情况。 
+    -v 显示正在进行的工作。 
+    -p 显示指定协议信息。 
+    -b 显示在创建每个连接或侦听端口时涉及的可执行程序。 
+    -e 显示以太网统计。此选项可以与 -s 选项结合使用。 
+    -f 显示外部地址的完全限定域名(FQDN)。 
+    -o 显示拥有的与每个连接关联的进程 ID。 
+    -s 显示每个协议的统计。 
+    -x 显示 NetworkDirect 连接、侦听器和共享端点。 
+    -y 显示所有连接的 TCP 连接模板。无法与其他选项结合使用。
+
+路由器出厂时，默认的串口封装协议是（  ）。
+A.HDLC  B.WAP  C.MPLS  D.L2TP
+R:A W:C N:路由器基本配置
+	路由器出厂时，其串口（广域网接口）默认的封装协议是HDLC，但可以手工修改为PPP、帧中继等封转协议。
+
+把网络117.15.32.0/23划分为117.15.32.0/27，则得到的子网是多少个？（  ）。每个子网中可使用的主机地址是多少个（  ）。
+A.4  B.8  C.16  D.32
+A.30  B.31  C.32  D.34
+R:CA W:CC N:子网划分和子网掩码
+    这是一道典型的子网划分的试题，只需要记住两个公式即可：
+	2^n，此公式计算子网个数，n为网络位向主机位借位位数（网络位延长位数）。
+	2^m-2，此公式计算每个子网有效主机IP数，m为剩余主机位位数。
+	根据题干/23变成/27之后，网络位延长了4位，可以产生2^4=16个子网。
+	主机位还剩32-27=5位，每个子网可以产生的有效IP数为2^5-2=30。
+
+
+    每一个DNS服务器包含了它所管理的DNS命名空间的所有资源记录。资源记录包含和特定主机有关的信息，如IP地址、提供服务的类型等等。常见的资源记录类型有：SOA（起始授权结构）、A（主机）、NS（名称服务器）、CNAME（别名）和MX（邮件交换器）。A记录：也称为主机记录，是DNS名称到IP地址的映射，用于正向解析。
+    在Windows的DOS窗口中键入命令
+    C：\> nslookup
+    > set type=a
+    > xyz.com.cn
+    这个命令序列的作用是（查询xyz.com.cn到IP地址的映射）。
+
+一个中等规模的公司，3个不同品牌的路由器都配置了RIPv1协议。ISP为公司分配的地址块为201.113.210.0/24。公司希望通过VLSM技术把网络划分为3个子网，每个子网中有40台主机，下面的配置方案中最优的是（  ）。
+A.转换路由协议为EIGRP，3个子网地址分别设置201.113.210.32/27、201.113.210.64/27和201.113.210.92/27
+B.转换路由协议为RIPv2，3个子网地址分别设置为201.113.210.64/26、 201.113 210.128/26和201.113.210.192/26
+C.转换路由协议为OSPF，3个子网地址分别设置为201.113.210.16/28、 201.113.210.16/28和201.113.210.48/28
+D.保持路由协议为RIPv1，3个子网地址分别设置为201.113.210.32/26、201.113.210.64/26和201.113.210.92/26
+R:B
+    一、RIPV1不支持可变长网掩码，RIPV2支持。二、子网划分。根据题干得出，40台主机，主机位必须为6位。得出其掩码为/26，同时需要使用RIPV2路由协议。
+
+要实现VTP动态修剪，在VTP域中的所有交换机都必须配置成（  ）。
+A.服务器   B.服务器或客户机   C.透明模式   D.客户机
+R:A W:C N:VTP协议
+    本题考查VTP协议的基础知识。VLAN中继协议（VLAN Trunking Protocol，VTP）是Cisco公司的专利协议。VTP在交换网络中建立了多个管理域，同一管理域中的所有交换机共享VLAN信息。一台交换机只能参加一个管理域，不同管理域中的交换机不共享VLAN信息。通过VTP协议，可以在一台交换机上配置所有的VLAN，配置信息通过VTP报文可以传播到管理域中的所有交换机。 
+	按照VTP协议，交换机的运行模式分为３种： 
+	（1）服务器模式（Server）：交换机在此模式下能创建、添加、删除和修改VLAN配置，并从中继端口发出VTP组播帧，把配置信息分发到整个管理域中的所有交换机。一个管理域中可以有多个服务器。 
+	（2）客户机模式（Client）：在此模式下不允许创建、修改或删除VLAN，但可以监听本管理域中其它交换机的VTP组播信息，并据此修改自己的VLAN配置。 
+	（3）透明模式（Transparent）：在此模式下可以进行VLAN配置，但配置信息不会传播到其它交换机。在透明模式下，可以接收和转发VTP帧，但是并不能据此更新自己的VLAN配置，只是起到通路的作用。
+
+
+
+    目前全球因特网所采用的协议族是TCP/IP协议族。IP是TCP/IP协议族中网络层的协议，是TCP/IP协议族的核心协议。IPv6正处在不断发展和完善的过程中，它在不久的将来将取代目前被广泛使用的IPv4。每个人将拥有更多IP地址。 
+	（1）IPV6地址长度为128位，地址空间增大了2的9 6次方倍； 
+	（2）灵活的IP报文头部格式。使用一系列固定格式的扩展头部取代了IPV4中可变长度的选项字段。IPV6中选项部分的出现方式也有所变化，使路由器可以简单路过选项而不做任何处理，加快了报文处理速度； 
+	（3）IPV6简化了报文头部格式，字段只有8个，加快报文转发，提高了吞吐量； 
+	（4）提高安全性。身份认证和隐私权是IPV6的关键特性； 
+	（5）支持更多的服务类型； 
+	（6）允许协议继续演变，增加新的功能，使之适应未来技术的发展；
+
+
+大型局域网通常划分为核心层、汇聚层和接入层，以下关于各个网络层次的描述中，不正确的是（  ）。
+A.核心层承担访问控制列表检查  B.汇聚层定义了网络的访问策略
+C.接入层提供局域网络接入功能  D.接入层可以使用集线器代替交换机
+R:A N:逻辑网络设计
+    本题考查局域网体系结构的基础知识。大型局域网的层次结构是将局域网络划分成不同的功能层次，例如划分成核心层、汇聚层和接入层，通过与核心设备互连的路由器接入广域网。
+    在三层模型中，核心层提供不同区域之间的高速连接和最优传输路径，汇聚层提供网络业务接入，并实现与安全、流量和路由相关的控制策略，接入层为终端用户提供接入服务。
+
+    通过在网络上安装和配置DHCP服务器，DHCP的客户端可在每次启动并加入网络时动态地获得IP地址和相关配置参数。DHCP服务器以地址租约的形式将该配置提供给发出请求的客户端。
+    DHCP的租约期限为DHCP服务器所分配的IP地址的有效期，租约定义了指派的IP地址可以使用的时间长度。默认情况下DHCP的租约期限为8天，当租约期过了一半时（按默认时间算是4天），客户端将和设置它的TCP/IP配置的DHCP服务器更新租约。当租期过了87.5%时，如果客户端仍然无法与当初的DHCP服务器联系上，它将与其他DHCP服务器通信，如果网络上再没有任何DHCP服务器在运行时，该客户端必须停止使用该IP地址，并从发送一个dhcpdiscover数据包开始，再一次重复整个过程。
+    [错误]客户机一直使用 DHCP 服务器分配给它的 IP 地址，直至整个租约期结束才开始联系更新租约。 
