@@ -1687,3 +1687,42 @@ A.220.17.0.0/20  B.220.17.0.0/21  C.220.17.0.0/16  D.220.17.0.0/24
 A.2032  B.2048  C.2000  D.2056
 R:BA W:AA N:子网划分和子网掩码
     这是一道典型的网络汇聚类试题，用CIDR的思路来解答。220.17.0.0～220.17.7.0经过CIDR汇聚后，得到的汇聚网络ID为220.17.0.0/21的网络。220.17.0.0～220.17.7.0共有8个标准的C类地址，每个C类地址都有两个地址不能分配给主机使用（网络号和子网广播地址），220.17.0.0/21地址块有11位主机位，可以分配2^11-2×8=2032个有效IP地址。
+
+20200310 每日一练 82
+https://uc.educity.cn/tiku/testReport.html?id=6403111
+
+    软件项目计划的一个重要内容是安排进度，常用的方法有Gantt图和PERT图。Gantt图用水平条状图描述，它以日历为基准描述项目任务，可以清楚地表示任务的持续时间和任务之间的并行，但是不能清晰地描述各个任务之间的依赖关系。PERT图是一种网络模型，描述一个项目任务之间的关系。可以明确表达任务之间的依赖关系，即哪些任务完成后才能开始另一些任务，以及如期完成整个工程的关键路径，但是不能清晰地描述各个任务之间的并行关系。
+
+    tracert也被称为Window路由跟踪实用程序,在命令提示符(cmd)中使用tracert命令可以用于确定IP数据包访问目标时所选择的路径。
+
+NAC’s（Network Access Control）role is to restrict network access to only compliant endpoints and （）users.However， NAC is not a complete LAN （）solution; additional proactive and （）security measures must be implemented.Nevis is the first and only comprehensive LAN security solution that combines deep security processing of every packet at 10Gbps， ensuring a high level of security plus application availability and performance.Nevis integrates NAC as the first line of LAN security （） .In addition to NAC， enterprises need to implement role-based network access control as well as critical proactive security measures— real-time， multilevel （）inspection and microsecond threat containment.
+A.automated  B.distinguished C.authenticated D.destructed
+A.crisis  B.security  C.favorable  D.excellent
+A.constructive  B.reductive  C.reactive  D.productive
+A.defense  B.intrusion  C.inbreak  D.protection
+A.port  B.connection  C.threat  D.insurance
+R:CBCAC W:CDADB
+    网络访问控制（NAC）的作用是限制对网络的访问，只允许注册的终端和认证的用户访问网络。然而NAC不是一个完整的LAN安全解决方案，另外还要实现主动的和被动的安全手段。Nevis是第一个也是仅有的全面的LAN安全解决方案，它以l0Gbps的速率对每一个分组进行深度的安全处理，在提供高级别安全的同时能保证网络应用的可利用性和适当的性能。Nevis集成了NAC作为LAN的第一道安全防线。此外，企业还需要实现基于角色的网络访问控制以及起关键作用的主动安全测试——实时的多级安全威胁检测和微秒级的安全威胁堵截。集中的安全策略配置、管理和报告使其能够迅速地对问题进行分析，对用户的活动进行跟踪，这些都是实时可见的，也是历史可查的。
+
+    Gantt图是以图示的方式通过活动列表和时间刻度形象地表示出任何特定项目的活动顺序与持续时间。其思想简单，基本是一条线条图，横轴表示时间，纵轴表示活动(项目)，线条表示在整个期间上计划和实际的活动完成情况。它直观地表明任务计划在什么时候进行，及实际进展与计划要求的对比。管理者由此极为便利地弄清一项任务(项目)还剩下哪些工作要做，并可评估工作是提前还是滞后，还是正常进行。
+
+运行OSPF协议的路由器用（  ）报文来建立和更新它的拓扑数据库。
+A.由其他路由器发送的链路状态公告(LSA)  B.从点对点链路收到的信标  C.由指定路由器收到的TTL分组  D.从邻居路由器收到的路由表
+R:A W:C N:OSPF路由协议
+    运行OSPF协议的路由器用LSA链路状态通告报文来建立和更新它的拓扑数据库。
+
+    *美国制定的光纤多路复用标准叫做SONET（Synchronous Optical Network），CCITT对应的建议是SDH（Synchronous Digital Hierarchy）。这两种标准的速率如下表所示。
+<img src="imgs/2020031001.jpg">
+    其中OC-3、OC-12和OC-48（表中黑体部分）是常用的。
+
+    一个网络系统从构思开始，到最后被淘汰的过程称为网络生命周期。一般来说，网络生命周期至少应包括网络系统的构思和计划、分析和设计、运行和维护的全过程。网络系统的生命周期与软件工程中的软件生命周期类似，首先它是一个循环迭代的过程，每次循环迭代的动力都来自于网络应用需求的变更。其次，每次循环过程中，都存在需求分析、规划设计、实施调试和运营维护等多个阶段。一般来说，网络规模越大，则可能经历的循环周期也越长。
+	每一个迭代周期都是网络重构的过程，不同的网络设计方法，对迭代周期的划分方式是不同的，拥有不同的网络文档模板，但是实施后的效果都满足了用户的网络需求。常见的迭代周期构成可分为如下五个阶段：需求规范阶段，通信规范阶段，逻辑网络设计阶段，物理网络设计阶段，实施阶段。
+	在这五个阶段中，每个阶段都是一个工作环节，每个环节完毕后才能进入到下一个环节，类似于软件工程中的“瀑布模型”，形成了特定的工作流程。如下图所示。
+	需求规范--->通信规范--->逻辑网络设计--->物理网络设计--->实施阶段	
+	按照这种流程构建网络，在下一个阶段开始之前，前一阶段的工作已经完成，一般情况下，不允许返回到前面的阶段。
+
+    N:数据的表示*
+    确定小数点的位置通常有两种方法：一种是规定小数点位置固定不变，称为定点数。另一种是小数点的位置不固定，可以浮动，称为浮点数。在计算机中，通常是用定点数来表示整数和纯小数，分别称为定点整数和定点小数。对于既有整数部分、又有小数部分的数，一般用浮点数表示。下面分别予以介绍： （1）、定点整数 在定点数中，当小数点的位置固定在数值位最低位的右边时，就表示一个整数。请注意：小数点并不单独占1个二进制位，而是默认在最低位的右边。定点整数又分为有符号数和无符号数两类。 （2）、定点小数 当小数点的位置固定在符号位与最高数值位之间时，就表示一个纯小数。 因为定点数所能表示数的范围较小，常常不能满足实际问题的需要，所以要采用能表示数的范围更大的浮点数。 （3）、浮点数 在浮点数表示法中，小数点的位置是可以浮动的。 在大多数计算机中，都把尾数s定为二进制纯小数，把阶码p定为二进制定点整数。尾数S的二进制位数决定了所表示数的精度；阶码p的二进制位决定了所能表示的数的范围。为了使所表示的浮点数既精度高、又范围大，就必须合理规定浮点数的存储格式。
+
+    通常路由器不进行转发的网络地址有：10.x.x.x、172.16.x.x—172.31.x.x、192.168.x.x，这些地址被大量用于企业内部网络中。一些宽带路由器，也往往使用192.168.1.1作为默认地址。私有网络由于不与外部互连，因而可能使用随意的IP地址。保留这样的地址供其使用是为了避免以后接入公网时引起地址混乱。使用私有地址的私有网络在接入Internet时，要使用地址翻译（NAT）将私有地址翻译成公用合法地址。在Internet上，这类地址是不能出现的。
+
