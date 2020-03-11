@@ -1726,3 +1726,88 @@ R:A W:C N:OSPF路由协议
 
     通常路由器不进行转发的网络地址有：10.x.x.x、172.16.x.x—172.31.x.x、192.168.x.x，这些地址被大量用于企业内部网络中。一些宽带路由器，也往往使用192.168.1.1作为默认地址。私有网络由于不与外部互连，因而可能使用随意的IP地址。保留这样的地址供其使用是为了避免以后接入公网时引起地址混乱。使用私有地址的私有网络在接入Internet时，要使用地址翻译（NAT）将私有地址翻译成公用合法地址。在Internet上，这类地址是不能出现的。
 
+20200311 每日一练 49
+https://uc.educity.cn/tiku/testReport.html?id=6409410
+
+以下关于网络存储描述正确的是 （）。
+ A.SAN 系统是将存储设备连接到现有的网络上，其扩展能力有限  B.SAN系统是将存储设备连接到现有的网络上，其扩展能力很强
+ C.SAN系统使用专用网络，其扩展能力有限  D.SAN系统使用专用网络，其扩展能力很强
+ R:D W:B N:网络存储技术
+    本题考查的是网络存储的概念。
+	存储区域网络（Storage Area Network，SAN）是一种专用网络，可以把一个或多个系统连接到存储设备和子系统。SAN可以被看作是负责存储传输的“后端”网络，而“前端”网络〔或称数据网络）负责正常的TCP/IP传输。
+	与NAS相比，SAN具有下面几个特点。
+	（1）SAN具有无限的扩展能力。
+	由于SAN采用了网络结构，服务器可以访问存储网络上的任何一个存储设备，因此用户可以自由增加磁盘阵列、带库和服务器等设备，使得整个系统的存储空间和处理能力得以按客户需求不断扩大。
+	（2）SAN具有更高的连接速度和处理能力。
+
+以太网的最大帧长为1518字节，每个数据帧前面有8个字节的前导字段，帧间隔为9.6μs。传输240000bit的IP数据报，采用100BASE-TX网络，需要的最短时间为（  ）。
+ A.1.23ms  B.12.3ms  C.2.63ms  D.26.3ms 
+ R:C W:B N:高速以太网
+    IP数据包的长度是240000比特，一共30000字节，封装在以太帧里面，需要分片，一共分20片（太网帧的长度范围是64-1518，容纳数据1480，30000-20IP数据报中数据部分长度，实际应该是21片，此题以20片计算）。
+    每个以太帧的传输时间是（1518+8）*8/100Mbps=0.00012208s。20个以太帧的传输时间是20*0.00012208=0.0024416s。
+    20个帧中间会存在20个帧间间隔时间192us。
+    所以总时间=2441.6+192=2633.6us=2.63ms。
+
+    多模光纤：很多不同角度的入射的光线在一条光纤中传输。适合用于近距离传输，一般约束在550M。
+    单模光纤：如光纤的直径减小到只有一个光的波长，使光纤一直向前传播，而不会产生多次反射，这样的光纤就成为单模光纤。单模光纤传输距离数十公里而不必要采用中继器。
+
+路由器的 S0 端口连接（） 。
+A.广域网  B.以太网  C.集线器  D.交换机
+R:A W:B
+    路由器的SO端口连接广域网，如下图所示。
+<img src="imgs\2020031101.jpg">
+
+两个公司希望通过Internet进行安全通信，保证从信息源到目的地之间的数据传输以密文形式出现，而且公司不希望由于在中间节点使用特殊的安全单元而增加开支，最合适的加密方式是（），使用的会话密钥算法应该是（）。
+A.链路加密  B.节点加密  C.端-端加密  D.混合加密
+A.RSA  B.RC-5  C.MD5  D.ECC
+R:CB W:CA
+    1、链路加密是在物理层加密，包括数据、路由信息、协议信息等都被加密，发送端和接受端之间的任何智能交换和存储节点都必须在处理这些序列之间对其进行解密。中间结点开销大。
+	2、端－端加密是把加密设备放在网络层和传输层之间，只加密传输层的数据单元，数据一直保持加密状态，直到到达目地才被解密。
+	3、节点加密时，节点中的数据是以密文形式存在，但要求在每个节点加装安全单元，需要公共网络提供配合。由此判断，最合适的加密方式是端到端加密。
+	所以（10）选C。
+	RSA算法是非对称密钥算法，可用于密钥的分发和会话。MD5属于消息摘要算法，RC5属于分组对称密钥算法。
+
+    访问控制列表用来限制使用者或设备，达到控制网络流量，解决拥塞，提高安全性等目的。在IP网络中，可以使用的访问列表有标准访问列表（值为1～99）、扩展访问列表（标号为100～199）两种。
+	标准访问列表：基于源IP地址来进行判定是否允许或拒绝数据报通过（或其他操作，例如在NAT中就是判断是否进行地址转换）。
+	扩展访问列表：在标准访问列表的基础上增加更高层次的控制，它能够基于目的地址、端口号码、对话层协议来控制数据报。
+	其中涉及到的命令有：
+	access-list：访问列表命令。
+	access-list-number：访问列表号码。
+	permit：允许。
+	deny：拒绝。
+	source：源IP地址。
+	source-wildcard：源IP地址的通配符。
+	any：任何地址，代表0.0.0.0 255.255.255.255。
+	通配符：source-wildcard省略时，则使用默认值0.0.0.0。它的作用与子网掩码是不相同的，当其取值为1时，代表该位不必强制匹配；当其取值为0时，代表必须匹配。
+	网络用户只能接收但不能发送Email，不可能的原因是deny pop3，POP3为邮局协议第3个版本，用于接收邮件。
+
+
+A transport layer protocol usually has several responsibilities.One is to create a process-to-process communication;UDP uses（  ）numbers to accomplish this. Another  responsibility is to provide control mechanisms at the transport level. UDP does this task at a very minimal level. There is no flow control mechanism and there is no（  ）for received packet. UDP，however， does provide error control to some extent. If UDP detects an error in the received packet， it will silently drop it.
+The transport layer also provides a connection mechanism for the processes. The （  ） must be able to send streams of data to the transport layer.It is the responsibility of the transport layer at（  ）station to make the connection with the receiver， chop the stream into transportable units，number them， and send them one by one. It is the responsibility of the transport layer at the receiving end to wait until all the different units belonging to the same process have arrived， check and pass those that are（  ）free， and deliver them to the receiving process as a stream.
+A.hop  B.port  C.route  D.packet
+A.connection  B.window  C.acknowledgement  D.destination
+A.jobs  B.processes C.programs D.users
+A.sending  B.routing  C.switching  D.receiving
+A.call  B.state  C.cost  D.error
+R:BCBAD W:BCCBB N:计算机专业英语
+    传输层协议通常有几个功能，其中之一就是生成进程与进程之间的通信。UDP使用端口号来实现这个功能。另外一个责任是在传输级实现控制机制。UDP对于这个任务只做很少的工作。没有流量控制，对于接收的报文也没有应答。然而，UDP在一定程度上还是做了差错控制工作。如果UDP在收到的报文中检测到了错误，就直接丢弃。
+	传输层也提供进程之间的连接机制。进程应该能够向传输层发送数据流。与接收站建立连接是发送方传输层的责任，同时把数据流划分成可传输的单元，对其进行编号，然后一个接一个地发送他们。接收方传输层的责任就是等待同一个进程的各个传输单元到达，检查其正确性，让没有错误的通过，并将其组织成数据流提交给接受进程。
+
+网络连接和IP 地址分配如下图所示，并且配置了RIPv2 路由协议。如果在路由器R1 上运行命令：R1﹟show ip route，下面4 条显示信息中正确的是（）。
+<img src="imgs\2020031102.jpg">
+A.R 192.168.1.0 [120/1] via 192.168.66.1，00：00：15，Ethernet0
+B.R 192.168.5.0 [120/1] via 192.168.66.2，00：00：18，Serial
+C.R 192.168.5.0 [120/1] via 192.168.66.1，00：00：24，Serial
+D.R 192.168.65.0 [120/1] via 192.168.67.1，00：00：15，Ethernet0
+R:B W:A
+    日常工作中最常用的就是通过show ip route命令来看路由表，如想看关于10.83.x.x的所有路由，可输入：
+	Router# show ip route|include 10.83.
+	显示的信息为：
+	O 10.83.100.8/30 [110/2370] via 10.83.100.2，05：32：27，Serial1/2：0.83
+	O 10.83.100.4/34 [11012115] via 10.20.100.2，05：32：27，Seria1/2：0.2
+	C 10.83.100.0/3D is directly connected.Setial1/2：0.83
+	O 10.83.103.D/24 [110/2195] via 10.83.1OO.2，05：32：27，Seria1/2：0.83
+	又从路由器R1到192.168.1.0不需经192.168.66.1，故备选答案A是错误的；从路由器RL到192.168.5.0的第一跳为192.168.66.2故B正确C错误；同理D也是错误的。
+    最左边那个R表示通过rip学习到的路由。由于是动态学习到的路由，所以目标网络ip不可能是和r1直连的接口网段ip。而是其他路由器上的网段ip。选项里面的每行你能看到2个ip。从左往右，第一个是目标网络的ip，第二个是下一跳地址。其中你还能在最后看到Ethernet0这些，这表示出接口。
+
+    DNS是一种在网络上为用户提供从域名向IP地址映射的服务。它基于UDP运行，使用53号端口。
