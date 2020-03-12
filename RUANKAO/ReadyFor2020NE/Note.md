@@ -1811,3 +1811,54 @@ R:B W:A
     最左边那个R表示通过rip学习到的路由。由于是动态学习到的路由，所以目标网络ip不可能是和r1直连的接口网段ip。而是其他路由器上的网段ip。选项里面的每行你能看到2个ip。从左往右，第一个是目标网络的ip，第二个是下一跳地址。其中你还能在最后看到Ethernet0这些，这表示出接口。
 
     DNS是一种在网络上为用户提供从域名向IP地址映射的服务。它基于UDP运行，使用53号端口。
+
+20200312 每日一练 72
+https://uc.educity.cn/tiku/testReport.html?id=6422375
+
+    Nslookup 是一个监测网络中DNS服务器是否能正确实现域名解析的命令行工具。它在Windows NT/2000/XP（在之后的windows系统也都可以用的，比如win7，win8等）中均可使用，Nslookup 必须要安装了TCP/IP 协议的网络环境之后才能使用。
+	在cmd环境下，输入nslookup进入nslookup交互界面
+	查询域名A记录(主机记录)，输入set type=a
+	查询域名MX记录(邮件交换记录)，输入set type=mx
+	查询域名CNAME记录(别名记录)，输入set type=cname
+	查询域名ns记录（所有DNS记录），输入set type=ns
+
+下面哪个字段包含在TCP头部和UDP头部？ （  ）。
+A.发送顺序号  B.窗口   C.源端口  D.紧急指针
+R:C W:A N:TCP协议
+    TCP和UDP都是传输层核心协议，负责端到端传输。不管是TCP报文还是UDP报文都包含了源端口和目的端口以建立端到端传输。由于TCP是可靠传输，相比UDP报文多出了一些字段用以实现流控、防重放攻击、标识报文优先级、确认等功能。如发送序列号、确认号、滑动窗口、紧急指针等字段。
+
+    软件开始是一个长时间的过程，其测试计划的制定应该是尽可能的早，一般在需求分析阶段就开始指定测试计划。
+
+
+Serialization delay and  （）  delay are the two components of network delay that are improved by increasing bandwidth.Serialization delay， i.e.the amount of time it takes to put the  （）  on the wire， and queuing delay (depth of the queue) are improved by increasing the  （）  from a 128kbps circuit to a T1.However， three other components of delay， routing/switching delay， distance delay， and protocol delay are components that can not be positively affected by an  （）  in bandwidth.If the circuits are not over-utilized， then increasing the bandwidth to improve the  （）  of the application will only result in an increased bandwidth with no positive effects on performance.
+A.buffering  B.queuing  C.receiving  D.timing
+A.electricity  B.digital  C.data  D.variable
+A.memory  B.cache  C.bandwidth  D.delay
+A.increase  B.decrease  C.maintenance  D.extension
+A.capability  B.cost  C.amount  D.performance
+R:BCCAD W:CBCDA
+    串行排序延迟和队列延迟是网络延迟的两个主要因素，这些是可以通过增加带宽加以改进的。串行排序延迟（将数据输出到线路上需要的时间）和队列延迟（队列的长度）可以通过把带宽从128Kbps增加到T1得到改善。然而，另外三种延迟因素—路由咬换延迟、距离延迟和协议处理延迟是不能通过增加带宽来改进的。如果线路没有超量使用，则通过增加带宽来改进应用软件性能的企图只能产生一种结果，那就是带宽的增加对性能并没有产生正面的影响。
+
+在Windows Server 2003 环境中有本地用户和区域用户两种用户。其中本地用户信息存储在（  ）。
+A.本地计算机的SAM数据库  B.本地计算机的活动目录  C.域控制器的活动目录  D.域控制器的SAM数据库
+R:A N:Windows概念
+    在操作系统中，计算机的账户是用户登录系统的钥匙，当用户想要进入一台计算机的操作系统对计算机进行操作和管理的时候，必须有一个相应的账户才可以，在windows环境下的计算机账户从计算机的管理模式来分主要分为本地用户账户和域账户两种，这两种账户各有以下特点和区别呢：
+	1、本地用户账户是在工作组环境上或是域的成员机登录本地机器所使用的账户名和密码，而域账户是在域的管理模式下域上的用户所使用的账户。
+	2、本地用户账户存储在本地的sam数据库中，而域账户存储在AD（active directory）中。
+	3、使用本地用户账户的时候，用户只能使用该账户登录到本地计算机上,而使用域账户用户可以在整个域环境中所有的计算机上进行登录。
+	4、本地账户只能在账户所属的计算机上进行管理，每个计算机上的管理员单独管理自己机器上的本地账户，而域账户通过AD用户和计算机管理工具进行统一的管理。
+
+下列关于项目估算方法的叙述不正确的是（  ）。
+A.专家判断方法受到发多经验和主观性影响  B.启发式方法（如COCOMO模型）的参数难以确定
+C.机器学习方法难以描述训练数据的特征和确定其相似性  D.结合上述三种方法可以得到精确的估算结果
+R:D N:项目管理
+    项目估算的常用方法主要有专家判断法、启发式法和机器学习法等。
+	专家判断法是指向学有专长、见识广博并有相关经验的专家进行咨询、根据他们多年来的实践经验和判断能力对计划项目作出预测的方法。很显然，采用这种方法容易受到专家经验和主观性的影响。
+	启发式方法使用一套相对简单、通用、有启发性的规则进行估算的方法，它具有参数难以确定、精确度不高等特点。
+	机器学习方法是一种基于人工智能与神经网络技术的估算方法，它难以描述训练数据的特征和确定其相似性。
+	而无论采用哪种估算方法，估算得到的结果都是大概的，而不是精确的。
+
+下列路由器协议中，（）用于AS之间的路由选择。
+ A.RIP  B.OSPF  C.IS-IS  D.BGP
+ R:D W:C
+    RIP、OSPF和IS-IS都是内部网关协议，只有BGP用于AS之间的路由选择。
