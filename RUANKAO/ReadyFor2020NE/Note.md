@@ -1488,7 +1488,7 @@ Kerberos由认证服务器（AS）和票证授予服务器（TGS）两部分组�
 <img src="imgs/2020030603.jpg">
 A.KTGS（A，KS）  B.KS（V，KAV）  C.KV（A，KAV）  D.Ks（t） 
 A.KAV（t+1）  B.Ks（t+1）  C.Ks（t）  D.KAV（t）
-R:AD W:BB N:对称密钥的分配
+R:AD W:BB* N:对称密钥的分配
     在分布式网络应用环境中，要保证其使用的安全性，就必须让工作站能够用可信、安全的方式向服务器证实其身份，否则就会出现许多安全问题。而解决这个问题的技术称之为身份认证。比较常见的身份认证技术包括：用户双方指定共享密钥（最不安全）、使用智能卡生成密钥、使用Kerberos服务、使用PKI服务（即通过从CA中心获取数字证书的方式）。
 	Kerberos并非为每一个服务器构造一个身份认证协议，而是提供一个中心认证服务器，提供用户到服务器以及服务器到用户的认证服务。Kerberos的核心是使用DES加密技术，实现最基本的认证服务。
 	如图所示，Kerberos认证过程可以分为3个阶段，6个步骤。
@@ -2005,3 +2005,93 @@ E1载波的基本帧由32个子信道组成，其中子信道（  ）用于传�
 A.CH0和CH2  B.CH1和CH15  C.CH15和CH16  D.CH0和CH16 
 R:D W:B N:信道复用技术
     E1的一个时分复用帧（其长度T=125us）共划 分为32相等的时隙，时隙的编号为CH0~CH31。其中时隙CH0用作帧同步，时隙CH16用来传送信令，剩下CH1~CH15和CH17~CH31 共30个时隙用作30个话路。
+
+20200315 每日一练 71
+https://uc.educity.cn/tiku/testReport.html?id=6464886
+
+以下ACL语句中，含义为“允许172.168.0.0/24网段所有PC访问10.1.0.10中的FTP服务”的是（access-list 101 permit tcp 172.168.0.0 0.0.0.255 host 10.1.0.l0 eq ftp）。
+N:访问控制列表ACL
+    访问控制列表用来限制使用者或设备，达到控制网络流量，解决拥塞，提高安全性等目的。在IP网络中，可以使用的访问列表有标准访问列表（值为1～99）、扩展访问列表（标号为100～199）两种。
+	1．标准访问列表
+        功能说明：基于源IP地址来进行判定是否允许或拒绝数据报通过（或其他操作，例如在NAT中就是判断是否进行地址转换）。
+        命令格式：
+        access-list access-list-number {permit | deny}
+        {source [ source-wildcard] | any }
+        命令解释：
+        access-list：访问列表命令。
+        access-list-number：访问列表号码，值为1～99。
+        permit：允许。
+        deny：拒绝。
+        source：源IP地址。
+        source-wildcard：源IP地址的通配符。
+        any：任何地址，代表0.0.0.0 255.255.255.255。
+        通配符：source-wildcard省略时，则使用默认值0.0.0.0。它的作用与子网掩码是不相同的，当其取值为1时，代表该位不必强制匹配；当其取值为0时，代表必须匹配。
+	2．扩展访问列表
+        功能说明：在标准访问列表的基础上增加更高层次的控制，它能够基于目的地址、端口号码、对话层协议来控制数据报。
+        命令格式：
+        access-list access-list-number { permit | deny }
+        {protocol \ protocol-keyword }
+        {source [ source-wildcard ] | any }
+        {destination destination-wildcard ] | any }
+        [ protocol-specific options] [ log ]
+
+某计算机的时钟频率为400MHz，测试该计算机的程序使用4种类型的指令。每种指令的数量及所需指令时钟数（CPI）如下表所示，则该计算机的指令平均时钟数为（）。
+<img src="imgs\2020031501.jpg">
+A.1.85  B.1.93  C.2.36  D.3.75
+R:B
+    指令平均时钟数约为
+	（160000×1+30000×2 +24000×4+16000×8）/（160000+30000+24000+16000）
+	= 444000 / 230000 ≈ 1.93
+	该计算机的运算速度约为
+	400M/1.93 ≈ 207.3MIPS
+
+某Apache服务器的配置文件httpd.conf包含如下所示配置项。在（1）处选择合适的选项，使得用户可通过http://www.test.cn访问到该Apache服务器；当用户访问http:// 111.25.4.30:80时，会访问到 （）虚拟主机。 
+	NameVirtualHost 111.25.4.30: 80 
+	ServerName www.othertest.com 
+	DocumentRoot /www/othertest 
+	ServerName （1） 
+	DocumentRoot /www/otherdate 
+	ServerName www.test.com 
+	ServerAlias test.com *.test.com 
+	DocumentRoot /www/test
+A.www.othertest.com  B.www.test.com   C.www.test.cn  D.ftp.test.com
+A.www.othertest.com  B.www.test.com   C.www.test.cn  D.ftp.test.com
+R:CA W:CB N:Linux系统Apache服务配置
+    本题考查Apache服务器的配置。 
+	在Apache服务器的配置文件httpd.conf中，NameVirtualHost用来指定虚拟主机使用的IP地址，这个IP地址将对应多个DNS名字。如果Apache使用了Listen参数控制了多个端口，那么就可以在这里加上端口号以进一步进行区分对不同端口的不同连接请求。此后，使用VirtualHost语句，使用NameVirtualHost指定的IP地址作参数，对每个名字都定义对应的虚拟主机设置。 
+	按照题目要求，用户可通过http://www.test.cn访问到该Apache服务器，而配置文件中ServerName缺少www.test.cn，所以（1）处应填写www.test.cn，当用户访问http://111.25.4.30:80时，会访问配置文件中定义的第一个虚拟主机www.othertest.com 。
+
+以下关于两种路由协议的叙述中，错误的是（  ）。
+A.链路状态协议在网络拓扑发生变化时发布路由信息   B.距离矢量协议是周期性地发布路由信息
+C.链路状态协议的所有路由器都发布路由信息   D.距离矢量协议RIP采用广播路由信息
+R:C N:RIP路由协议
+    链路状态路由协议网络拓扑发生变化时发布更新LSA消息，从而更新路由信息距离矢量路由协议是周期性的发布路由信息。链路状态路由协议传递LSA不是周期性的传播，只是通告给邻居一些链路状态，运行该路由协议的路由器不是简单地从相邻的路由器学习路由，而是把路由器分成区域，收集区域的所有的路由器的链路状态信息，根据状态信息生成拓扑结构，每一个路由器再根据拓扑结构计算出路由。
+
+下列选项中，同属于报文摘要算法的是（  ）。
+A.DES和MD5  B.MD5和SHA-1  C.RSA和SHA-1  D.DES和RSA
+R:B W:A N:哈希算法和报文鉴别
+    报文摘要算法(Message Digest Algorithms)即采用单向HASH算法将需要加密的明文进行摘要，而产生的具有固定长度的单向散列(HASH)值。其中，散列函数(HashFunctions)是将一个不同长度的报文转换成一个数字串(即报文摘要)的公式，该函数不需要密钥，公式决定了报文摘要的长度。报文摘要和非对称加密一起，提供数字签名的方法。报文摘要算法主要有安全散列标准SHA-1、MD5系列标准。
+
+Originally introduced by Netscape Communications，（） are a general mechanism which HTTP Server side applications，such as CGI （），can use to both store and retrieve information on the HTTP （） side of the connection.Basically，Cookies can be used to compensate for the （） nature of HTTP.The addition of a simple，persistent，client-side state significantly extends the capabilities of WWW-based （）.
+A.Browsers  B.Cookies  C.Connections  D.Scripts
+A.graphics  B.processes  C.scripts  D.texts
+A.Client  B.Editor  C.Creator  D.Server
+A.fixed  B.flexible C.stable D.stateless
+A.programs  B.applications  C.frameworks  D.Constrains
+R:BCADB W:DCDDB
+    Cookies原来是由Netscape通信公司引入的，这是HTTP服务器方应用程序的一种通用机制，就像CGI脚本一样，它可以由HTTP连接的客户方用于存储和检索信息。Cookies的基本功能是弥补HTTP无状态的缺陷。它能通过简单而持续地维护客户方的状态来扩展基于WWW的应用能力。
+
+VLAN 中继协议（VTP）用于在大型交换网络中简化 VLAN 的管理。按照 VTP协议，交换机的运行模式分为3种：服务器、客户机和透明模式。下面关于VTP 协议的描述中，错误的是（  ）。
+A.交换机在服务器模式下能创建、添加、删除和修改VLAN 配置  B.一个管理域中只能有一个服务器
+C.在透明模式下可以进行VLAN 配置，但不能向其它交换机传播配置信息  D.交换机在客户机模式下不允许创建、修改或删除VLAN
+R:B N:VTP协议
+    VLAN中继协议（VLAN Trunking Protocol， VTP）是Cisco公司的专利协议，用于在大型交换网络中简化VLAN的管理。VTP协议在交换网络中建立了多个管理域，同一管理域中的所有交换机共享VLAN信息。一台交换机只能参加一个管理域，不同管理域中的交换机不共享VLAN信息。通过VTP协议，可以在一台交换机上配置所有的VLAN，配置信息通过VTP报文可以传播到管理域中的所有交换机。 
+	按照VTP协议，交换机的运行模式分为3种： 
+	（1）服务器模式（Server）。交换机在此模式下能创建、添加、删除和修改VLAN配置，并从中继端口发出VTP组播帧，把配置信息分发到整个管理域中的所有交换机。一个管理域中可以有多个服务器。 
+	（2）客户机模式（Client ）。交换机在此模式下不允许创建、修改或删除VLAN，但可以监听本管理域中其他交换机的VTF组播信息，并据此修改自己的VLAN配置。 
+	（3）透明模式（Transparent）。交换机在此模式下可以进行VLAN配置，但配置信息不会传播到其他交换机。在透明模式下，可以接收和转发VTP帧，但是并不能据此更新自己的VLAN配置，只是起到通路的作用。 
+	VTP协议的优点有： 
+	提供通过一个交换机在整个管理域中配置VLAN的方法； 
+	提供跨不同介质类型（如ATM， FDDI和以太网）配置VLAN的方法； 
+	提供跟踪和监视ULAN配置的方法； 
+	保持VLAN配置的一致性。
