@@ -2420,7 +2420,7 @@ R:B W:C N:UDP协议
 20200323 每日一练 53.3
 https://uc.educity.cn/tiku/testReport.html?id=6534918
 
-VLAN中继协议（VTP）的作用是（  ）。按照VTP协议，交换机的运行模式有（  ）。如果要启动VTP动态修剪，则（  ）。
+VLAN中继协议（VTP）的作用是（  ）。按照VTP协议，交换机的运行模式有（  ）。如果要启动VTP动态修剪，则（  ）。*
 A.启动VLAN自动配置过程   B.减少VLAN配置信息的冲突   C.让同一管理域中的所有交换机共享VLAN配置信息  D.建立动态配置VLAN的环境
 A.服务器模式，客户机模式，透明模式   B.服务器模式，客户机模式，终端模式  C.路由器模式，交换机模式，终端模式  D.路由器模式，交换机模式，透明模式
 A.管理域中的交换机必须配置成一个服务器和多个客户  B.管理域中的所有交换机都不能配置成终端模式  C.管理域中的所有交换机都不能配置成透明模式  D.管理域中的所有交换机都必须配置成服务器
@@ -2460,3 +2460,60 @@ R:C W:B
 	其中，R表示数据速率，单位是b/s。据此，数据速率可计算如下：
 	R=B log(2)N=2W log(2)N=2 ×3400 ×log(2)4=6800*2=13.6Kb/s
 
+20200324 每日一练 75.9
+https://uc.educity.cn/tiku/testReport.html?id=6548694
+
+某单位网络拓扑如下图所示：
+<img src="imgs\2020032401.png">
+路由器AR2路由表内容如下所示。从路由信息中可以看出，DHCP Server所在网段是（  ）；PC1所在网段是（  ）；路由器AR2接口GE0/0/0地址为（  ）。
+<img src="imgs\2020032402.png">
+A.192.168.0.0/24   B.192.168.1.0/24   C.201.1.1.0/30   D.127.0.0.0/24 
+A.192.168.0.0/24   B.192.168.1.0/24   C.201.1.1.0/30   D.127.0.0.0/24
+A.192.168.0.1   B.192.168.1.254   C.201.1.1.1   D.201.1.1.2
+R:BAD W:BCA N:子网划分和子网掩码
+    由其路由表可在，192.168.0.0/24是通过RIP学习到的，跳数为1，下一跳IP地址为：201.1.1.1，因此192.168.0.0网段符合PC1的情况。直连网段有201.1.1.0/32，192.168.1.0/24，并且201.1.1.2是自己的地址。从而可知答案。
+    Q:路由器ar2接口ge0/0/0也可以是201.1.1.3？
+    A:不能是201.1.1.3，在路由表中已看出是30位的掩码，如果是201.1.1.3的话那是广播地址，不能给路由器接口使用。
+    设备与设备互联，设备的两个接口一般都是同网段的，所以他们的ip地址是同网段的ip
+    在AR2上看路由表，interface表示出接口，g0/0/0接ar1路由器，这是从图里面看到的
+    从表里面可以知道那么g0/0/1就是接dhcp服务器，g0/0/1的ip是192.168.1.0网段，所以dhcp服务器也是这个网段的
+    proto 表示协议，指明路由是通过哪种协议学到的。pc1在ar2对端，所以能学到的是rip
+    direct 表示直连路由的意思。那么pc1就是192.168.0.0网段
+    nexthop 表示下一跳，在ar2上看路由表，g0/0/0的下一跳是201.1.1.1，所以它的ip就得是201.1.1.2
+    estination/mask 目的网络/目的子网掩码
+    Proto 路由协议类型
+    pre 优先级
+    cost 开销（路由度量值）
+    next hop 下一跳（路由器连接的端设备的接口）
+    interface 出接口（路由器自己的接口）
+<img src="imgs\2020032403.png">
+
+    安全超文本传输协议S-HTTP在应用层，它是HTTP协议的扩展，它仅适用于HTTP联结上，S-HTTP可提供通信保密、身份识别、可信赖的信息传输服务及数字签名等。
+    PGP是1995年开发出的，是一个完整的电子邮件安全软件包，包括加密、鉴别、电子签名和压缩等技术。PGP工作原理并不复杂。提供电子邮件的安全性、发送发鉴别和报文完整性功能。
+    MIME意为多目Internet邮件扩展，它设计的最初目的是为了在发送电子邮件时附加多媒体数据，让邮件客户程序能根据其类型进行处理。
+    SET协议是专为在因特网上进行安全信用卡交易的协议，最初是由两个著名的信用卡公司VISA和MasterCard开发的。但是在SET交易中客户端要使用专门的软件（浏览器钱包），同时商家要支付的费用要比使用SSL更加昂贵，所以SET在市场竞争中失败了。
+
+VLAN中继协议（VTP）的作用是（  ）。按照VTP协议，交换机的运行模式有（  ）。如果要启动VTP动态修剪，则（  ）。*
+W:CAC N:VTP协议
+
+If two communicating entities are in different hosts connected by a network，there is a risk that PDUs will not arrive in the order in which they were sent，because they may traverse（  ）paths through the network. If each PDUs is given a unique number，and numbers are assigned（  ），then it is a logically simple task for the receiving entity to reorder（  ）PDUs on the basis of sequence number. A problem with this scheme is that，with a（  ）sequence number field，sequence  number  will  repeat. Evidently，the  maximum  sequence  number  must  be（  ）than  the  maximum  number  of  PDUs  that  could  be  outstanding  at any  time.
+A.same   B. different   C. single   D. unique
+A. randomly   B. equally   C. uniformly   D. sequentially
+A. received   B. sent   C. transmitting  D. forwarding
+A. various  B. diverse  C. finite  D. infinite
+A. smaller  B. greater  C. less  D. more
+R:BDACB W:BCCCB N:UDP协议
+    如果两个通信实体位于通过网络连接的不同主机中，会有一个PDU不会按照发送顺序到达的风险, 因为他们可能通过网络穿过____路径。如果每个PDU被赋予唯一的号码，并且数字被____分配，那么接收实体在序列号的基础上重新排序随机____PDU是一个逻辑上简单的任务。该方案的一个问题是，使用____序列号字段，序列号将重复。显然，PDUs最大序列号必须比____PDUs最大数量才会在任何时候展示出卓越。
+    A. same（相同的） B. different（不同的） C. single（单一的） D. unique（唯一的）
+    A. randomly（随机地） B. equally（公正地） C. uniformly （相同地）D. sequentially（继续地）
+    A. received（收到） B. sent（发送） C. transmitting（传播） D. forwarding （促进）
+    A. various（各种各样的） B diverse（不同的） C. finite（有限的） D. infinite（无限的）
+    A. smaller（更小） B. greater（更大） C. less（更少） D. more（更多）
+
+    无线局域网标准的制定始于1987年，当初是在802.4L组作为令牌总线的一部分来研究的，其主要目的是用作工厂设备的通信和控制设施。1990年，IEEE802.11小组正式独立出来，专门从事制定WLAN的物理层和MAC层标准。1997年颁布的IEEE802.11标准运行在2.4GHz的ISM（Industrial Scientific and Medical）频段，采用扩频通信技术，支持1 Mb/s和2Mb/s数据速率。随后又出现了两个新的标准，1998年推出的IEEE802.11b标准也是运行在ISM频段，采用CCK （ Complementary Code Keying）技术，支持11 Mbls的数据速率。1999年推出的IEEE802. 11 a标准运行在U-NII （Unlicensed National Information Infrastructure）频段，采用OFDM （ Orthogonal Frequency Division Multiplexing ）调制技术，支持最高达54Mb/s的数据速率。目前的WLAN标准主要有4种，如下表所示。
+<img src="imgs\2020032401.jpg">
+
+WI-Fi联盟制定的安全认证方案WPA(Wi-fi Protected Access)是（  ）标准的子集。
+A.IEEE 802.11   B.IEEE 802.11a   C.IEEE 802.11b   D.IEEE 802.11i
+R:D W:B N:IEEE 802标准
+    Wi-Fi保护接入（Wi-Fi Protected Access，WPA）是作为通向802.11i道路的不可缺失的一环而出现，并成为在IEEE 802.11i 标准确定之前代替WEP的无线安全标准协议，属于IEEE 802.11i标准的子集。
