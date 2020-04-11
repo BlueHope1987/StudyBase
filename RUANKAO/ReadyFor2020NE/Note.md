@@ -1425,7 +1425,7 @@ R:B W:D N:VLAN
 
         IIS身份验证方式中，基本身份验证的安全级别最低，采用明文的方式传送用户名和密码。
 
-运行RIPv2 协议的 3 台路由器按照如下图所示的方式连接，路由表项最少需经过（  ）可达到收敛状态。
+运行RIPv2 协议的 3 台路由器按照如下图所示的方式连接，路由表项最少需经过（  ）可达到收敛状态。*
 ----R1----R2----R3----
 A.30s  B. 60s  C. 90s  D. 120s
 R:B N:RIP路由协议
@@ -3432,3 +3432,64 @@ A.64kb/s   B.2.048Mb/s  C.34.368Mb/s  D.139.26Mb/s
 R:BC W:AB N:信道复用技术
 
     E1的一个时分复用帧（其长度T=125us）共划分为32相等的时隙，时隙的编号为CH0~CH31。其中时隙CH0用作帧同步，时隙CH16用来传送信令，剩下CH1~CH15和CH17~CH31 共30个时隙用作30个话路。每个时隙传送8bit，因此共用256bit。每秒传送8000个帧，因此PCM一次群E1的数据率就是2.048Mbit/s。E3速率是34.368Mbit/s，相当于16E1电路。
+
+20200411 每日一练 39*
+https://uc.educity.cn/tiku/testReport.html?id=6743550
+
+    对TCP链接请求的响应应答，ACK=1、SYN=1、FIN=0（代表同意TCP连接）。
+
+运行RIPv2 协议的 3 台路由器按照如下图所示的方式连接，路由表项最少需经过（  ）可达到收敛状态。*
+
+城域以太网在各个用户以太网之间建立多点第二层连接，IEEE802.1ad定义的运营商网桥协议提供的基本技术是在以太帧中插入（  ）字段，这种技术被称为（  ）技术。
+A.运营商VLAN标记   B.运营商虚电路标识  C.用户VLAN标记   D.用户帧类型标记
+A.Q-in -Q   B.IP-in-IP   C.NAT-in-NAT   D.MAC-in-MAC
+R:AA W:BA N:城域以太网
+
+    QinQ技术（也称Stacked VLAN 或Double VLAN）。标准出自IEEE 802.1ad，其实现将用户私网VLAN Tag封装在公网VLAN Tag中，使报文带着两层VLAN Tag穿越运营商的骨干网络（公网）。
+	QinQ也称Stacked VLAN 或Double VLAN。标准出自IEEE802.1ad,当前该标准仍处于草案阶段。其实现为在802.1q协议标签前再次封装802.1q协议 标签，其中一层标识用户系统网络（customer network），一层标识网络运营网络（service provider network），将其扩展实现用户线路标识。
+
+The defacto standard Application Program Interface （API） for TCP/IP applications is the “sockets” interface. Although this API was developed for （  ） in the early 1980s it has also been implemented on a wide variety of non-Unix systems。 TCP/IP （  ）written using the sockets API have in the past enjoyed a high degree of portability and we would like the same （  ）with IPv6 applications。 But changes are required to the sockets API to support IPv6 and this memo describes these changes。These include a new socket address structure to carry IPv6 （  ），new  address conversion functions，and some new socket options。These extensions are designed to provide access to the basic IPv6 features required by TCP and UDP applications，including multicasting， while introducing a minimum of change into the system and providing complete （  ）for existing IPv4 applications。
+A.Windows   B.Linux   C.Unix   D.DOS
+A.applications  B.networks   C.protocols   D.systems 
+A.portability    B.availability   C.capability   D.reliability 
+A.connections   B.protocols   C.networks   D.addresses
+A.availability   B.compatibility   C.capability   D.reliability 
+R:DAADB W:AAABC N:计算机专业英语
+
+    对于TCP/IP应用程序而言，事实上的标准应用程序结构（API）是套接字接口。在二十世纪八十年代早期，API是在DOS环境下开发，且在多种非Unix系统上实现。TCP / IP使用套接字API编写的应用程序在过去享有高度的可移植性，我们倾向于在IPv6应用程序中也要实现与之相同的可移植性。但是套接字API支持IPv6和本备忘录描述这些变化，有些改变是必须的。这就包括一个新的套接字地址结构需要携带IPv6地址，新地址转换功能，和一些新的套接字选项。这些扩展旨在提供TCP和UDP应用程序所需的基本IPv6特性，包括多播，当进入一套系统系统时引入最少的变化，且为现有的IPv4应用程序提供完整的兼容性。
+
+IEEEE 802.11i 标准制定的无线网络加密协议（  ）是一个基于（  ）算法的加密方案。
+A.RC4   B.CCMP   C.WEP   D.WPA
+A.RSA   B.DES    C.TKIP  D.AES
+R:DC W:CA N:WLAN
+
+    wpa协议是一种保护无线网络(WiFi)安全的系统，它是在前一代有线等效加密(wep)的基础上产生的，解决了前任wep的缺陷问题，它使用tkip(临时密钥完整性)协议，是ieee802.11i标准中的过渡方案
+
+    包过滤型防火墙工作在OSI网络参考模型的网络层和传输层，它根据数据包头源地址，目的地址、端口号和协议类型等标志确定是否允许通过。只有满足过滤条件的数据包才被转发到相应的目的地，其余数据包则被从数据流中丢弃。
+	包过滤方式是一种通用、廉价和有效的安全手段。之所以通用，是因为它不是针对各个具体的网络服务采取特殊的处理方式，适用于所有网络服务：之所以廉价，是因为大多数路由器都提供数据包过滤功能，所以这类防火墙多数是由路由器集成的:之所以有效，是因为它在很大程度上满足了绝大多数企业的安全要求。
+	在整个防火墙技术的发展过程中，包过滤技术出现了两种不同的版本，称为“第一代静态包过滤”和“第二代动态包过滤”。
+	第一代静态包过滤类型防火墙
+	这类防火墙几乎是与路由器同时产生的，‘它是根据定义好的过滤规则审查每个数据包，以便确定其是否与某一条包过池规则匹配。过滤规则基于数据包的报头信息进行制订。报头信息中包括IP源地址、IP目标地址、传输协议（如TCP， UDP和ICMP等）、TCP/UDP目标端口和ICMP消息类型等。
+	第二代动态包过滤类型防火墙
+	这类防火墙采用动态设置包过滤规则的方法，避免了静态包过滤所具有的问题。这种技术后来发展成为包状态监测（ Stateful Inspection）技术。采用这种技术的防火墙对通过其建立的每一个连接都进行跟踪，并且根据需要可动态地在过滤规则中增加或更新条目。
+	包过滤方式的优点是不用改动客户机和主机上的应用程序，因为它工作在网络层和传输层，与应用层无关。但其弱点也是明显的：过滩判别的依据只是网络层和传输层的有限信息，因而各种安全要求不可能充分满足：在许多过涟器中，过滩规则的数目是有限制的，且随着规则数目的增加，性能会受到很大地影响:由于缺少上下文关联信息，不能有效地过滤如UDP， RPC（远程过程调用）一类的协议。另外，大多数过滤器中缺少审计和报普机制，它只能依据包头信息，而不能对用户身份进行验证。很容易受到“地址欺骗型”攻击。对安全管理人员素质要求高，建立安全规则时，必须对协议本身及其在不同应用程序中的作用有较深入的理解。因此，过滤器通常是和应用网关配合使用，共同组成防火墙系统。
+
+在异步通信中，每个字符包含1位起始位、7位数据位、1位奇偶位和2位终止位，每秒钟传送100个字符，则有效数据速率为（  ）。
+A.500b/s  B.700b/s   C.770b/s   D.1100b/s
+R:B W:D N:异步传输和同步传输
+
+	本题考查异步通信的基础知识。所谓异步通信就是把一个字符作为同步的单位，字符之间插入同步信息。通常一个字符为7比特，加上起始位、奇偶位和2比特终止位，共11比特，可计算如下：
+    R=7/11 * 11 * 100/s = 700b/s
+
+设信道带宽为5000Hz，采用PCM编码，采样周期为125μs，每个样本量化为256个等级，则信道的数据速率为（  ）。
+A.10Kb/s    B.40Kb/s   C.56Kb/s   D.64Kb/s
+R:D W:B N:奈奎斯特定律
+
+    R=Blog2(N)=(1/125*10^(-6))*log2(256)=8000*8=64000bps
+
+假设网络的生产管理系统采用B/S工作方式，经常上网的用户数为100个，每个用户每分钟平均产生11个事务，平均事务量大小为0.06MB，则这个系统需要的信息传输速率为（  ）。
+A.5.25Mb/s   B.8.8Mb/s   C.66Mb/s   D.528Mb/s
+R:B W:D
+
+    
+	用户数量100个，每个用户每分钟产生11个事物，意味着这100个用户每秒可以产生（100×11）/60个事务，每个事务量大小为0.06MB亦即每个事物量的比特数为0.06MB×8=0.48Mbits。系统计算的信息传输速率单位是b/s，（100×11×0.48）/60=8.8Mb/s。
