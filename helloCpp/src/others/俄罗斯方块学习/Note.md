@@ -53,18 +53,16 @@ public:
 		else
 			tetrisHsyLst = new unsigned char[200];
 		tetrisMap = new unsigned char*[width];
-		for (int i = 0; i < width; i++){
+		for (short i = 0; i < width; i++){
 			tetrisMap[i] = new unsigned char[height];
-			for (int j = 0; j < height; j++)
+			for (short j = 0; j < height; j++)
 				tetrisMap[i][j] = 0;
 		}
-		int i=32;
-
-
 	}
 
-	void pullNextTetris() {
-		//推入下个方块
+	void pullNextTetris(unsigned char nxtblk) {
+		//推入下个方块 IOSZLJT
+		nxttetris = nxtblk;
 	}
 
 	void updateframe(int operate) {
