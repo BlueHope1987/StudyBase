@@ -28,10 +28,9 @@ T	[0,1,0] [0,1,0]	[0,0,0]	[0,1,0]
     [0,0,0] [0,1,0]	[0,1,0]	[0,1,0]
 
 
-// ConsoleApplication1.cpp : 定义控制台应用程序的入口点。
-//
+#include <iostream>
 
-#include "stdafx.h"
+using namespace std;
 
 enum tBlock_set {I,O,S,Z,L,J,T};
 enum operate_set {up,down,left,right,fall};
@@ -73,6 +72,9 @@ public:
 			for (short j = 0; j < height; j++)
 				tetrisMap[i][j] = 0;
 		}
+
+		//test
+		updateframe(up);
 	}
 
 	void pullNextTetris(tBlock_set nxtblk) {
@@ -86,7 +88,14 @@ public:
 			curtetris = nxttetris;
 			cury = height;
 			curx = width / 2 - 2;
+			curangle=0;//复位方块角度
 		}
+		if(curangle==0){
+            //_block[][]=Block[(int) curtetris];
+            //xoffset=1;
+            //yoffset=1;
+		}
+
 
 
 
