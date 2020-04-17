@@ -3775,3 +3775,87 @@ R:B W:A N:SNMP协议
     RMON远程网络监视协议的实现完全基于SNMP体系结构，它与现存的SNMP框架相兼容，不需对该协议进行任何修改。RMON使SNMP更有效、更积极主动地监测远程网络设备，为监控子网的运行提供了一种高效的手段。RMON能够减少网管站同代理间的通讯流量，达到简便而有力地管理大型互连网络的目的。
 
 下图的两种编码方案分别是（）。R:C W:B*
+
+20200417 每日一练 48
+https://uc.educity.cn/tiku/testReport.html?id=6813829
+
+    当一个帧离开路由器接口时，其第二层封装信息中；数据包转发过程中，源目IP不变，源和目标MAC地址变化。
+
+用于生成VLAN标记的协议是（  ）。
+A.IEEE 802.1q   B.IEEE 802.3    C.IEEE 802.5    D.IEEE 802.1d
+R:A W:B N:VLAN
+
+    IEEE 802.1q协议是虚拟局域网协议，用来给普通的以太帧打上VLAN标记。
+
+Melissa and LoveLetter made use of the trust that exists between friends or colleagues. Imagine receiving an（）from a friend who asks you to open it. This is what happens with Melissa and several other similar email（）. Upon running， such worms usually proceed to send themselves out to email addresses from the victim’s address book， previous emails， web pages（） .
+As administrators seek to block dangerous email attachments through the recognition of well-known（）， virus writers use other extensions to circumvent such protection. Executable （.exe） files are renamed to .bat and .cmd plus a whole list of other extensions and will still run and successfully infect target users.
+Frequently， hackers try to penetrate networks by sending an attachment that looks like a flash movie， which， while displaying some cute animation， simultaneously runs commands in the background to steal your passwords and give the（）access to your network.
+A.attachment    B.packet   C.datagram   D.message
+A.virtual   B.virus    C.worms   D.bacteria
+A.memory   B.caches   C.ports   D.registers
+A.names   B.cookies   C.software   D.extensions
+A.cracker   B.user    C.customer   D.client
+R:ACBDA W:DCBDA
+
+    Melissa病毒和LoveLetter病毒充分利用了朋友和同时之间的信任。想象一下这种情况：你的朋友发一个附件给你叫你打开它。Melissa和其他类似的蠕虫病毒都采用的是这种手段。一旦你运行了这些病毒程序，蠕虫就会继续把自己发送到你的E-mail地址薄以及先前接收的e-mail的那些地址中去。
+	当管理员试图用扩展名来阻止危险的e-mail附件时，病毒的编写者就会使用其它的扩展名来保护。可执行文件（*.exe）被重命名成为.bat、.cmd等等其它的扩展名。这些病毒文件同样会被运行然后成功的入侵目标用户。
+	通常，黑客会使用一个类似于flash的附件来通过网络，这些flash通常会在播放一些可爱的动画的同时在后台窃取你的密码并把破解文件植入。
+
+下面关于IPv6单播地址的描述中，正确的是（  ）。
+A.全球单播地址的格式前缀为2000::/3   B.链路本地地址的格式前缀为FE00::/12
+C.站点本地地址的格式前缀为FE00::/10   D.任何端口只能拥有唯一的全局地址
+R:A W:B N:IPv6协议
+
+    可集聚全球单播地址包括地址格式的起始3位为001的所有地址(此格式可在将来用于当前尚未分配的其他单播前缀)。地址格式化为下图所示的字段。
+	|-3-|  -13-  |-8-|  -24-  |  -16-  |   -64bits-   |
+     001  TLA ID  RES  NLA ID   SLA ID   Interface ID
+	IPv6全球单播地址相当于IPv4的公网IP，地址结构中首部3位001，TLA ID顶级汇聚标识符 ，Res 为未来扩展TLA ID或NLA ID的长度而保留的位 ，NLA ID下一级汇聚标识符 ，SLA ID 站点汇聚标识符，接口标识位64位。全球单播地址的格式前缀为2000::/3
+	链路本地地址的格式前缀为“FE80::”开头。
+	站点本地地址的格式前缀为FEC0::/10。
+	D选项“任何端口只能拥有唯一的全局地址”这句话描述过于绝对。一个端口可以配置IPv4的全局地址也可以配置IPv6的全局地址。
+
+下列隧道协议中工作在网络层的是（  ）。
+A.SSL   B.L2TP   C.IPSec  D.PPTP
+R:C W:B N:VPN配置
+
+    本题考查隧道协议的综合知识。
+	隧道技术是VPN的基本技术，它在公用网建立一条数据通道（隧道），让数据包通过这条隧道传输。隧道是由隧道协议形成的，分为第二、三层隧道协议。第二层隧道协议是先把各种网络协议封装到PPP中，再把整个数据包装入隧道协议中。这种双层封装方法形成的数据包靠第二层协议进行传输。第二层隧道协议有L2F、PPTP、L2TP等。L2TP协议是目前IETF的标准，由IETF融合PPTP与L2F而形成。
+	第三层隧道协议是把各种网络协议直接装入隧道协议中，形成的数据包依靠第三层协议进行传输。第三层隧道协议有VTP、IPSec（IP Security）等。IPSec是由一组RFC文档组成，定义了一个系统来提供安全协议选择、安全算法，确定服务所使用密钥等服务，从而在IP层（网络层）提供安全保障。
+
+数据存储在磁盘上的会影响I／O服务的总时间。假设每磁道划分成10个物理块，每块存放1个逻辑记录。逻辑记录R1，R2，…，R10存放在同一个磁道上，记录的安排顺序如下表所示：
+ 物理块 1   2   3   4   5   6   7   8   9   10
+ 逻辑块 R1  R2  R3  R4  R5  R6  R7  R8  R9  R10
+假定磁盘的旋转速度为20ms／周，磁头当前处在R1的开始处。若系统顺序处理这些记录，使用单缓冲区，每个记录处理时间为4ms，则处理这10个记录的最长时间为（）；若对信息存储进行优化分布后，处理10个记录的最少时间为（）。
+A.180ms   B.200ms   C.204ms   D.220ms 
+A.40ms   B.60ms   C.100ms   D.160ms
+R:CB W:BA
+
+    已知磁盘的旋转速度为20ms/周，每道存放10个记录，因此读出一个记录的时间是：20/10＝2ms。
+	第1个记录读取后(R1),并处理完记录后,这时磁头会达到R4处.需经过R4,R5,R6,R7,R8,R9,R10,R1,才能再次读取R2.
+	，必须再转8个记录（从记录R4到记录R1），再花2ms读出时间和4ms的处理时间，共需要时间：2×8＋2＋4=22。
+	其他8个记录都是的读取和处理时间和记录R2相同。于是，处理10个记录的时间是：(2+4)+9*(2*8+2+4)=204ms。
+	对于优化之后，读出并处理R1后，读写头刚好转到记录R2的开始处，因此立即就可读出处理记录R2，又经过2+4，刚好又到R3这个位置，后续记录的读取与处理情况相同。所以处理10个记录的时间为：10*(2+4)＝60ms。
+	具体可以如图：
+     物理块 1   2   3   4   5   6   7   8   9   10
+     逻辑块 R1  R8  R5  R2  R9  R6  R3  R10 R7  R4
+
+100BASE-FX采用4B/5B和NRZ-I编码，这种编码方式的效率为 （） 。
+A.50%     B.60%    C.80%    D.100%
+R:C W:B N:数字编码和编码效率
+
+    在快速以太网中，不能使用曼彻斯特编码。因为曼码的编码效率是50%，即100Mb/s的数据速率要求200M的波特率。为了提高编码的效率，降低电路的频率（成本），在高速网络中采用4B/5B编码法，这种编码方法的原理如图3所示。
+<img src="imgs\2020041701.jpg">
+    这是一种两级编码方案。基本的编码方法是“见1就翻不归零码”（NRZ-I代码序列中1的个数越多，越能提供同步信息，但如果遇到长串的0，则不能提供同步信息。所以在发送到传送介质去之前需经过一次4B/5B编码的变换，发送器扫描发送的比特序列，4位分为一组，然后按照表1的对应规则变换成5位的代码。
+<img src="imgs\2020041702.jpg">
+    5位二进制代码共有32种状态，在表1选用的5位代码中1的个数不的个数都不少于两个。这样就保证了在介质上传输的代码能够提供足够多的同步信息。
+    4B/5B编码的效串为4/5=80%，对于100M的数据速率，需要的波特率为100M÷80%=125M波特。
+
+    这4条命令解释如下。
+	S1（config-if）# vlan-membership static vlan_#：该命令为Cisco I900交换机端口分配VLAN，后面必须说明端口号。
+	S1 （config-i）# vlan database：该命令用于Cisco 2950交换机，从特权模式进入VLAN配置模式。
+	S1 （config-i）# switchpart mode access：将端口设置为接入链路连接。
+	S1 （config-i）# switchpart  access vtan 1：该命令用于Cisco 2950交换机，把当前端口分配给VLAN1。
+
+    提供电子邮件安全服务的协议是PGP。
+
+    主机能PING通同一网络的部分主机，说明TCP/IP协议能正常工作，接口也没有故障，综合四个选择最有可能是的网络中存在过滤规则。
