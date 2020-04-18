@@ -46,6 +46,15 @@ private:
 							{{0,0,1,0},{1,1,1,0}},
 							{{0,1,0,0},{1,1,1,0}}
 	};
+	short blockofset[7][4][2]={
+                            {{1,1},{1,1},{-1,-1},{-1,-1}},
+                            {{0,1},{-1,-1},{-1,-1},{-1,-1}},
+                            {{0,1},{0,0},{-1,-1},{-1,-1}},
+                            {{0,1},{0,0},{-1,-1},{-1,-1}},
+                            {{0,1},{1,1},{0,1},{1,1}},
+                            {{0,1},{1,1},{0,1},{1,1}},
+                            {{1,1},{1,1},{1,1},{1,1}},
+	};//每方块每角度原点YX偏移+ -1为角度不可用
 
 protected:
 public:
@@ -89,11 +98,21 @@ public:
 			cury = height;
 			curx = width / 2 - 2;
 			curangle=0;//复位方块角度
+
 		}
 		if(curangle==0){
+
             //_block[][]=Block[(int) curtetris];
             //xoffset=1;
             //yoffset=1;
+            for(short i=0;i<2;i++)
+            {
+                //if(Blocks[curtetris][i][0]||Blocks[curtetris][i][1]||Blocks[curtetris][i][2]||Blocks[curtetris][i][3]){
+                //    for(short j=0;j<4;i++)
+                //    {
+                //    }
+                }
+            }
 		}
 
 
