@@ -27,7 +27,6 @@ T	[0,1,0] [0,1,0]	[0,0,0]	[0,1,0]
     [1,1,1]	[0,1,1]	[1,1,1]	[1,1,0]   [0,1,0]
     [0,0,0] [0,1,0]	[0,1,0]	[0,1,0]
 
-
 #include <iostream>
 
 using namespace std;
@@ -62,9 +61,9 @@ public:
 	unsigned char*	tetrisHsyLst; //历史记录
 	short width = 10; //战场宽
 	short height = 20; //战场高
-	unsigned char curangle; //当前角度
+	unsigned char curangle,lstangle; //当前角度 上个角度
 	tBlock_set curtetris, nxttetris; //当前方块 当前角度 下个方块
-	short curx, cury;//当前坐标
+	short curx, cury,lstx,lsty;//当前坐标 上个坐标
 	unsigned char speed;//速度 多少帧一跳
 
 	tetrisView(short x, short y, int qsize) {
@@ -76,13 +75,15 @@ public:
 		else
 			tetrisHsyLst = new unsigned char[200];
 		tetrisMap = new unsigned char*[width];
-		for (short i = 0; i < width; i++) {
+		for (short i = 0; i < height; i++) {
 			tetrisMap[i] = new unsigned char[height];
-			for (short j = 0; j < height; j++)
+			for (short j = 0; j < width; j++)
 				tetrisMap[i][j] = 0;
 		}
 
 		//test
+		nxttetris=I;
+		cury = -1;
 		updateframe(up);
 	}
 
@@ -96,22 +97,20 @@ public:
 		if (cury = -1) {
 			curtetris = nxttetris;
 			cury = height;
-			curx = width / 2 - 2;
+			curx = width / 2 - 1;
 			curangle=0;//复位方块角度
-
+			lstx=-1;
+			lsty=-1;
+			lstangle=0;
 		}
 		if(curangle==0){
-
-            //_block[][]=Block[(int) curtetris];
-            //xoffset=1;
-            //yoffset=1;
             for(short i=0;i<2;i++)
             {
-                //if(Blocks[curtetris][i][0]||Blocks[curtetris][i][1]||Blocks[curtetris][i][2]||Blocks[curtetris][i][3]){
-                //    for(short j=0;j<4;i++)
-                //    {
-                //    }
+                for(short j=0;j<4;j++)
+                {
+                    if(Blocks[curtetris][i][j]) tetrisMap[cury-blockofset[curtetris][curangle][0]+i][curx-blockofset[curtetris][curangle][0]+j]=1;
                 }
+
             }
 		}
 
