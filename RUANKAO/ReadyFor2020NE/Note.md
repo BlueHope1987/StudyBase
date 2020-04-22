@@ -595,7 +595,7 @@ https://uc.educity.cn/tiku/testReport.html?id=6239740
 IEEE 802.1x是一种基于（  ）认证协议。
 A.用户ID B.报文 C.MAC地址 D.SSID
 R:C W:B
-    802.1x协议是基于Client/Server的访问控制和认证协议。它可以限制未经授权的用户/设备通过接入端口(access port)访问LAN/WLAN。在获得交换机或LAN提供的各种业务之前，802.1x对连接到交换机端口上的用户/设备MAC地址进行认证。在认证通过之前，802.1x只允许EAPoL（基于局域网的扩展认证协议）数据通过设备连接的交换机端口；认证通过以后，正常的数据可以顺利地通过以太网端口。
+    802.1x协议是基于Client/Server的访问控制和认证协议。它可以限制未经授权的用户/设备通过接入端口(access port)访问LAN/WLAN。在获得交���机或LAN提供的各种业务之前，802.1x对连接到交换机端口上的用户/设备MAC地址进行认证。在认证通过之前，802.1x只允许EAPoL（基于局域网的扩展认证协议）数据通过设备连接的交换机端口；认证通过以后，正常的数据可以顺利地通过以太网端口。
     C选项比A选项更优的是，A选项应该加上用户ID和密码。802.1x协议也可以扩展到基于MAC地址的认证。
 
 Network security consists of policies and practices to prevent and monitor（  ）access,misuse, modification, or denial of a computer network and network-accessible resources.Network security involves the authorization of access to data in a network, which is controlled by the network（  ）.Users choose or are assigned an ID and password or other authenticating information that allows them to access to information and programs within their authority.Network security secures the network, as well as protecting and overseeing operations being done. The most common and simple way of protecting a network resource is by assigning it a （  ）name and a corresponding password. Network security starts with authentication. Once authenticated,a（  ）enforces access policies such as what services are allowed to be accessed by the network users.Though effective to prevent unauthorized access, this component may fail to check potentially harmful content such as computer（  ）or Trojans being transmitted over the network.
@@ -2261,7 +2261,7 @@ R:AC W:AB N:NAT配置
     NAT（Network Address Translation，网络地址转换）是将IP 数据包头中的IP 地址转换为另一个IP 地址的过程。在实际应用中，NAT 主要用于实现私有网络访问公共网络的功能。这种通过使用少量的公有IP 地址代表较多的私有IP 地址的方式，将有助于减缓可用IP地址空间的枯竭。
 	NAT不仅能解决了lP地址不足的问题，而且还能够有效地避免来自网络外部的攻击，隐藏并保护网络内部的计算机。
 	1、宽带分享：这是 NAT 主机的最大功能。
-	2、安全防护：NAT 之内的 PC 联机到 Internet 上面时，他所显示的 IP 是 NAT 主机的公共 IP，所以 Client 端的 PC 当然就具有一定程度的安全了，外界在进行 portscan（端口扫描） 的时候，就侦测不到源Client 端的 PC 。
+	2、安全防护：NAT 之内的 PC 联机到 Internet 上面时，他所显示的 IP 是 NAT 主机的公��� IP，所以 Client 端的 PC 当然就具有一定程度的安全了，外界在进行 portscan（端口扫描） 的时候，就侦测不到源Client 端的 PC 。
 	NAT的实现方式有三种，即静态转换Static Nat、动态转换Dynamic Nat和端口多路复用OverLoad。
 	静态转换是指将内部网络的私有IP地址转换为公有IP地址，IP地址对是一对一的，是一成不变的，某个私有IP地址只转换为某个公有IP地址。借助于静态转换，可以实现外部网络对内部网络中某些特定设备（如服务器）的访问。
 	动态转换是指将内部网络的私有IP地址转换为公用IP地址时，IP地址是不确定的，是随机的，所有被授权访问上Internet的私有IP地址可随机转换为任何指定的合法IP地址。也就是说，只要指定哪些内部地址可以进行转换，以及用哪些合法地址作为外部地址时，就可以进行动态转换。动态转换可以使用多个合法外部地址集。当ISP提供的合法IP地址略少于网络内部的计算机数量时。可以采用动态转换的方式。
@@ -2872,7 +2872,7 @@ R:BACB N:路由器基本配置
 A.100位  B.128位  C.160位  D.180位
 R:C W:B N:哈希算法和报文鉴别
 
-    信息摘要简要地描述了一份较长的信息或文件，它可以被看做是一份长文件的数字指纹，信息摘要可以用于创建数字签名。对于特定的文件而言，信息摘要是唯一的，而且不同的文件必将产生不同的信息摘要。常见的信息摘要算法包括MD5（产生一个128位的输出，输入是以512位的分组进行处理的）和SHA（安全散列算法，也是按512位的分组进行处理，产生一个160位的输出），它们可以用来保护数据的完整性。
+    信息摘要简要地描述了一份较长的信息或文件，它可以被看做是一份长文件的数字指纹，信息摘要可以用于创建数字签名。对于特定的文件而言，信息摘要是唯一的，而且不同的文件必将产生不同的信息摘要。常见的信息摘要算法包括MD5（产生一个128位的输出，输入是以512位的分组进行处理的）和SHA（安全散列算法，也是按512位��分组进行处理，产生一个160位的输出），它们可以用来保护数据的完整性。
 
 参加下面的网络连接图，4个选项是Host A的ARP表，如果HostA ping HostB,则ARP表中的哪一选项用来封装传输的帧？（  ）。
 <img src="imgs\2020033002.png">
@@ -4106,3 +4106,55 @@ A.地方标准   B.部门标准   C.行业标准   D.企业标准
 R:C W:B
 
     我国的国家标准由国务院标准化行政主管部门制定；行业标准由国务院有关行政主管部门制定；地方标准由省、自治区和直辖市标准化行政主管部门制定；企业标准由企业自己制定。而信息产业部属于国务院有关行政主管部门范畴，故由其批准发布的标准属于行业标准。
+
+20200422 每日一练 76.6
+https://uc.educity.cn/tiku/testReport.html?id=6861928
+
+下面的光纤以太网标准中，支持1000m以上传输距离的是（  ）。
+A.1000BASE-FX    B.1000BASE-CX   C.1000bASE-SX   D.1000BASE-LX 
+R:D W:A N:网络传输介质
+
+    1000BASE-FX是千兆光纤以太网接口，支持500米传输距离。
+	1000BASE-CX对应于802.3z标准，采用的是150Ω平衡屏蔽双绞线（STP）。最大传输距离25米，使用9芯D型连接器连接电缆。1000BASE-CX采用8B/10B编码方式。1000BASE-CX适用于交换机之间的连接，尤其适用于主干交换机和主服务器之间的短距离连接。
+	1000BASE-SX标准只支持多模光纤介质，最大传输距离为550米。
+	1000BASE-LX标准支持多模光纤传输介质，传输距离为550米。同时该标准还支持单模光纤传输介质，其最最大传输距离为5000米。
+
+    
+	E1载波的基本帧划分为32个子信道（E0），每个子信道含8位数据，子信道CH0（或TS0)用于组帧，使得接收方可以检测帧的开起点。另一个子信道CH16（或TS16）用于承载控制呼叫的信令（例如CAS信令）。其余30个子信道用于承载PCM编码的话音数据。E1帧每秒发送8000次，发送时间为125µs，其数据速率为8×32×8000=2.048Mb/s。
+    基于EO的准同步数字系列PDH（Plesiocnronous Digital Hierarchy)以4个低级信道组成更高一级的信道，如下图所示。实际使用的是E1和E3信道。
+
+| Signal | Rate |
+|   -    |  -   |
+| E0 | 64kb/s |
+| E1 | 2.048Mb/s |
+| E2 | 8.448Mb/s |
+| E3 | 34.368Mb/s |
+| E4 | 139.264Mb/s |
+
+某局域网访问Internet速度很慢，经检测发现局域网内有大量的广播包，采用（  ）方法不可能有效地解决该网络问题。
+A.在局域网内查杀ARP病毒和蠕虫病毒  B.检查局域网内交换机端口和主机网卡是否有故障
+C.检查局域网内是否有环路出现  D.提高出口带宽速度
+R:D
+
+    此问题的根本在于如何消除局域网内的大量广播包。而从局域网的特性我们知道，在局域网内部存在有病毒的时候，可能引发内部大量的广播包，如ARP病毒，蠕虫病毒等。第二种可能是设备故障，如交换机端口，网卡或者线路接触不良等故障，可能导致通信出现问题，而生产广播包。第三种可能是因为内部存在环路，导致广播风暴的出现而存在大量的广播包。而提高出口带宽与内部广播包的多少并没有直接的关系。
+
+新交换机出厂时的默认配置是（  ）。
+A.预配置为VLAN 1，VTP 模式为服务器   B.预配置为VLAN 1，VTP 模式为客户机
+C.预配置为VLAN 0，VTP 模式为服务器   D.预配置为VLAN 0，VTP 模式为客户机
+R:A W:D N:VLAN
+
+    新交换机出厂时的预配置为VLAN 1，  VTP模式为服务器。
+
+下列关于网络汇聚层的描述中，正确的是（  ）。
+A.要负责收集用户信息，例如用户IP地址、访问日志等    B.实现资源访问控制和流量控制等功能
+C.将分组从一个区域高速地转发到另一个区域    D.提供一部分管理功能，例如认证和计费管理等
+R:B N:逻辑网络设计
+
+    实现资源访问控制和流量控制是汇聚层的相关功能。A、D选项属于接入层的功能。C选项属于核心层功能。
+
+    由法人或者其他组织主持，代表法人或者其他组织意志创作，并由法人或者其他组织承担责任的作品，著作权由单位完整地享有。
+
+    1990年，IEEE 802委员会成立一个新的工作组制定了无线局域网标准IEEE 802.11。
+	IEEE 802.11定义了使用红外、跳频扩频与直接序列扩频技术，最早的802.11标准只能够达到1Mbps～2Mbps的速度，在制定更高速度的标准时，就产生了802.11a和802.11b两个分支，其中802.11a运行在5GHz U-NII频段（其中U-NII是指用于构建国家信息基础的无限制频段），数据传输速率可达54Mbps，802.11b运行在2.4GHz的ISM频段（其中ISM是指可用于工业、科学、医疗领域的频段）。后来又推出了802.11g的新标准，其运行在2.4GHz的ISM频段，传输速率可达54Mbps。
+
+    一个Ｃ类地址能容纳的主机为254台主机，加果一个公司有2000台主机，需要分配的C类网络数量为2000/254约等于8个。默认C类网络的子网掩码为255.255.255.0，为了使该公司网络在路由表中只占一行，也就是将8个C类网络进行路由汇聚，即子网掩码应该设置为255.255.248.0。
