@@ -94,6 +94,7 @@ public:
 
 	void updateframe(operate_set operate) {
 		//更新帧 operate操作 上下左右空
+		//当cury=-1新方块 重置变量
 		if (cury = -1) {
 			curtetris = nxttetris;
 			cury = height;
@@ -103,6 +104,7 @@ public:
 			lsty=-1;
 			lstangle=0;
 		}
+		//角度为0时的逻辑 1、验证当前角度、坐标，2、消除上个角度、坐标 或 固定
 		if(curangle==0){
             for(short i=0;i<2;i++)
             {
