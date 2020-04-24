@@ -95,7 +95,7 @@ public:
 	void updateframe(operate_set operate) {
 		//更新帧 operate操作 上下左右空
 		//当cury=-1新方块 重置变量
-		if (cury = -1) {
+		if (cury == -1) {
 			curtetris = nxttetris;
 			cury = height;
 			curx = width / 2 - 1;
@@ -106,14 +106,31 @@ public:
 		}
 		//角度为0时的逻辑 1、验证当前角度、坐标，2、消除上个角度、坐标 或 固定
 		if(curangle==0){
+            //检查
             for(short i=0;i<2;i++)
             {
                 for(short j=0;j<4;j++)
                 {
-                    if(Blocks[curtetris][i][j]) tetrisMap[cury-blockofset[curtetris][curangle][0]+i][curx-blockofset[curtetris][curangle][0]+j]=1;
-                }
+                        //如果方块当前格和战场当前格均为真(碰撞) 则固定上一个（重置）
+                    if(
+                       Blocks[curtetris][i][j]&&
+                       tetrisMap[cury-blockofset[curtetris][curangle][0]+i]
+                                [curx-blockofset[curtetris][curangle][0]+j]
+                    ){
+                        cury == -1;
+                        return;
+                     };
+                };
 
-            }
+            };
+            //消除
+            for(short i=0;i<2;i++)
+            {
+                for(short j=0;j<4;j++)
+                {
+                };
+            };
+			//绘新
 		}
 
 
