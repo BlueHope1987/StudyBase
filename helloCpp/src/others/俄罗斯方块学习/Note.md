@@ -114,10 +114,10 @@ public:
                         //如果方块当前格和战场当前格均为真(碰撞) 则固定上一个（重置）
                     if(
                        Blocks[curtetris][i][j]&&
-                       tetrisMap[cury-blockofset[curtetris][curangle][0]+i]
-                                [curx-blockofset[curtetris][curangle][0]+j]
+                       tetrisMap[cury-blockofset[curtetris][curangle][0]-i]
+                                [curx-blockofset[curtetris][curangle][1]+j]
                     ){
-                        cury == -1;
+                        cury = -1;
                         return;
                      };
                 };
