@@ -28,6 +28,7 @@ T	[0,1,0] [0,1,0]	[0,0,0]	[0,1,0]
     [0,0,0] [0,1,0]	[0,1,0]	[0,1,0]
 
 #include <iostream>
+#include <windows.h>
 
 using namespace std;
 
@@ -49,7 +50,7 @@ private:
 	};//Blocks[编号][Y][X]
 	short blockofset[7][4][2] =
 	{
-		{ { 1,1 },{ 1,1 },{ -1,-1 },{ -1,-1 } },
+		{ { 1,1 },{ 1,0 },{ -1,-1 },{ -1,-1 } },
 		{ { 0,1 },{ -1,-1 },{ -1,-1 },{ -1,-1 } },
 		{ { 0,1 },{ 0,0 },{ -1,-1 },{ -1,-1 } },
 		{ { 0,1 },{ 0,0 },{ -1,-1 },{ -1,-1 } },
@@ -57,19 +58,19 @@ private:
 		{ { 0,1 },{ 1,1 },{ 0,1 },{ 1,1 } },
 		{ { 1,1 },{ 1,1 },{ 1,1 },{ 1,1 } },
 	};//blockofset[编号][角度][YX偏移] 每方块每角度原点YX偏移+ -1为角度不可用
+	unsigned char curangle, lstangle; //当前角度 上个角度
+	tBlock_set curtetris, nxttetris; //当前方块 当前角度 下个方块
+	short curx, cury;//当前坐标
+	unsigned char speed;//速度 多少帧一跳
+	short curblkloc[8][2], lstblkloc[8][2];//当前和先前方块每格坐标，缓存消除用，避免重复计算
 
-	//当前和先前方块每格坐标，缓存消除用，避免重复计算
-	short curblkloc[8][2], lstblkloc[8][2];
 protected:
 public:
 	unsigned char** tetrisMap; //战场二维数组
 	unsigned char*	tetrisHsyLst; //历史记录
 	short width = 10; //战场宽
 	short height = 20; //战场高
-	unsigned char curangle, lstangle; //当前角度 上个角度
-	tBlock_set curtetris, nxttetris; //当前方块 当前角度 下个方块
-	short curx, cury, lstx, lsty;//当前坐标 上个坐标
-	unsigned char speed;//速度 多少帧一跳
+
 
 	tetrisView(short x, short y, int qsize)
 	{
@@ -78,22 +79,38 @@ public:
 			width = x;
 		if (y > 10 && y < 255)
 			height = y;
-		if (qsize > 50 & qsize < 1000)
+		if (qsize > 50 && qsize < 1000)
 			tetrisHsyLst = new unsigned char[qsize];
 		else
 			tetrisHsyLst = new unsigned char[200];
-		tetrisMap = new unsigned char*[width];
+		tetrisMap = new unsigned char*[height];
 		for (short i = 0; i < height; i++)
 		{
-			tetrisMap[i] = new unsigned char[height];
+			tetrisMap[i] = new unsigned char[width];
 			for (short j = 0; j < width; j++)
 				tetrisMap[i][j] = 0;
 		}
 
+/////////////////////////////////////////////////////
+		//Code Blocks初始数组最后一行有问题 以此测试
+//    for(short j=height-1;j>=0;j--){
+//        for(short i=0;i<width;i++){
+//            if(tetrisMap[j][i]){
+//                cout<<"■";
+//            }else{
+//                cout<<"□";
+//            }
+//        }
+//        cout<<endl;
+//    }
+        //测试终了，问题：初始化数组时 new unsigned char*[height] 和 width 搞反了
+////////////////////////////////////////////////////
+
 		//test
-		nxttetris = I;
+		//临时：产生新方块
+		nxttetris = (tBlock_set)(rand() % 7);
 		cury = -1;
-		updateframe(op_up);
+		updateframe(null);
 	}
 
 	void pullNextTetris(tBlock_set nxtblk)
@@ -150,10 +167,12 @@ public:
 			cury = height - 1;//数组值需-1
 			curx = width / 2 - 1;
 			curangle = 0;//复位方块角度
-			lstx = -1;
-			lsty = -1;
 			lstangle = 0;
 			lstblkloc[0][0] = -1;
+
+			//临时：产生新方块
+			nxttetris = (tBlock_set)(rand() % 7);
+			//TODO:消行逻辑写在这里
 		}
 		short bkn = 0;//curblkloc角标
 
@@ -188,16 +207,32 @@ public:
 						//未撞墙检查
 						if (_cx <= width - 1 && _cx >= 0)
 						{
-							//如果战场当前格为真(碰撞) 则固定上一个（重置）
-							if (tetrisMap[_cy][_cx])
+							bool nn = false;
+							//如果当前格存在于上个坐标组中
+							for (short i = 0; i < 8 && lstblkloc[i][0] != -1; i++)
 							{
-								cury = -1;
-								return;
+								if (lstblkloc[i][0] ==_cy&& lstblkloc[i][1] == _cx) {
+									nn = true;
+									break;
+								}
+							}
+							//如果战场当前格为真(碰撞) 则固定上一个（重置）
+							if (!nn&&tetrisMap[_cy][_cx])
+							{
+								if (operate == op_down) {
+									cury = -1;
+									return;
+								}
+								else {
+									curangle = lstangle;
+									return;
+								}
 							}
 						}
 						else
 						{
 							//如果撞墙 返回无效操作
+							curangle = lstangle;
 							return;
 						}
 						curblkloc[bkn][0] = _cy;
@@ -206,6 +241,8 @@ public:
 					};
 				};
 			};
+			cury += _opy;
+			curx += _opx;
 			if (bkn < 8) curblkloc[bkn][0] = -1;//结尾标记
 			break;
 
@@ -241,16 +278,32 @@ public:
 						//未撞墙检查
 						if (_cx <= width - 1 && _cx >= 0)
 						{
-							//如果战场当前格为真(碰撞) 则固定上一个（重置）
-							if (tetrisMap[_cy][_cx])
+							bool nn = false;
+							//如果当前格存在于上个坐标组中
+							for (short i = 0; i < 8 && lstblkloc[i][0] != -1; i++)
 							{
-								cury = -1;
-								return;
+								if (lstblkloc[i][0] == _cy&& lstblkloc[i][1] == _cx) {
+									nn = true;
+									break;
+								}
+							}
+							//如果战场当前格为真(碰撞) 则固定上一个（重置）
+							if (!nn&&tetrisMap[_cy][_cx])
+							{
+								if (operate == op_down) {
+									cury = -1;
+									return;
+								}
+								else {
+									curangle = lstangle;
+									return;
+								}
 							}
 						}
 						else
 						{
 							//如果撞墙 返回无效操作
+							curangle = lstangle;
 							return;
 						}
 						curblkloc[bkn][0] = _cy;
@@ -259,6 +312,8 @@ public:
 					};
 				};
 			};
+			cury += _opy;
+			curx += _opx;
 			if (bkn < 8) curblkloc[bkn][0] = -1;//结尾标记
 			break;
 
@@ -294,16 +349,32 @@ public:
 						//未撞墙检查
 						if (_cx <= width - 1 && _cx >= 0)
 						{
-							//如果战场当前格为真(碰撞) 则固定上一个（重置）
-							if (tetrisMap[_cy][_cx])
+							bool nn = false;
+							//如果当前格存在于上个坐标组中
+							for (short i = 0; i < 8 && lstblkloc[i][0] != -1; i++)
 							{
-								cury = -1;
-								return;
+								if (lstblkloc[i][0] == _cy&& lstblkloc[i][1] == _cx) {
+									nn = true;
+									break;
+								}
+							}
+							//如果战场当前格为真(碰撞) 则固定上一个（重置）
+							if (!nn&&tetrisMap[_cy][_cx])
+							{
+								if (operate == op_down) {
+									cury = -1;
+									return;
+								}
+								else {
+									curangle = lstangle;
+									return;
+								}
 							}
 						}
 						else
 						{
 							//如果撞墙 返回无效操作
+							curangle = lstangle;
 							return;
 						}
 						curblkloc[bkn][0] = _cy;
@@ -312,6 +383,8 @@ public:
 					};
 				};
 			};
+			cury += _opy;
+			curx += _opx;
 			if (bkn < 8) curblkloc[bkn][0] = -1;//结尾标记
 			break;
 
@@ -347,16 +420,32 @@ public:
 						//未撞墙检查
 						if (_cx <= width - 1 && _cx >= 0)
 						{
-							//如果战场当前格为真(碰撞) 则固定上一个（重置）
-							if (tetrisMap[_cy][_cx])
+							bool nn = false;
+							//如果当前格存在于上个坐标组中
+							for (short i = 0; i < 8 && lstblkloc[i][0] != -1; i++)
 							{
-								cury = -1;
-								return;
+								if (lstblkloc[i][0] == _cy&& lstblkloc[i][1] == _cx) {
+									nn = true;
+									break;
+								}
+							}
+							//如果战场当前格为真(碰撞) 则固定上一个（重置）
+							if (!nn&&tetrisMap[_cy][_cx])
+							{
+								if (operate == op_down) {
+									cury = -1;
+									return;
+								}
+								else {
+									curangle = lstangle;
+									return;
+								}
 							}
 						}
 						else
 						{
 							//如果撞墙 返回无效操作
+							curangle = lstangle;
 							return;
 						}
 						curblkloc[bkn][0] = _cy;
@@ -365,6 +454,8 @@ public:
 					};
 				};
 			};
+			cury += _opy;
+			curx += _opx;
 			if (bkn < 8) curblkloc[bkn][0] = -1;//结尾标记
 			break;
 
@@ -384,57 +475,150 @@ public:
 			}
 		};
 		//绘新
-		for (short i = 0; i < 8 && curblkloc[i][0] != -1; i++)
+		for (short i = 0; i < 8; i++)
 		{
-			if (tetrisMap[curblkloc[i][0]][curblkloc[i][1]] == 0) {
-				tetrisMap[curblkloc[i][0]][curblkloc[i][1]] = 1;
-				lstblkloc[i][0] = curblkloc[i][0];
-				curblkloc[i][0] = -1;
-				lstblkloc[i][1] = curblkloc[i][1];
+			if (curblkloc[i][0] != -1) {
+				if (tetrisMap[curblkloc[i][0]][curblkloc[i][1]] == 0) {
+					tetrisMap[curblkloc[i][0]][curblkloc[i][1]] = 1;
+					lstblkloc[i][0] = curblkloc[i][0];
+					curblkloc[i][0] = -1;
+					lstblkloc[i][1] = curblkloc[i][1];
+				}
+				else {
+					throw;
+				}
 			}
 			else {
-				throw;
+				lstblkloc[i][0] = -1;
+				i = 8;
 			}
+			lstangle = curangle;
+
 		};
-
-
-
-
 	}
 
 	~tetrisView()
 	{
-
+		delete  tetrisMap;
+		delete	tetrisHsyLst;
 	}
 };
+
+void ptmap(tetrisView *s){
+    for(short j=s->height-1;j>=0;j--){
+        for(short i=0;i<s->width;i++){
+            if(s->tetrisMap[j][i]){
+                cout<<"■";
+            }else{
+                cout<<"□";
+            }
+        }
+        cout<<endl;
+    }
+}
+
+//void Thread1(tetrisView *s) {
+//	short n = 0;
+//	short spd = 20;
+//	if (n == spd) {
+//		s->updateframe(op_down);
+//		n = 0;
+//	}
+//	else {
+//		n++;
+//	}
+//}
 
 int main()
 {
 	tetrisView game = tetrisView(0, 0, 0);
-	char ky;
-	for (int i = 1; i == 1;) {
-		cin >> ky;
-		switch (ky) {
-		case 'w':
-			game.updateframe(op_up);
-			break;
-		case 'a':
-			game.updateframe(op_left);
-			break;
-		case 'd':
-			game.updateframe(op_right);
-			break;
-		case 's':
-			game.updateframe(op_down);
-			break;
-		case 'f':
-			game.updateframe(op_fall);
-			break;
-		case 'q':
-			return 0;
-		default:
-			break;
-		}
+    //ptmap(&game);
+
+
+	HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
+	DWORD			dwRes;
+	INPUT_RECORD	keyRec;
+
+
+	//HANDLE hThread;
+	//DWORD ThreadID;
+	//hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Thread1, (tetrisView*)(&game), 0, &ThreadID);
+
+	short n = 0;
+	short spd = 20;
+
+	while (1) {
+		//ReadConsoleInput(hIn, &keyRec, 1, &dwRes);
+		//SuspendThread(hThread);
+		//if (keyRec.EventType == KEY_EVENT)
+		//{
+		//	// 只在按下时判断，弹起时不判断
+		//	if (keyRec.Event.KeyEvent.bKeyDown)
+		//	{
+		//		switch (keyRec.Event.KeyEvent.wVirtualKeyCode)
+		//		{
+		//		case VK_UP:
+		//			game.updateframe(op_up);
+		//			break;
+		//		case VK_LEFT:
+		//			game.updateframe(op_left);
+		//			break;
+		//		case VK_RIGHT:
+		//			game.updateframe(op_right);
+		//			break;
+		//		case VK_DOWN:
+		//			game.updateframe(op_down);
+		//			break;
+		//		case VK_SPACE:
+		//			game.updateframe(op_fall);
+		//			break;
+		//		default:
+		//			break;
+		//		}
+		//	}
+		//}
+		if (::GetKeyState(VK_UP) < 0) game.updateframe(op_up);
+		if (::GetKeyState(VK_DOWN)<0) game.updateframe(op_down);
+		if (::GetKeyState(VK_LEFT)<0) game.updateframe(op_left);
+		if (::GetKeyState(VK_RIGHT)<0) game.updateframe(op_right);
+
+
+			if (n == spd) {
+				game.updateframe(op_down);
+				n = 0;
+			}
+			else {
+				n++;
+			}
+
+
+		//ResumeThread(hThread);
+		//char ky;
+		//cin >> ky;
+		//switch (ky) {
+		//case 'w':
+		//	game.updateframe(op_up);
+		//	break;
+		//case 'a':
+		//	game.updateframe(op_left);
+		//	break;
+		//case 'd':
+		//	game.updateframe(op_right);
+		//	break;
+		//case 's':
+		//	game.updateframe(op_down);
+		//	break;
+		//case 'f':
+		//	game.updateframe(op_fall);
+		//	break;
+		//case 'q':
+		//	return 0;
+		//default:
+		//	break;
+		//}
+		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0,0 });
+		//	system("cls");
+		ptmap(&game);
 	}
 	return 0;
 }
