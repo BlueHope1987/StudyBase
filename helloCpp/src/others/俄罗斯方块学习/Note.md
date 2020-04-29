@@ -91,20 +91,20 @@ public:
 				tetrisMap[i][j] = 0;
 		}
 
-/////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////
 		//Code Blocks初始数组最后一行有问题 以此测试
-//    for(short j=height-1;j>=0;j--){
-//        for(short i=0;i<width;i++){
-//            if(tetrisMap[j][i]){
-//                cout<<"■";
-//            }else{
-//                cout<<"□";
-//            }
-//        }
-//        cout<<endl;
-//    }
-        //测试终了，问题：初始化数组时 new unsigned char*[height] 和 width 搞反了
-////////////////////////////////////////////////////
+		//    for(short j=height-1;j>=0;j--){
+		//        for(short i=0;i<width;i++){
+		//            if(tetrisMap[j][i]){
+		//                cout<<"■";
+		//            }else{
+		//                cout<<"□";
+		//            }
+		//        }
+		//        cout<<endl;
+		//    }
+		//测试终了，问题：初始化数组时 new unsigned char*[height] 和 width 搞反了
+		////////////////////////////////////////////////////
 
 		//test
 		//临时：产生新方块
@@ -176,7 +176,7 @@ public:
 		}
 		short bkn = 0;//curblkloc角标
 
-		//角度为0时的逻辑 1、验证当前角度、坐标，2、消除上个角度、坐标 或 固定
+					  //角度为0时的逻辑 1、验证当前角度、坐标，2、消除上个角度、坐标 或 固定
 		switch (curangle)
 		{
 		case 0:
@@ -211,7 +211,7 @@ public:
 							//如果当前格存在于上个坐标组中
 							for (short i = 0; i < 8 && lstblkloc[i][0] != -1; i++)
 							{
-								if (lstblkloc[i][0] ==_cy&& lstblkloc[i][1] == _cx) {
+								if (lstblkloc[i][0] == _cy&& lstblkloc[i][1] == _cx) {
 									nn = true;
 									break;
 								}
@@ -261,7 +261,7 @@ public:
 					short _cx = curx - blockofset[curtetris][curangle][1] + i + _opx;
 
 					//如果方块当前格为真
-					if (Blocks[curtetris][1-i][j])
+					if (Blocks[curtetris][1 - i][j])
 					{
 						//撞底
 						if (_cy < 0)
@@ -332,7 +332,7 @@ public:
 					short _cx = curx - blockofset[curtetris][curangle][1] + j + _opx;
 
 					//如果方块当前格为真
-					if (Blocks[curtetris][1-i][3-j])
+					if (Blocks[curtetris][1 - i][3 - j])
 					{
 						//撞底
 						if (_cy < 0)
@@ -504,17 +504,18 @@ public:
 	}
 };
 
-void ptmap(tetrisView *s){
-    for(short j=s->height-1;j>=0;j--){
-        for(short i=0;i<s->width;i++){
-            if(s->tetrisMap[j][i]){
-                cout<<"■";
-            }else{
-                cout<<"□";
-            }
-        }
-        cout<<endl;
-    }
+void ptmap(tetrisView *s) {
+	for (short j = s->height - 1; j >= 0; j--) {
+		for (short i = 0; i<s->width; i++) {
+			if (s->tetrisMap[j][i]) {
+				cout << "■";
+			}
+			else {
+				cout << "□";
+			}
+		}
+		cout << endl;
+	}
 }
 
 //void Thread1(tetrisView *s) {
@@ -532,7 +533,7 @@ void ptmap(tetrisView *s){
 int main()
 {
 	tetrisView game = tetrisView(0, 0, 0);
-    //ptmap(&game);
+	//ptmap(&game);
 
 
 	HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
@@ -581,15 +582,15 @@ int main()
 		if (::GetKeyState(VK_DOWN)<0) game.updateframe(op_down);
 		if (::GetKeyState(VK_LEFT)<0) game.updateframe(op_left);
 		if (::GetKeyState(VK_RIGHT)<0) game.updateframe(op_right);
+		if (::GetKeyState(VK_ESCAPE) < 0) return 0;
 
-
-			if (n == spd) {
-				game.updateframe(op_down);
-				n = 0;
-			}
-			else {
-				n++;
-			}
+		if (n == spd) {
+			game.updateframe(op_down);
+			n = 0;
+		}
+		else {
+			n++;
+		}
 
 
 		//ResumeThread(hThread);
