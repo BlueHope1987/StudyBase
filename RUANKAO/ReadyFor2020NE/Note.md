@@ -1696,7 +1696,7 @@ https://uc.educity.cn/tiku/testReport.html?id=6403111
 
     tracert也被称为Window路由跟踪实用程序,在命令提示符(cmd)中使用tracert命令可以用于确定IP数据包访问目标时所选择的路径。
 
-NAC’s（Network Access Control）role is to restrict network access to only compliant endpoints and （）users.However， NAC is not a complete LAN （）solution; additional proactive and （）security measures must be implemented.Nevis is the first and only comprehensive LAN security solution that combines deep security processing of every packet at 10Gbps， ensuring a high level of security plus application availability and performance.Nevis integrates NAC as the first line of LAN security （） .In addition to NAC， enterprises need to implement role-based network access control as well as critical proactive security measures— real-time， multilevel （）inspection and microsecond threat containment.
+NAC’s（Network Access Control）role is to restrict network access to only compliant endpoints and （）users.However， NAC is not a complete LAN （）solution; additional proactive and （）security measures must be implemented.Nevis is the first and only comprehensive LAN security solution that combines deep security processing of every packet at 10Gbps��� ensuring a high level of security plus application availability and performance.Nevis integrates NAC as the first line of LAN security （） .In addition to NAC， enterprises need to implement role-based network access control as well as critical proactive security measures— real-time， multilevel （）inspection and microsecond threat containment.
 A.automated  B.distinguished C.authenticated D.destructed
 A.crisis  B.security  C.favorable  D.excellent
 A.constructive  B.reductive  C.reactive  D.productive
@@ -2261,7 +2261,7 @@ R:AC W:AB N:NAT配置
     NAT（Network Address Translation，网络地址转换）是将IP 数据包头中的IP 地址转换为另一个IP 地址的过程。在实际应用中，NAT 主要用于实现私有网络访问公共网络的功能。这种通过使用少量的公有IP 地址代表较多的私有IP 地址的方式，将有助于减缓可用IP地址空间的枯竭。
 	NAT不仅能解决了lP地址不足的问题，而且还能够有效地避免来自网络外部的攻击，隐藏并保护网络内部的计算机。
 	1、宽带分享：这是 NAT 主机的最大功能。
-	2、安全防护：NAT 之内的 PC 联机到 Internet 上面时，他所显示的 IP 是 NAT 主机的公��� IP，所以 Client 端的 PC 当然就具有一定程度的安全了，外界在进行 portscan（端口扫描） 的时候，就侦测不到源Client 端的 PC 。
+	2、安全防护：NAT 之内的 PC 联机到 Internet 上面时，他所显示�� IP 是 NAT 主机的公��� IP，所以 Client 端的 PC 当然就具有一定程度的安全了，外界在进行 portscan（端口扫描） 的时候，就侦测不到源Client 端的 PC 。
 	NAT的实现方式有三种，即静态转换Static Nat、动态转换Dynamic Nat和端口多路复用OverLoad。
 	静态转换是指将内部网络的私有IP地址转换为公有IP地址，IP地址对是一对一的，是一成不变的，某个私有IP地址只转换为某个公有IP地址。借助于静态转换，可以实现外部网络对内部网络中某些特定设备（如服务器）的访问。
 	动态转换是指将内部网络的私有IP地址转换为公用IP地址时，IP地址是不确定的，是随机的，所有被授权访问上Internet的私有IP地址可随机转换为任何指定的合法IP地址。也就是说，只要指定哪些内部地址可以进行转换，以及用哪些合法地址作为外部地址时，就可以进行动态转换。动态转换可以使用多个合法外部地址集。当ISP提供的合法IP地址略少于网络内部的计算机数量时。可以采用动态转换的方式。
@@ -2873,7 +2873,7 @@ R:BACB N:路由器基本配置
 A.100位  B.128位  C.160位  D.180位
 R:C W:B N:哈希算法和报文鉴别
 
-    信息摘要简要地描述了一份较长的信息或文件，它可以被看做是一份长文件的数字指纹，信息摘要可以用于创建数字签名。对于特定的文件而言，信息摘要是唯一的，而且不同的文件必将产生不同的信息摘要。常见的信息摘要算法包括MD5（产生一个128位的输出，输入是以512位的分组进行处理的）和SHA（安全散列算法，也是按512位��分组进行处理，产生一个160位的输出），它们可以用来保护数据的完整性。
+    信息摘要简要地描述了一份较长的信息或文件，它可以被看做是一份长文件的数字指纹，信息摘要可以用于创建数字签名。对于特定的文件而言，信息摘要是���一的，而且不同的文件必将产生不同的信息摘要。常见的信息摘要算法包括MD5（产生一个128位的输出，输入是以512位的分组进行处理的）和SHA（安全散列算法，也是按512位��分组进行处理，产生一个160位的输出），它们可以用来保护数据的完整性。
 
 参加下面的网络连接图，4个选项是Host A的ARP表，如果HostA ping HostB,则ARP表中的哪一选项用来封装传输的帧？（  ）。
 <img src="imgs\2020033002.png">
@@ -3541,7 +3541,7 @@ A.便于测试网络连接数  B.减少网络维护工作量  C.限制网络广�
 R:C W:D N:ARP协议
     
     ARP表用于缓存设备的IP地址与MAC地址的对应关系， 采用ARP表的好处是限制网络广播数量。
-	以主机A（192.168.1.5）向主机B（192.168.1.1）发送数据为例。当发送数据时，主机A会在自己的ARP缓存表中寻找是否有目标IP地址。如果找到了，也就知道了目标MAC地址，直接把目标MAC地址写入帧里面发送就可以了；如果在ARP缓存表中没有找到目标IP地址，主机A就会在网络上发送一个广播，A主机MAC地址是“主机A的MAC地址”，这表示向同一网段内的所有主机发出这样的询问：“我是192.168.1.5，我的硬件地址是"主机A的MAC地址".请问IP地址为192.168.1.1的MAC地址是什么？”网络上其他主机并不响应ARP询问，只有主机B接收到这个帧时，才向主机A做出这样的回应：“192.168.1.1的MAC地址是00-aa-00-62-c6-09”。这样，主机A就知道了主机B的MAC地址，它就可以向主机B发送信息了。同时A和B还同时都更新了自己的ARP缓存表（因为A在询问的时候把自己的IP和MAC地址一起告诉了B），下次A再向主机B或者B向A发送信息时，直接从各自的ARP缓存表里查找就可以了。
+	以主机A（192.168.1.5）向主机B（192.168.1.1）发送数据为例。当发送数据时，主机A会在自己的ARP缓存表中寻找是否有目���IP地址。如果找到了，也就知道了目标MAC地址，直接把目标MAC地址写入帧里面发送就可以了；如果在ARP缓存表中没有找到目标IP地址，主机A就会在网络上发送一个广播，A主机MAC地址是“主机A的MAC地址”，这表示向同一网段内的所有主机发出这样的询问：“我是192.168.1.5，我的硬件地址是"主机A的MAC地址".请问IP地址为192.168.1.1的MAC地址是什么？”网络上其他主机并不响应ARP询问，只有主机B接收到这个帧时，才向主机A做出这样的回应：“192.168.1.1的MAC地址是00-aa-00-62-c6-09”。这样，主机A就知道了主机B的MAC地址，它就可以向主机B发送信息了。同时A和B还同时都更新了自己的ARP缓存表（因为A在询问的时候把自己的IP和MAC地址一起告诉了B），下次A再向主机B或者B向A发送信息时，直接从各自的ARP缓存表里查找就可以了。
 
 下面算法中，不属于公开密钥加密算法的是（  ）。
 A.ECC   B.DSA   C.RSA   D.DES
@@ -4811,7 +4811,7 @@ A.侵犯了张某的著作权，因为其未经许可，擅自复印张某的程
 C.不侵犯张某的著作权，其行为属于合理使用    D.侵犯了张某的著作权，因为其擅自复印，又在其发表的文章中全文引用了张某的程序
 R:C W:D N:侵权判定
 
-    《中华人民共和国著作权法》第十二条规定：“改编、翻译、注释、整理已有作品而产生的作品，其著作权由改编、翻译、注释、整理人享有，但行使著作权时，不得侵犯原作品的著作权。”根据一件已有的作品，利用改编、翻译、注释、整理等演绎方式而创作的派生作品称之为演绎作品。演绎是一种创作，因而演绎作品是一种新创作的作品。演绎作者对其演绎作品享有完整的著作权。本题中李某将《电脑与编程》杂志上看到张某发表的一组程序逐段加以评析，写成评论文章后投到《电脑编程技巧》杂志上发表，故李某的“评论文章”属于演绎作品，其行为不侵犯张某的著作权，其行为属于合理使用。
+    《中华人民共和国著作权法》第十二��规定：“改编、翻译、注释、整理已有作品而产生的作品，其著作权由改编、翻译、注释、整理人享有，但行使著作权时，不得侵犯原作品的著作权。”根据一件已有的作品，利用改编、翻译、注释、整理等演绎方式而创作的派生作品称之为演绎作品。演绎是一种创作，因而演绎作品是一种新创作的作品。演绎作者对其演绎作品享有完整的著作权。本题中李某将《电脑与编程》杂志上看到张某发表的一组程序逐段加以评析，写成评论文章后投到《电脑编程技巧》杂志上发表，故李某的“评论文章”属于演绎作品，其行为不侵犯张某的著作权，其行为属于合理使用。
 
 内存按字节编址，从A1000H到B13FFH的区域的存储容量为（  ）KB。
 A.32  B.34  C.65  D.67
@@ -5495,3 +5495,49 @@ R:C W:A N:Windows网络管理命令
 下列关于网络汇聚层的描述中，正确的是（  ）。* W:C N:逻辑网络设计
 
     流水线周期为各阶段时间最长的一段。
+
+20200521 每日一练 70
+https://uc.educity.cn/tiku/testReport.html?id=7148194
+
+    资源预约协议（RSVP）用在IETP定义的集成服务（InsServ）中建立端到端的QoS保障机制。RSVP进行资源预约过程中，从源到目标建立链路，从目标到源建立预留约。
+    资源预留协议（RSVP）最初是IETF为QoS的综合服务模型定义的一个信令协议，用于在流（flow）所经路径上为该流进行资源预留，从而满足该流的QoS要求。资源预留的过程从应用程序流的源节点发送Path消息开始，该消息会沿着流所经路径传到流的目的节点，并沿途建立路径状态；目的节点收到该Path消息后，会向源节点回送Resv消息，沿途建立预留状态，如果源节点成功收到预期的Resv消息，则认为在整条路径上资源预留成功。
+
+	2002年6月，IEEE 802.3ae标准发布，支持10Gb/s的传输速率，规定的几种传输介质如表4所示。传统以太网采用CSMA/CD协议，即带冲突检测的载波监听多路访问技术。与千兆以太网一样，万兆以太网基本应用于点到点线路，不再共享带宽，没有冲突检测，载波监听和多路访问技术也不再重要。千兆以太网和万兆以太网采用与传统以太网同样的帧结构，最大/最小帧长都不变。
+    标准规定的传输介质：
+<img src="imgs\2020052101.jpg">
+
+    Linux系统目录结构是树状结构。树根是“/”符号，在树根下有很多子目录，这些子目录都有其特定的功能。下表是Linux系统中常见的目录及其功能的简单描述：
+    Linux目录概述表
+<img src="imgs\2020052102.jpg">
+
+假设分配给用户U1的网络号为192.25.16.0~192.25.31.0，则U1的地址掩码应该为（）；假设分配给用户U2的网络号为192.25.64.0/20，如果路由器收到一个目标地址为11000000.00011001.01000011.00100001的数据报，则该数据报应传送给用户（  ）。
+A.255.255.255:0    B.255.255.250.0   C.255.255.248.0   D.255.255.240.0
+A.U1   B.U2   C.U1或U2   D.不可到达
+R:DB W:CD N:CIDR和路由汇聚
+
+    16个C类地址进行聚合，192.25.16.0~192.25.31.0，聚合后的最大的相同位数是20位，那么则U1的地址掩码应该为255.255.240.0，聚合后的地址是192.25.16.0/20。分配给用户U2的网络号为192.25.64.0/20。现在路由器收到一个11000000.00011001.01000011.00100001（192.25.67.33）的数据包，很明显这个数据报属于U2网络，那么数据报应传送给用户U2。
+
+    采用4B/5B编码能够提高编码的效率，降低电路成木。这种编码方法的原理如下图所示。
+<img src="imgs\2020052103.jpg">
+    这实际上是一种两级编码方案。系统中使用不归零码（NRZ），在发送到传输介质时变成见1就翻不归零码（NRZ-1）。NRZ-1代码序列中1的个数越多，越能提供同步信息，如果遇到长串的“0”，则不能提供同步信息，所以在发送到介质上之前还需经过一次4B/5B编码。发送器扫描要发送的位序列，4位分为一组，然后按照对应规则变换成5位二进制代码。
+	5位二进制代码的状态共有32种，其中1的个数都不少于2个，这样就保证了传输的代码能提供足够多的同步信息。另外，还有5B/6B，8B/10B等编码方法，其原理是类似的。
+
+下列分组交换网络中，采用的交换技术与其他 3 个不同的是（   ）网。
+A.IP    B.X.25    C.帧中继    D.ATM
+R:A W:C N:X.25网络
+
+    其它三种采用的是面向连接的方式。
+
+SNMPv2提供了几种访问管理信息的方法，其中属于SNMPv2特有的是（  ）。
+A.管理站与代理之间的请求/响应通信    B.管理站与管理站之间的请求/响应通信
+C.代理到管理站的非确认通信 　   D.代理向管理站发送陷入报文
+R:B W:C N:SNMP协议
+
+    SNMP协议和版本区别
+	（1）SNMPv1：由于轮询的性能限制，SNMP不适合管理很大的网络，不适合检索大量数据。SNMP的陷入报文是没有应答的，可能会丢掉重要的管理信息。SNMP只提供简单的团体名认证，安全措施很弱。SNMP不支持管理站之间的通信。
+	（2）SNMPv2：管理者与管理者之间可以通信。SNMPv2提供3种访问管理信息的方法：管理站和代理之间的在请求/响应通信；代理系统到管理站的非确认通信；管理站和管理站之间的请求/响应通信，以支持分布式网络管理。SNMPv2报文的结构分为3 个部分：版本号、团体名和作为数据传送的PDU。
+	
+	SNMPv2访问管理信息的方法如下：
+	管理站和代理之间的请求/响应通信。与SNMPv1是一样的。
+	管理站和管理站之间的请求/响应通信。是SNMPv2特有的。
+	代理系统到管理站的非确认通信，即由代理向管理站发送陷入报文，报知出现的异常情况。SNMPv1中也有对应的通信方式。
