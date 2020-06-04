@@ -6078,3 +6078,51 @@ R:D W:A N:CSMA/CD协议
 	②若信道忙，继续监听直到信道空闲，转①。
 	③如果发送延迟一个时间单位τ，则重复①。
 	困难的问题是决定概率P的值，P的取值应在重负载下能使网络有效地工作。为了说明P的取值对网络性能的影响，假设有n个站正在等待发送，与此同时，有一个站正在发送。当这个站发送停止时，实际要发送的站数等于nP。若nP大于1，则必有多个站同时发送，这必然会发生冲突，nP必须小于1。然而若P值太小，发送站就要等待较长时间，在轻负载的情况下，这意味着较大的发送时延。
+
+20200604 每日一练 79
+https://uc.educity.cn/tiku/testReport.html?id=7291339
+
+Let us now see how randomization is done when a collision occurs. After a （  ）, time is divided into discrete slots whose length is equal to the worst-case round-trip propagation time on the ether(2τ). To accommodate the longest path allowed by Ethernet, the slot time has been set t0 512 bit times, or 51.2μsec.
+After the first collision, each station waits either 0 or 1 （  ） times before trying again. If two stations collide and each one picks the same random number, they will collide again. After the second collision, each one picks either 0,1,2,or 3 at random and waits that number of slot times. If a third collision occurs(the probability of this happening is 0.25),  then the next time the number of slots to wait is chosen at （  ）from the interval 0 to 2^3-1.
+In general, after i collisions，a random number between 0 and 2^i-1 is chosen, and that number of slots is skippeD. However, after ten collisions have been reached, the randomization（  ） is frozen at a maximum of 1023 slots. After 16 collisions, the controller throws in the towel and reports failure back to the computer. Further recoveryis up to （  ） layers.
+A.datagram   B.collision    C.connection   D.service
+A.slot   B.switch   C.process   D.fire
+A.rest   B.random    C.once   D.odds
+A.unicast    B.multicast   C.broadcast   D.interval
+A.local   B.next    C.higher   D.lower
+R:BABDC W:CCBCC N:计算机专业英语
+
+    现在让我们看看当发生冲突时，随机性操作是如何体现的。出现冲突时，时间被划分为离散的时槽，其长度等于最坏情况下以太网的周转传播时间（2τ），为了适应以太网中的最长通路，时槽被设为512比特的发送时间，即15.2微秒。
+	第一次冲突后，每个站在再次试图发送前等待0或1个时槽。如果两个站出现冲突，并且每个站都选用了同样的随机数，那么就会再一次发生冲突。第二次发生冲突后，每个站随机地选取数字0、1、2或者3，并等待相应的时槽数。如果发生了第三次冲突（这种情况出现的概率为0.25），则下一次等待的时槽数目就随机的在0~2^3-1中选取。
+	一般情况下，第i次冲突后，随机数在0到2^i-1之间选取，相应的时槽数被跳过。然而，达到10次冲突后，随机数被固定在最大1023个时槽之内。16次冲突后，控制器放弃发送，向计算机发出故障报告。近一步的恢复措施由上层协议实施。
+
+路由器命令R1(config) # ip routing的作用是（）。
+A.显示路由信息    B.配置默认路由   C.激活路由器端口    D.启动路由配置
+R:D W:B N:路由器基本配置
+
+    路由器命令Rl（congig） # ip routing的作用是启动路由配置。有些路由器在默认情况下关闭了路由选择协议，这时要使用命令ip routing激活路由选择协议，然后再用命令routerr rip或者router osgf process-id分别进入RIP配置模式和0SPF配置模式。
+
+采用Windows Server 2003创建一个Web站点，主目录中添加主页文件index.asp后，在客户机的浏览器地址栏内输入该网站的域名后不能正常访问，则不可能的原因是（  ）。
+A.Web站点配置完成后没有重新启动      B.DNS服务器不能进行正确的域名解析
+C.没有将index.asp添加到该Web站点的默认启动文档中      D.没有指定该Web站点的服务端口
+R:D N:Windows系统WEB站点配置
+
+    采用Windows Server 2003创建一个Web站点，主目录中添加主页文件index.asp后，其中选项D答案为不可能的原因，Web站点在没有指明具体的服务端口时，其默认端口为80。（注意：题目中说的是“不可能的原因”）
+
+    IGRP发布路由更新信息的周期是90s，而RIP路由更新周期通常为30s。
+
+所谓移动IP是指（  ）； 实现移动IP的关键技术是（  ）。
+A.通过地址翻译技术改变主机的IP地址   B.一个主机IP地址可以转移给另一个手机
+C.移动主机通过再无线通信网中漫游来保持网络连接    D.移动主机在离开家乡网络的远程站点可以连接工作
+A.移动主机具有一个可以接入任何网络的通用IP地址  B.移动主机具有一个家乡网络地址并获取一个外地转交地址
+C.移动主机通过控制全网的管理中心申请网络接入服务  D.移动主机总是通过家乡网络地址来获取接入服务
+R:DB W:DA
+
+    Mobile IP是为了满足移动节点在移动中保持其连接性而设计的。Mobile IP现在有两个版本，分别为Mobile IPv4（RFC 3344，取代了RFC 3220，RFC 2002）和Mobile IPv6（RFC 3775）。目前广泛使用的仍然是Mobile IPv4。
+	最简单的说，移动IP技术就是让计算机在互联网及局域网中不受任何限制的即时漫游，也称移动计算机技术。
+	专业来说，移动IP技术是移动节点（计算机/服务器/网段等）以固定的网络IP地址，实现跨越不同网段的漫游功能，并保证了基于网络IP的网络权限在漫游过程中不发生任何改变。
+	移动IP的关键技术有代理搜索、转交地址、登录、隧道。
+	1、代理搜索：是计算节点用来判断自己是否处于漫游状态。
+	2、转交地址：是移动节点移动到外网时从外代理处得到的临时地址。
+	3、登录：是移动节点到达外网时进行一系列认证、注册、建立隧道的过程。
+	4、隧道：是家代理与外代理之间临时建立的双向数据通道。
