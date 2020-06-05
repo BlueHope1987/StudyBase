@@ -6126,3 +6126,39 @@ R:DB W:DA
 	2、转交地址：是移动节点移动到外网时从外代理处得到的临时地址。
 	3、登录：是移动节点到达外网时进行一系列认证、注册、建立隧道的过程。
 	4、隧道：是家代理与外代理之间临时建立的双向数据通道。
+
+20200605 每日一练 74
+https://uc.educity.cn/tiku/testReport.html?id=7302904
+
+Certificates are （）documents attesting to the （） of a public key to an individual or other entity. They allow verification of the claim that a given public key does in fact belong to a given individual. Certificates help prevent someone from using a phony key to （）someone else. In their simplest form， Certificates contain a public key and a name. As commonly used， a certificate also contains an （）date， the name of the CA that issued the certificate， a serial number， and perhaps other information. Most importantly， it contains the digital（）of the certificate issuer. The most widely accepted format for certificates is X.509 ， thus， Certificates can be read or written by any application complying with X.509.
+A.text  B.data  C.digital   D.structured
+A.connecting   B.binding   C.composing   D.conducting
+A.impersonate   B.personate   C.damage   D.control
+A.communication   B.computation   C.expectation   D.expiration
+A.signature   B.mark   C.stamp   D.hypertext
+R:CBADA  W:CCBBA
+
+	证书是一种数字文档，用于表明把一个公钥绑定到一个人或其他实体。用它可以验证一个给定的公钥确实属于某一个人。证书可以防止某些人使用假冒的密钥去冒充别人。最简单的证书包含一个公钥和一个名字。通常使用的证书也包含超时日期、发行证书的CA的名字、一个序列号，以及其他信息。最重要的是，它包含了证书发行者的数字签名。最广泛接受的证书格式是X.509，这样的证书可以被任何服从X.509标准的应用读或写。
+
+点对点协议PPP中LCP的作用是（  ）。
+A.包装各种上层协议   B.封装承载的网络层协议   C.把分组转变成信元   D.建立和配置数据链路
+R:D W:A N:PPP协议
+
+    PPP协议是一种点到点的链路层协议，它提供了点到点的一种封装、传递数据的一种方法。PPP协议一般包括三个协商阶段：LCP（链路控制协议）阶段，认证阶段，NCP（网络层控制协议）阶段。拨号后，用户计算机和接入服务器在LCP阶段协商底层链路参数，然后在认证阶段进行用户计算机将用户名和密码发送给接入服务器认证，接入服务器可以进行本地认证，可以通过RADIUS协议将用户名和密码发送给AAA服务器进行认证。认证通过后，在NCP（IPCP）协商阶段，接入服务器给用户计算机分配网络层参数如IP地址等。
+
+下列关于网络汇聚层的描述中，正确的是（  ）。*
+
+为了限制路由信息传播的范围，OSPF协议把网络划分成4种区域（Area），其中（主干区域）的作用是连接各个区域的传输网络，（存根区域）不接受本地自治系统以外的路由信息。*
+
+    每个OSPF区域被指定了一个32位的区域标识符，可以用点分十进制表示，例如主干区域的标识符可表示为0.0.0.0。OSPF的区域分为以下5种，不同类型的区域对由自治系统外部传入的路由信息的处理方式不同。
+	标准区域：标准区域一可以接收任何链路更新信息和路由汇总信息。
+	主干区域：主干区域是连接各个区域的传输网络，其他区域都通过主干区域交换路由信息。主干区域拥有标准区域的所有性质。
+	存根区域：不接受本地自治系统以外的路由信息，对自治系统以外的目标采用默认路由0.0.0.0。
+	完全存根区域：不接受自治系统以外的路由信息，也不接受自治系统内其他区域的路由汇总信息，发送到本地区域外的报文使用默认路由0.0.0.0。完全存根区域是Cisco定义的，是非标准的。
+	不完全存根区域（NSAA）：类似于存根区域，但是允许接收以类型7的链路状态公告发送的外部路由信息。
+
+在以太网中，最大传输单元（MTU）是 （）字节。
+A.46    B.64    C.1500    D.1518
+R:C W:D
+
+    在以太网中，最大传输单元（MTU）是1500个字节，最大帧长是1518个字节。
