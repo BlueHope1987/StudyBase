@@ -6162,3 +6162,34 @@ A.46    B.64    C.1500    D.1518
 R:C W:D
 
     在以太网中，最大传输单元（MTU）是1500个字节，最大帧长是1518个字节。
+
+
+20200606 每日一练 62
+https://uc.educity.cn/tiku/testReport.html?id=7318863
+
+SMTP服务器端使用的端口号默认为（  ）。
+A.21  B.25  C.53  D.80
+R:B W:C N:电子邮件协议
+
+    SMTP是一种提供可靠且有效电子邮件传输的协议。SMTP是建立在FTP文件传输服务上的一种邮件服务，主要用于传输系统之间的邮件信息并提供来信有关的通知。在传输文件过程中默认使用25号端口。
+
+    广播地址是不能做为源地址的，但可以作为目的地址。
+
+关于移动Ad Hoc网络MANET，（  ）不是MANET的特点。
+A.网络拓扑结构是动态变化的  B.电源能量限制了无线终端必须以最节能的方式工作
+C.可以直接应用传统的路由协议支持最佳路由选择  D.每个结点既是主机又是路由器
+R:C W:B N:WLAN
+
+    Ad Hoc网络中不能直接应用传统的路由协议支持最佳路由选择。
+
+    甘特图的优点是直观表明各个任务的计划进度和当前进度，能动态地反映软件开发进展的情况，是小型项目中常用的工具。缺点是不能显式地描绘各个任务间的依赖关系，关键任务也不明确。
+
+DOM is a platform- and language-（） API that allows programs and scripts to dynamically access and update the content， structure and style of WWW documents（currently， definitions for HTML and XML documents are part of the specification）. The document can be further processed and the results of that processing can be incorporated back into the presented （）. DOM is a（）-based API to documents， which requires the whole document to be represented in（）while processing it. A simpler alternative to DOM is the event-based SAX， which can be used to process very large（）documents that do not fit into the memory available for processing.
+A.specific  B.neutral  C.contained  D.related
+A.text  B.image  C.page  D.graphic
+A.table  B.tree  C.control  D.event
+A.document  B.processor  C.disc  D.memory
+A.XML  B.HTML   C.script  D.Web
+R:BCBDA W:CABAB
+
+    DOM是一种独立于平台和语言的API，它允许程序和脚本语言动态的访问和更新WWW文档的内容、结构以及形式（目前对HTML和XML文档的定义也是这些规范的一部分）。这些文档可以近一步的被处理，然后处理的结果被传送到当前页面。DOM是一种树形的API文档，在处理这种文档的时候，要求将整个文档在内存中进行表示。DOM的一种简单解决方案就是基于事件的SAX，它可以用来处理大量的XML文档，同时处理文档的同时不需要将其调入内存。
