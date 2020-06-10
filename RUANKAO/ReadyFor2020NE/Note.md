@@ -6046,7 +6046,7 @@ https://uc.educity.cn/tiku/testReport.html?id=7280237
 
     扩展频谱通信技术*
 
-    DHCP就是Dynamic Host Configuration Protocol （动态主机配丑协议）的缩写，当DHCP客户机首次启动时，客户机向DHCP服务器发送一个Dhcpdiscover数据包，该数据包表达了客户机的IP租用请示，在大多数情况下，客户机接受收到的第一个dhcpoffero使用DHCP服务时，可以通过保留IP与MAC地址保证某台计算机使用固定IP地址。客户端在配置时不必指明DHCP服务器IP地址，就能获得DHCP服务。在一个子网内可以设置多台dhcp服务器的。
+    DHCP就是Dynamic Host Configuration Protocol （动态主机配置协议）的缩写，当DHCP客户机首次启动时，客户机向DHCP服务器发送一个Dhcpdiscover数据包，该数据包表达了客户机的IP租用请示，在大多数情况下，客户机接受收到的第一个dhcpoffero使用DHCP服务时，可以通过保留IP与MAC地址保证某台计算机使用固定IP地址。客户端在配置时不必指明DHCP服务器IP地址，就能获得DHCP服务。在一个子网内可以设置多台dhcp服务器的。
 
     交换设备端口的基础知识。路由器与广域网连接的端口称为WAN端口，路由器与局域网连接的端口称为LAN口。常见的网络端口有以下几种：
     RJ-45端口：这种端口通过双绞线连接以太网。10Base-T的RJ-45端口标识为“ETH”，而100Base-TX的RJ-45端口标识为“10/100bTX”。
@@ -6318,3 +6318,41 @@ A.同轴电缆 　 B.无屏蔽双绞线 　 C.CATV电缆 　 D.光纤
 R:D W:A N:高速以太网
 
     100BASE-FX支持2芯的多模或单模光纤。100BASE-FX主要是用做高速主干网，从节点到集线器（HUB）的距离可以达到2km，是一种全双工系统。
+
+
+20200610 每日一练 60
+https://uc.educity.cn/tiku/testReport.html?id=7359033
+
+某公司用三台 Web 服务器维护相同的 Web 信息，并共享同一域名。在 Windows的 DNS 服务器中通过（）操作，可以确保域名解析并实现负载均衡。
+A.启用循环（Round Robin），添加每个 Web 服务器的主机记录 　 B.禁止循环（Round Robin），启动转发器指向每个 Web 服务器
+C.启用循环（Round Robin），启动转发器指向每个 Web 服务器   D.禁止循环（Round Robin），添加每个 Web 服务器的主机记录
+R:A w:C
+
+    Windows的DNS服务器可以用来实现简单的负载平衡技术，其中的配置需要将对服务器的访问分配到不同的物理服务器上。配置的步骤为：启用循环（Round Robin），添加每个Web服务器的主机记录。
+
+Windows系统下，通过运行（）命令可以打开Windows管理控制台。
+A.regedit   B.cmd   C.mmc   D.mfc
+R:C W:B
+
+    本题考查的是打开Windnws管理控制台的操作命令，答案A是打开注册表，答案B是打开命令窗口，答案C的mmc可以完成此功能，答案D为干扰项。
+
+在直接寻址方式中，用于存放指令地址的是（  ）。
+A.PC（程序计数器）   B.AR（地址寄存器）   C.AC（累加器）   D.ALU（逻辑运算单元）
+R:A W:B N:寻址方式
+
+    本题主要考查寄存器的相关内容。
+	程序计数器是用于存放下一条指令所在单元的地址的地方。在程序执行前，必须将程序的起始地址，即程序的一条指令所在的内存单元地址送入程序计数器，当执行指令时，CPU将自动修改程序计数器的内容，即每执行一条指令程序计数器增加一个量，使其指向下一个待指向的指令。程序的转移等操作也是通过该寄存器来实现的。
+	地址寄存器一般用来保存当前CPU所访问的内存单元的地址，以方便对内存的读写操作。
+	累加器是专门存放算术或逻辑运算的一个操作数和运算结果的寄存器。ALU是CPU的执行单元，主要负责运算工作。
+
+把路由器当前配置文件存储到NVRAM中的命令是（  ）。
+A.Router（confg）#copy current to starting     B.Router#copy starting to running
+C.Router（config）#copy running-config starting-config     D.Router#copy run startup
+R:D W:A N:路由器基本配置
+
+    [思科]把路由器当前配置文件存储到NVRAM中的命令是Router#copy run startup。
+    华为设备命令为save
+
+当一个主机要获取通信目标MAC地址时，（广播发送ARP请求 ）。
+
+	此题考查的是ARP协议。该协议的目的是知道对方的IP地址求对方的MAC地址。第一步源方广播发送ARP请求，第二部目的方单播ARP应答，源方将目的方的MAC和IP地址的对应记录记录在缓存中。
