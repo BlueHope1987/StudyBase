@@ -1823,3 +1823,81 @@ R:BC W:DB N:设计模式
 <img src="imgs\2020052302.png">
     Invoker指的是调用者，ConcreteCommand是具体命令类，对应本题类图，可以找到对应的类名。
     对于题目所给出的图，与“Invoker”角色相对应的类是MenuItem，与“Concrete Command”角色相对应的类是Open。
+
+20200623 每日一练 80
+https://uc.educity.cn/tiku/testReport.html?id=7489657
+
+某公司在对一家用车库门嵌入式软件系统进行架构设计时，识别出两个关键的质量属性场景，其中“当车库门正常下降时，如果发现下面有障碍物，则系统停止下降的时间需要控制在0.1秒内”与（性能）质量属性相关；“系统需要为部署在远程PC机上的智能家居系统留有控制接口，并支持在智能家居系统中对该系统进行远程错误诊断与调试”与（可测试性）质量属性相关。
+
+以下关于软件中间件的叙述，错误的是（  ）。
+A.中间件通过标准接口实现与应用程序的关联，提供特定功能的服务
+B.使用中间件可以提高应用软件可移植性
+C.使用中间件将增加应用软件设计的复杂度
+D.使用中间件有助于提高开发效率
+R:C N:构件与中间件技术
+
+    中间件是一种独立的系统软件或服务程序，分布式应用软件借助这种软件在不同的技术之间共享资源，中间件位于客户机服务器的操作系统之上，管理计算资源和网络通信。
+    软件中间件的作用是为处于自己上层的应用软件提供运行与开发的环境，帮助用户开发和集成应用软件。它不仅仅要实现互连，还要实现应用之间的互操作。
+    使用中间件对于应用软件的设计层面来说应该是简单了，注意是设计。
+
+某公司拟开发了个轿车巡航定速系统，系统需要持续测量车辆当前的实时速度，并根据设定的期望速度启动控制轿车的油门和刹车。针对上述需求，采用（过程控制）架构风格最为合适。** W:D（管道-过滤器） N:软件架构风格
+
+处理流程设计是系统设计的重要内容。以下关于处理流程设计工具的叙述中，不正确的是（  ）。
+A.程序流程图（PFD）用于描述系统中每个模块的输入，输出和数据加工
+B.N-S图容易表示嵌套关系和层次关系，并具有强烈的结构化特征
+C.IPO图的主体是处理过程说明，可以采用流程图、判定树/表等来进行描述
+D.问题分析图（PAD）包含5种基本控制结构，并允许递归使用
+R:A W:C N:业务流程设计
+
+    用于描述系统中每个模块的输入，输出和数据加工的图是IPO图，而非程序流程图。
+    这些是系统设计阶段使用到的流程设计工具的基本知识，从前期统计分析来看，不属于架构师的高频考点和重要知识点。所以没有包含到架构师教程和讲解中（毕竟时间有限）。建议通过习题练习过程中去吸纳这类知识。
+    1、程序流程图又称程序框图，是用统一规定的标准符号描述程序运行具体步骤的图形表示。程序框图的设计是在处理流程图的基础上，通过对输入输出数据和处理过程的详细分析，将计算机的主要运行步骤和内容标识出来。
+    2、N-S图，也被称为盒图或NS图（Nassi Shneiderman图），一种在流程图中完全去掉流程线，全部算法写在一个矩形阵内，容易表示嵌套关系和层次关系，并具有强烈的结构化特征 。NS图几乎是流程图的同构，任何的NS图都可以转换为流程图，而大部分的流程图也可以转换为NS图。其中只有像Goto指令或是C语言中针对循环的break及continue指令无法用NS图表示。
+    3、IPO是指结构化设计中变换型结构的输入（Input）、加工（Processing）、输出（Output）。IPO图是对每个模块进行详细设计的工具，它是输入加工输出（INPUT PROCESS OUTPUT）图的简称。主体是处理过程说明，可以采用流程图、判定树/表等来进行描述 。
+    4、PAD图指问题分析图(Problem Analysis Diagram),是一算法描述工具,也是详细设计（软件设计）中常用的图形工具，它是一种由左往右展开的二维树型结构.PAD图的控制流程为自上而下,从左到右地执行.包含5种基本控制结构，并允许递归使用。
+
+面向对象的设计模型包含以（包图）表示的软件体系结构图，以（交互图）表示的用例实现图，完整精确的类图，针对复杂对象的状态图和用以描述流程化处理的活动图等。
+
+某公司拟开发一个地面清洁机器人。机器人的控制者首先定义清洁任务和任务之间的关系，机器人接受任务后，需要响应外界环境中触发的一些突发事件，根据自身状态进行动态调整，最终自动完成任务。针对上述需求，该机器人应该采用（规则系统）架构风格最为合适。
+
+    规则系统属于虚拟机风格的一种，在本题中要求机器人的控制者首先定义清洁任务和任务之间的关系，然后由机器人执行，这说明机器人能对自定义的一些逻辑进行解析，这是虚拟机风格的一大特色。
+
+补20200522 每日一练 91
+https://uc.educity.cn/tiku/testReport.html?id=7495896
+
+架构权衡分析方法(Architecture Tradeoff Analysis Method, ATAM)是在基于场景的架构分析方法（Scenarios-based Architecture  Analysis Method, SAAM）基础之上发展起来的，主要包括场景和需求收集、（  ），属性模型构造和分析，属性模型折中等四个阶段。ATAM方法要求在系统开发之前，首先对这些质量属性进行（  ）和折中。
+A.架构视图和场景实现  B.架构风格和场景分析  C.架构设计和目标分析  D.架构描述和需求评估
+A.设计  B.实现  C.测试  D.评价
+R:AD W:DD N:软件架构评估
+
+    ATAM被分为四个主要的活动领域(或阶段) ，分别是场景和需求收集、体系结构视图和场景实现、属性模型构造和分析、折中。
+    体系结构权衡分析方法(Architecture Tradeoff AnalysisMethod，ATAM)是在SAAM的基础上发展起来的，主要针对性能、可用性、安全性和可修改性，在系统开发之前，对这些质量属性进行评价和折中。
+    (1)特定目标：ATAM的目标是在考虑多个相互影响的质量属性的情况下，从原则上提供一种理解软件体系结构的能力的方法。对于特定的软件体系结构，在系统开发之前，可以使用ATAM方法确定在多个质量属性之间折中的必要性。
+    (2)质量属性：ATAM方法分析多个相互竞争的质量属性。开始时考虑的是系统的可修改性、安全性、性能和可用性。
+    (3)风险承担者：在场景、需求收集有关的活动中， ATAM方法需要所有系统相关人员的参与。
+    (4)体系结构描述：体系结构空间受到历史遗留系统、互操作性和以前失败的项目约束。在五个基本结构的基础上进行体系结构描述，这五个结构是从Kruchten的4 + 1视图派生而来的。其中逻辑视图被分为功能结构和代码结构。这些结构加上它们之间适当的映射可以完整地描述一个体系结构。
+    用一组消息顺序图显示运行时的交互和场景，对体系结构描述加以注解。ATAM方法被用于体系结构设计中，或被另一组分析人员用于检查最终版本的体系结构。
+    (5)评估技术：可以把ATAM方法视为一个框架，该框架依赖于质量属性，可以使用不同的分析技术。它集成了多个优秀的单一理论模型，其中每一个都能够高效、实用地处理属性。该方法使用了场景技术。从不同的体系结构角度，有三种不同类型的场景，分别是用例(包括对系统典型的使用，还用于引出信息) 、增长场景(用于涵盖与它的系统修改) 、探测场景(用于涵盖那些可能会对系统造成压迫的极端修改) 。
+
+A system's architecture is a representation of a system in which there is a mapping of（  ）onto hardware and software components, a mapping of the（  ）onto the hardware architecture. and a concern for the human interaction with these components. That is, system architecture is concerned with a total system, including hardware. software, and humans.Software architectural structures can be divided into three major categories, depending on the broad nature of the elements they show.1）（  ）embody decisions as a set of code or data units that have to be constructed or procured.2）（  ）embody decisions as to how the system is to be structured as set of elements that have runtime behavior and interactions.3）（  ）embody decisions as to how the system will relate to nonsoftware structures in its environment(such as CPUs, file systems, networks, development teams, etc.).
+A.attributes  B.constraint  C.functionality  D.requirements
+A.physical components  B.network architecture  C.software architecture  D.interface architecture
+A.Service structures  B.Module structures  C.Deployment structures  D.Work assignment structures
+A.Decompostion structures  B.Layer structures  C.Implementation structures  D.Component-and-connector structures
+A.Allocation structures  B.Class structures  C.Concurrency structures  D.Uses structures
+R:CCBDA W:DABDA N:专业英语
+
+    系统架构是一个系统的一种表示，包含了功能到软硬件构件的映射、软件架构到硬件架构的映射以及对于这些组件人机交互的关注。也就是说，系统架构关注于整个系统，包括硬件、软件和使用者。软件架构结构根据其所展示元素的广义性质，可以被分为三个主要类别。
+    1）模块结构将决策体现为一组需要被构建或采购的代码或数据单元。
+    2）构件连接器结构将决策体现为系统如何被结构化为一组具有运行时行为和交互的元素。
+    3）分配结构将决策体现为系统如何在其环境中关联到非软件结构，如CPU、文件系统、网络、开发团队等。
+
+假设单个CPU的性能为1，则由n个这种CPU组成的多处理机系统的性能P为：
+p=n/(1+(n-1)a)
+其中，a是一个表示开销的常数。例如，a=0.1，n=4时，P约为3。也就是说，由4个这种CPU组成的多机系统的性能约为3。该公式表明，多机系统的性能有一个上限，不管n如何增加，P都不会超过某个值。当a=0.1时，这个上限是（  ）。
+A.5  B.10  C.15  D.20
+R:B N:阿姆达尔解决方案
+
+    本题主要考查多处理机系统的性能上限计算问题，根据计算公式，可以看出当a=0.1时，公式变为p=10n/(10+(n-1))，对该表达式进行求导，得到该式的极限为10。（可以枚举）
+
+    著作权法不适用于： 法律、法规，国家机关的决议、决定、命令和其他具有立法、行政、司法性质的文件，及其官方正式译文。如“国务院颁布的《计算机软件保护条例》”属于该情况，所以不受著作权法保护。
