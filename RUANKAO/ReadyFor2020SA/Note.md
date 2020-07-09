@@ -2875,3 +2875,53 @@ R:C N:软件架构风格
 
 需求管理是CMM可重复级中的6个关键过程域之一，其主要目标是（对于软件需求，必须建立基线以进行控制，软件计划、产品和活动必须与软件需求保持一致）。
 
+
+20200709 每日一练 88
+https://uc.educity.cn/personalCenter/studyCenter.html
+
+An application architecture specifies the technologies to be used to implement one or more information systems． It serves as an outline for detailed design， construction， and implementation． Given the models and details， include（  ）， we can distribute data and processes to create a general design of application architecture． The design will normally be constrained by architecture standards， project objectives， and （  ）． The first physical DFD to be drawn is the（  ）． The next step is to distribute data stores to different processors． Data（  ） are two types of distributed data which most RDBMSs support． There are many distribution options used in data distribution． In the case of （  ）we should record each table as a data store on the physical DFD and connect each to the appropriate server．
+A.logical DFDs and ERD  B.ideal object model and analysis class model
+C.use case models and interface prototypes  D.physical DFDs and database schema
+
+A.the database management system  B.the feasibility of techniques used
+C.the network topology and technology  D.the user interface and process methods
+
+A.context DFD  B.system DFD  C.network architecture DFD  D.event-response DFD
+
+A.vertical partitioning and horizontal replication  B.vertical replication and horizontal partitioning
+C.integration and distribution  D.partitioning and replication
+
+A.storing all data on a single server  B.storing specific tables on different servers
+C.storing subsets of specific tables on different servers  D.duplicating specific tables or subsets on different servers
+R:ABCDB W:ABBDB N:专业英语
+
+    应用架构说明了实现一个或多个信息系统所使用的技术，它作为详细设计、构造和实现的一个大纲。给定了包括逻辑数据流图和实体联系图在内的模型和详细资料，我们可以分配数据和过程以创建应用架构的一个概要设计。概要设计通常会受到架构标准、项目目标和所使用技术的可行性的制约。需要绘制的第一个物理数据流图是网络架构数据流图。接下来是分配数据存储到不同的处理器。数据分区和复制是大多数关系型数据库支持的两种分布式数据形式。有许多分配方法用于数据分布。在不同服务器上存储特定表的情况下，我们应该将每个表记为物理数据流图中的一个数据存储，并将其连接到相应的服务器。
+
+识别风险点、非风险点、敏感点和权衡点是软件架构评估过程中的关键步骤。针对某系统所作的架构设计中，“系统需要支持的最大并发用户数量直接影响传输协议和数据格式”描述了系统架构设计中的一个（  ）；“由于系统的业务逻辑目前尚不清楚，因此现有系统三层架构中的第二层可能会出现功能重复，这会影响系统的可修改性”描述了系统架构设计中的一个（  ）。
+A.敏感点  B.风险点  C.非风险点  D.权衡点
+R:AB W:DA N:软件架构评估
+
+    本题考查架构设计中的一些基本概念。
+    风险点与非风险点不是以标准专业术语形式出现的，只是一个常规概念，即可能引起风险的因素，可称为风险点。
+    敏感点是一个或多个构件（和/或构件之间的关系）的特性。研究敏感点可使设计入员或分析员明确在搞清楚如何实现质量目标时应注意什么。“系统需要支持的最大并发用户数量直接影响传输协议和数据格式”，说明传输协议和数据格式对并发用户数量比较敏感。“最大并发用户数量”这个一个质量属性会同时影响“传输协议和数据格式“这两个属性，因此其描述的是一个敏感点。   
+    权衡点是影响多个质量属性的特性，是多个质量属性的敏感点。例如，“改变加密的级别可能会对安全性和性能都产生显著的影响” 提高加密级别可以提高安全性，但可能要耗费更多的处理时间，影响系统性能。如果某个机密消息的处理有严格的时间延迟要求，则加密级别可能就会成为一个权衡点。
+
+某企业准备将四个工人甲、乙、丙、丁分配在A、B、C、D四个岗位。每个工人由于技术水平不同，在不同岗位上每天完成任务所需的工时见下表。适当安排岗位，可使四个工人以最短的总工时（14）全部完成每天的任务。
+    A   B   C   D
+甲  7   5   2   3
+乙  9   4   3   7
+丙  5   4   7   5
+丁  4   6   5   6
+
+补20200508 每日一练 100
+https://uc.educity.cn/tiku/testReport.html?id=7666958
+
+某公司欲开发一个漫步者机器人，用来完成火星探测任务。机器人的控制者首先定义探测任务和任务之间的时序依赖性，机器人接受任务后，需要根据自身状态和外界环境进行动态调整，最终自动完成任务。针对这些需求，该机器人应该采用（解释器）架构风格最为合适。
+
+    本题主要考查架构风格与架构设计策略。本题出题本就不严谨，从描述来看多种架构风格均合适：过程控制，虚拟机，隐式调用。当次考试参考答案为C隐式调用，但从此后的同类问题来看，答案修改为“虚拟机（解释器，规则系统）”，所以再次出现该类问题，建议首选虚拟机类风格。
+
+在基于构件的软件开发中，（  ）描述系统设计蓝图以保证系统提供适当的功能；（  ）用来了解系统的性能、吞吐率等非功能性属性。
+A.逻辑构件模型  B.物理构件模型  C.组件接口模型  D.系统交互模型
+R:AB N:开发模型
+
+    在基于构件的软件开发中，逻辑构件模型用功能包描述系统的抽象设计，用接口描述每个服务集合，以及功能之间如何交互以满足用户需求，它作为系统的设计蓝图以保证系统提供适当的功能。物理构件模型用技术设施产品、硬件分布和拓扑结构、以及用于绑定的网络和通信协议描述系统的物理设计，这种架构用于了解系统的性能、吞吐率等许多非功能性属性。
