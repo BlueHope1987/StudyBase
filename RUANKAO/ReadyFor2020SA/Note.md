@@ -634,7 +634,7 @@ R:B W:D N:数据备份与恢复
 
     从题目中“系统中有正在运行的事务”了解到应采用动态方式，从题目中“全部数据”了解到应是全局转储，所以应采用：动态全局转储。
 
-（  ）是关于项目开发管理正确的说法。
+（  ）是关于项目开发管理正确的说法。*
 A.需求文档、设计文档属于项目管理和机构支撑过程域产生的文档
 B.配置管理是指一个产品在其生命周期各个阶段所产生的各种形式和各种版本的文档、计算机程序、部件及数据的集合
 C.项目时间管理中的过程包括活动定义、活动排序、活动的资源估算、活动历时估算、制定进度计划以及进度控制
@@ -1551,7 +1551,7 @@ R:CA N:信号量与PV操作
     标出信号量之后，从某进程引出的信号量，在该进程末尾需要对信号量执行V操作，而信号量箭头指向的进程开始处应有信号量的P操作。
     以P1为例，S1与S2从P1发出，所以在P1末尾处要执行V（S1）V（S2），而在P2开始处应执行P（S1）P（S3）。
 
-Software architecture reconstruction is an interpretive, interactive, and iterative process including many activities. （  ）involves analyzing a system's existing design and implementation artifacts to construct a model of it. The result is used in the following activities to construct a view of the system. The database construction activity converts the （  ） contained in the view into a standard format for storage in a database. The （  ）activity involves defining and manipulating the information stored in database to reconcile, augment, and establish connections between the elements. Reconstruction consists of two primary activities: （  ） and （  ）. The former provides a mechanism for the user to manipulate architectural elements, and the latter provides facilities for architecture reconstruction.
+Software architecture reconstruction is an interpretive, interactive, and iterative process including many activities. （  ）involves analyzing a system's existing design and implementation artifacts to construct a model of it. The result is used in the following activities to construct a view of the system. The database construction activity converts the （  ） contained in the view into a standard format for storage in a database. The （  ）activity involves defining and manipulating the information stored in database to reconcile, augment, and establish connections between the elements. Reconstruction consists of two primary activities: （  ） and （  ）. The former provides a mechanism for the user to manipulate architectural elements, and the latter provides facilities for architecture reconstruction.*
 A.Reverse engineering  B.Information extraction  C.Requirements analysis  D.Source code analysis
 A.actors and use cases  B.processes and data  C.elements and relations  D.schemas and tables
 A.database normalization  B.schema definition  C.database optimization  D.view fusion
@@ -1879,7 +1879,7 @@ R:AD W:DD N:软件架构评估
     用一组消息顺序图显示运行时的交互和场景，对体系结构描述加以注解。ATAM方法被用于体系结构设计中，或被另一组分析人员用于检查最终版本的体系结构。
     (5)评估技术：可以把ATAM方法视为一个框架，该框架依赖于质量属性，可以使用不同的分析技术。它集成了多个优秀的单一理论模型，其中每一个都能够高效、实用地处理属性。该方法使用了场景技术。从不同的体系结构角度，有三种不同类型的场景，分别是用例(包括对系统典型的使用，还用于引出信息) 、增长场景(用于涵盖与它的系统修改) 、探测场景(用于涵盖那些可能会对系统造成压迫的极端修改) 。
 
-A system's architecture is a representation of a system in which there is a mapping of（  ）onto hardware and software components, a mapping of the（  ）onto the hardware architecture. and a concern for the human interaction with these components. That is, system architecture is concerned with a total system, including hardware. software, and humans.Software architectural structures can be divided into three major categories, depending on the broad nature of the elements they show.1）（  ）embody decisions as a set of code or data units that have to be constructed or procured.2）（  ）embody decisions as to how the system is to be structured as set of elements that have runtime behavior and interactions.3）（  ）embody decisions as to how the system will relate to nonsoftware structures in its environment(such as CPUs, file systems, networks, development teams, etc.).
+A system's architecture is a representation of a system in which there is a mapping of（  ）onto hardware and software components, a mapping of the（  ）onto the hardware architecture. and a concern for the human interaction with these components. That is, system architecture is concerned with a total system, including hardware. software, and humans.Software architectural structures can be divided into three major categories, depending on the broad nature of the elements they show.1）（  ）embody decisions as a set of code or data units that have to be constructed or procured.2）（  ）embody decisions as to how the system is to be structured as set of elements that have runtime behavior and interactions.3）（  ）embody decisions as to how the system will relate to nonsoftware structures in its environment(such as CPUs, file systems, networks, development teams, etc.).*
 A.attributes  B.constraint  C.functionality  D.requirements
 A.physical components  B.network architecture  C.software architecture  D.interface architecture
 A.Service structures  B.Module structures  C.Deployment structures  D.Work assignment structures
@@ -3084,3 +3084,35 @@ R:AC W:AB N:逆向工程
     ④ 领域级：包括反映程序分量或程序与应用领域概念之间对应关系的信息
 
 OMG接口定义语言 IDL 文件包含了六种不同的元素，（  ）是一个 IDL 文件最核心的内容，（  ）将映射为Java 语言中的包  (Package) 或 c++语言中的命名空间(Namespace)。** W:CB
+
+
+20200713 每日一练 80
+https://uc.educity.cn/tiku/testReport.html?id=7703527
+
+The objective of （  ）is to determine what parts of the application software will be assigned to what hardware.The major software components of the system being developed have to be identified and then allocated to the various hardware components on which the system will operate. All software systems can be divided into four basic functions. The first is（  ）. Most information systems require data to be stored and retrieved,whether a small file,such as a memo produced by a word processor,or a large database,such as one that stores an organization’s accounting records. The second function is the （  ）,the processing required to access data,which often means database queries in Structured Query Language. The third function is the （  ）,which is the logic documented in the DFDs,use cases,and functional requirements.The fourth function is the presentation logic,the display of information to the user and the acceptance of the user’s commands.The three primary hardware components of a system are （  ）.
+A.architecture design   B.modular design   C.physical design   D.distribution design
+A.data access components   B.database management system   C.data storage   D.data entities
+A.data persistence  B.data access objects  C.database connection  D.dataaccess logic
+A.system requirements  B.system architecture  C.application logic  D.application program
+A.computers,cables and network  B.clients,servers,and network  C.CPUs,memories and I/O devices  D.CPUs,hard disks and I/O devices
+R:ACDCB N:专业英语
+
+    架构设计的目标是确定应用软件的哪些部分将分配到何种硬件。识别出正在开发系统的主要软件构件并分配到系统将要运行的硬件构件。所有软件系统可分为四项基本功能。第一项是数据存储。大多数信息系统需要数据进行存储并检索，不论是一个小文件，比如一个字处理器产生的一个备忘录，还是一个大型数据库，比如存储一个企业会计记录的数据库。第二项功能是数据访问逻辑，处理过程需要访问数据，这通常是指用SQL进行数据库查询。第三项功能是应用程序逻辑，这些逻辑通过数据流图，用例和功能需求来记录。第四项功能是表示逻辑，给用户显示信息并接收用户命令。一个系统的三类主要硬件构件是客户机、服务器和网络。
+
+Software architecture reconstruction is an interpretive, interactive, and iterative process including many activities... * W:CDADC
+
+    软件架构重用是一个解释性、交互式和反复迭代的过程，包括了多项活动。信息提取通过分析系统现有设计和实现工件来构造它的模型。其结果用于在后续活动中构造系统的视图。数据库构建活动把模型中包含的元素和关系转换为数据库中的标准存储格式。视图融合活动包括定义和操作数据库中存储的信息，理顺、加强并建立起元素之间的连接。重构由两个主要活动组成；可视化和交互记及模式定义和识别。前者提供了一种让用户操作架构元素的机制，后者则提供了用于架构重构的设施。
+
+某文件系统采用多级索引结构， 若磁盘块的大小为4K字节，每个块号需占4字节，那么采用二级索引结构时的文件最大长度可占用（1024×1024）个物理块。
+
+    本题考查索引文件结构。在索引文件结构中，二级间接索引是指：索引结点对应的盘块存索引表，在索引表指向的盘块中依然存索引表，由于每个索引表可以存4K/4=1024个块号，所以二级索引可对应1024*1024个物理块。
+
+（  ）是关于项目开发管理正确的说法。* W:B*
+
+
+补20200504 每日一练 92
+https://uc.educity.cn/tiku/testReport.html?id=7714251
+
+用于管理信息系统规划的方法有很多，其中（战略目标集转化法）将整个过程看成是一个“信息集合”，并将组织的战略目标转变为管理信息系统的战略目标。（企业系统规划法）通过自上而下地识别企业目标、企业过程和数据，然后对数据进行分析，自下而上地设计信息系统。
+
+A system's architecture is a representation of a system in which there is a mapping...* W:AACDD
