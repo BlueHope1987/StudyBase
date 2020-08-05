@@ -96,7 +96,7 @@ A. client-based architecture  B. server-based architecture  C. network architect
 A. Operational requirements  B. Speed requirement  C. Access control requirements  D. Customization requirements
 A. Environment requirements  B. Maintainability requirements  C. Performance requirements   D. Virus control requirements
 A. Safety requirements   B. Security requirements   C. Data management requirements    D. System requirements
-R:DBACB W:DDAAB N:专业英语
+R:BDACB W:DDAAB N:专业英语
 
     架构设计指定了将要使用的软件和硬件的总体架构和布局。 架构设计是一个非常复杂的过程，往往留给经验丰富的架构设计师和顾问。 第一步是将（71）细化为更详细的要求，然后用于帮助选择要使用的体系结构以及要放置在每个设备上的软件组件。
     在（72）中，还必须决定是使用两层，三层还是n层架构。 然后使用需求和体系结构设计来开发硬件和软件规范。 有四种主要的非功能需求类型可能在设计架构时非常重要。 （73）指定系统必须执行的操作环境以及这些操作环境如何随时间变化。 （74）侧重于非功能性需求问题，如响应时间，容量和可靠性。 （75）是否有能力保护信息系统免受故意行为造成的破坏和数据丢失。 文化和政治要求是特定于系统将被使用的国家。
@@ -4246,3 +4246,29 @@ R:D N:软件测试
 https://uc.educity.cn/tiku/testReport.html?id=8076861
 
 系统测试由若干个不同的测试类型组成，其中（  ）检查系统能力的最高实际限度，即软件在一些超负荷情况下的运行情况；（  ）主要是检查系统的容错能力。** W:BC
+
+20200805 每日一练 88.3
+https://uc.educity.cn/tiku/testReport.html?id=8091981
+
+某企业工程项目管理数据库的部分关系模式如下所示，其中带实下划线的表示主键，虚下划线的表示外键。...* W:CCB
+
+应用系统构建中可以采用多种不同的技术，（  ）可以将软件某种形式的描述转换为更高级的抽象表现形式，而利用这些获取的信息，（  ）能够对现有系统进行修改或重构，从而产生系统的一个新版本。* W:CD*
+
+20200418 每日一练 73
+https://uc.educity.cn/tiku/testReport.html?id=8098942
+
+某计算机系统采用 5 级流水线结构执行指令，设每条指令的执行由取指令(2 Δt )、分析指令(1Δt )、取操作数(3Δt )、运算(1Δt )和写回结果(2Δt ) 组成， 并分别用5 个子部件完成，该流水线的最大吞吐率为（  ） ；若连续向流水线输入10条指令，则该流水线的加速比为（  ） .** W:BD*
+
+将系统需求模型转换为架构模型是软件系统需求分析阶段的一项重要工作，以下描述中，（  ）是在转换过程中需要关注的问题。
+A.如何通过多视图模型描述软件系统的架构  B.如何确定架构模型中有哪些元素构成
+C.如何采用表格或用例映射保证转换的可追踪性。  D.如何通过模型转换技术，将高层架构模型逐步细化为细粒度架构模型
+R:C W:D N:软件架构的概念
+
+    从本质上看，需求和软件架构设计面临的是不同的对象：一个是问题空间；另一个是解空间。保持两者的可追踪性和转换，一直是软件工程领域追求的目标。从软件需求模型向SA模型的转换主要关注两个问题：
+    1、如何根据需求模型构建软件架构模型；
+    2、如何保证模型转换的可追踪性。
+    本题中选项A与B是软件架构设计阶段需要考虑的问题，而选项D是软件架构实现阶段中需要考虑的问题。
+
+The architecture design specifies the overall architecture and the placement of software and hardware that will be used...* W:DDACB
+
+生产某种产品有两个建厂方案：（1）建大厂，需要初期投资500万元。如果产品销路好，...* W:A*
