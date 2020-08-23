@@ -4821,3 +4821,12 @@ R:C N:网络与最大流量
     方案①②④⑥⑦的畅通概率为：
     (1-0.2)*(1-0.8)*(1-0.35)*(1-0.5)= 0.052
 
+
+20200823 每日一练 80
+https://uc.educity.cn/tiku/testReport.html?id=8537248
+
+九个项目A11、A12、A13、A21、A22、A23、A31、A32、A33的成本从1百万、2百万、…，到9百万各不相同，但并不顺序对应。已知A11与A21、A12与A22的成本都有一倍关系，A11与A12、A21与A31、A22与A23、A23与A33的成本都相差1百万。由此可以推断，项目A22的成本是（  ）百万。*** W:B**
+
+The architecture design specifies the overall architecture and the placement of software and hardware that will be used...*** W:ADACB
+
+An architectural style defines as a family of such systems in terms of a（  ）of structural organization...** W:ACCDD**
