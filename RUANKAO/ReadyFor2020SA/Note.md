@@ -1108,7 +1108,7 @@ R:BD W:AD N:软件设计
 
     商业智能的核心技术包括：数据仓库、数据挖掘、联机分析处理。
 
-某公司欲开发一门户网站，将公司的各个分公司及办事处信息进行整合。现决定采用Composite设计模式来实现公司的组织结构关系，并设计了如下图所示的UML类图。图中与Composite模式中的“Component”角色相对应的类是（Company），与“Composite”角色相对应的类是（oncreteCompany）。
+某公司欲开发一门户网站，将公司的各个分公司及办事处信息进行整合。现决定采用Composite设计模式来实现公司的组织结构关系，并设计了如下图所示的UML类图。图中与Composite模式中的“Component”角色相对应的类是（Company），与“Composite”角色相对应的类是（ConcreteCompany）。
 <img src="imgs\2020061501.png">
 
     本题考查组合模式相关的知识。下图为组合模式的UML图例。与题目给出的图例进行匹配可得出答案。
@@ -5090,3 +5090,15 @@ R:DC W:AC N:构件与中间件技术
 https://uc.educity.cn/tiku/testReport.html?id=8848799
 
 <无有效练习总结>
+
+20200904 每日一练 85
+https://uc.educity.cn/tiku/testReport.html?id=8880708
+
+CRM是一套先进的管理思想及技术手段，它通过将（  ）进行有效的整合，最终为企业涉及到的各个领域提供了集成环境。CRM系统的四个主要模块包括（  ）。* W:BC
+
+基于JavaEE平台的基础功能服务构建应用系统时，（  ）可用来集成遗产系统。*** W:D***
+
+补20200327 每日一练 95
+https://uc.educity.cn/tiku/testReport.html?id=8881276
+
+某文件系统文件存储采用文件索引节点法。假设磁盘索引块和磁盘数据块大小均为1KB，每个文件的索引节点中有8个地址项iaddr[0]～iaddr[7]，每个地址项大小为4字节，其中iaddr[0]～iaddr[5]为直接地址索引，iaddr[6]是一级间接地址索引，iaddr[7]是二级间接地址索引。如果要访问icwutil.dll文件的逻辑块号分别为0、260和518，则系统应分别采用（  ）。该文件系统可表示的单个文件最大长度是（  ）KB。** W:BD**
