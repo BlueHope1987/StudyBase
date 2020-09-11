@@ -5238,3 +5238,23 @@ R:CB N:信息摘要与数字签名
     而对消息摘要“加密”，虽然做的是加密操作，但并无加密的作用。因为私钥加密时，公钥解密。公钥谁都能获取到，所以谁都能解，故无法防止窃听，但可以防止抵赖。
 
 构件组装成软件系统的过程可以分为三个不同的层次：（  ）。**** W:B**
+
+20200911 每日一练 68
+https://uc.educity.cn/tiku/testReport.html?id=9117368
+
+以下关于软件中间件的叙述，错误的是（  ）。* W:A
+
+基于UML的需求分析过程的基本步骤为：利用（  ）表示需求；利用（  ）表示目标软件系统的总体架构。** W:AD**
+
+架构权衡分析方法(Architecture Tradeoff Analysis Method, ATAM)是在基于场景的架构分析方法（Scenarios-based Architecture  Analysis Method, SAAM）基础之上发展起来的，主要包括场景和需求收集、（  ），属性模型构造和分析，属性模型折中等四个阶段。ATAM方法要求在系统开发之前，首先对这些质量属性进行（  ）和折中。** W:DD**
+
+An application architecture specifies the technologies to be used to implement one or more information systems...* W:AACDB
+
+以下叙述，（  ）不是软件架构的主要作用。** W:A**
+
+补20200322 每日一练 85
+https://uc.educity.cn/tiku/testReport.html?id=9117729
+
+设计模式基于面向对象技术，是人们在长期的开发实践中良好经验的结晶，提供了一个简单、统一的描述方法，使得人们可以复用这些软件设计办法、过程管理经验。按照设计模式的目的进行划分，现有的设计模式可以分为创建型、（结构型）和行为型三种类型。其中（Singleton）属于创建型模式，（Memento**）属于行为型模式。（Bridge*）模式可以将一个复杂的组件分成功能性抽象和内部实现两个独立的但又相关的继承层次结构，从而可以实现接口与实现分离*** W:Builder Adapter
+
+软件概要设计包括设计软件的结构、确定系统功能模块及其相互关系，主要采用（  ）描述程序的结构。** W:B**
