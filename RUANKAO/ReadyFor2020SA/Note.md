@@ -5541,3 +5541,15 @@ ERP是对企业物流资源，资金流资源和信息流资源进行全面集�
 某高校欲构建财务系统，使得用户可通过校园网访问该系统。根据需求，公司给出如下2套方案。...*** W:CD***
 
 IETF定义的集成服务(IntServ)把Internet服务分成了三种服务质量不同的类型，这三种服务不包括（  ）。* W:B*
+
+20200926 每日一练 72
+https://uc.educity.cn/tiku/testReport.html?id=9693091
+
+某企业拟生产甲、乙、丙、丁四个产品。每个产品必须依次由设计部门、制造部门和检验部门进行设计、制造和检验...* W:C
+
+通常有两种常用的需求定义方法：严格定义方法和原型方法。下述的各种假设条件中，“（  ）”不适合使用严格定义方法进行需求定义。* W:A
+
+Software architecture reconstruction is an interpretive, interactive, and iterative process including many activities...*** W:ACBDC
+
+补20200311 每日一练 100
+https://uc.educity.cn/tiku/testReport.html?id=9694321
