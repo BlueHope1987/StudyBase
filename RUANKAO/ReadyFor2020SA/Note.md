@@ -5553,3 +5553,17 @@ Software architecture reconstruction is an interpretive, interactive, and iterat
 
 补20200311 每日一练 100
 https://uc.educity.cn/tiku/testReport.html?id=9694321
+
+<无有效练习总结>
+
+20200927 每日一练 100
+https://uc.educity.cn/tiku/testReport.html?id=9694582
+
+<无有效练习总结>
+
+补20200310 每日一练 80
+https://uc.educity.cn/tiku/testReport.html?id=9694929
+
+设关系模式R(U,F)，其中u为属性集，F是U上的一组函数依赖，那么函数依赖的公理系统（Armstrong公理系统）中的合并规则是指（  ）为F所蕴涵。** W:A**
+
+共享数据库是一种重要的企业应用集成方式。以下关于共享数据库集成方式的叙述中，错误的是（  ）。** W:D**
