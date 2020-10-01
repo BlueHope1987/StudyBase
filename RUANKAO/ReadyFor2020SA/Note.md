@@ -5621,3 +5621,23 @@ https://uc.educity.cn/tiku/testReport.html?id=9770715
 在RUP中采用“4+1”视图模型来描述软件系统的体系结构。在该模型中，最终用户侧重于（  ），系统工程师侧重于（  ）。**** W:DC***
 
 以下关于企业信息化方法的叙述中，正确的是（  ）。* W:C*
+
+20201001 每日一练 60
+https://uc.educity.cn/tiku/testReport.html?id=9816176
+
+（  ）不是反映嵌入式实时操作系统实时性的评价指标。** W:D*
+
+在嵌入式操作系统中，板级支持包BSP作为对硬件的抽象，实现了（  ）。*** W:C**
+
+Software architecture reconstruction is an interpretive, interactive, and iterative process including many activities...**** W:ADADC*
+
+IETF定义的集成服务(IntServ)把Internet服务分成了三种服务质量不同的类型，这三种服务不包括（  ）。** W:C
+
+补20200306 每日一练 85.8
+https://uc.educity.cn/tiku/testReport.html?id=9816219
+
+设计模式描述了一个出现在特定设计语境中的设计再现问题，并为它的解决方案提供了一个经过充分验证的通用方案...** W:DACA
+
+进程P1、P2、P3、P4和P5的前趋图如下...** W:A D(V(S2) 和P(S5))* C(V(S3)和V(S4) V(S5))*
+
+逆向工程导出的信息可以分为4个抽象层次，其中（  ）可以抽象出程序的抽象语法树、符号表等信息；（  ）可以抽象出反映程序段功能及程序段之间关系的信息。* W:AB*
