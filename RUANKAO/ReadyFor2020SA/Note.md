@@ -5672,3 +5672,21 @@ https://uc.educity.cn/tiku/testReport.html?id=9827468
 https://uc.educity.cn/tiku/testReport.html?id=9827682
 
 <无有效练习总结>
+
+20201004 每日一练 80
+https://uc.educity.cn/tiku/testReport.html?id=9851192
+
+共享数据库是一种重要的企业应用集成方式。以下关于共享数据库集成方式的叙述中，错误的是（  ）。**** W:A
+
+电子商务系统中参与电子商务活动的实体包括（  ）。* W:B
+
+补20200303 每日一练 65
+https://uc.educity.cn/tiku/testReport.html?id=9851359
+
+以下关于第三方认证服务的叙述中，正确的是（  ）。* W:D
+
+ERP（Enterprise Resource Planning）是建立在信息技术的基础上，利用现代企业的先进管理思想，对企业的物流、资金流和（  ）流进行全面集成管理的管理信息系统，为企业提供决策、计划、控制与经营业绩评估的全方位和系统化的管理平台。在ERP系统中，（  ）管理模块主要是对企业物料的进、出、存进行管理。* W:CB*
+
+以下关于需求管理的叙述中，正确的是（  ）。* W:C*
+
+系统移植也是系统构建的一种实现方法，在移植工作中，（ ）需要最终确定移植方法。*** W:B
