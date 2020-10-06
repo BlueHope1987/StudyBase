@@ -5714,3 +5714,17 @@ https://uc.educity.cn/tiku/testReport.html?id=9875038
     （3）设计不完善问题——“设计出来了，但是设计得不好”
     比如前后逻辑矛盾，表述歧义，表达不清晰，逻辑混乱，存在误解等等。要发现此类问题，同样可以借助工具编写流程图和状态迁移图，
     等等还有很多。
+
+20201006 每日一练 76
+https://uc.educity.cn/tiku/testReport.html?id=9902911
+
+An architectural style defines as a family of such systems in terms of a（  ）of structural organization...*** W:ABDDD
+
+某公司承接了一个开发家用空调自动调温器的任务，调温器测量外部空气温度，根据设定的期望温度控制空调的开关。根据该需求，公司应采用（  ）架构风格最为合适。W:A
+
+某软件开发公司负责开发一个Web服务器服务端处理软件，其核心部分是对客户端请求消息的解析与处理，包括HTTP报头分离、SOAP报文解析等功能。该公司的架构师决定采用成熟的架构风格指导整个软件的设计，以下（  ）架构风格，最适合该服务端处理软件。** W:D**
+
+补20200301 每日一练 98
+https://uc.educity.cn/tiku/testReport.html?id=9903085
+
+An application architecture specifies the technologies to be used to implement one or more information systems...* W:AACDB
