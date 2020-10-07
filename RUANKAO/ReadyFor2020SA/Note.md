@@ -5728,3 +5728,8 @@ An architectural style defines as a family of such systems in terms of a（  ）
 https://uc.educity.cn/tiku/testReport.html?id=9903085
 
 An application architecture specifies the technologies to be used to implement one or more information systems...* W:AACDB
+
+20201007 每日一练 90
+https://uc.educity.cn/tiku/testReport.html?id=9927735
+
+静态分析通过解析程序文本从而识别出程序语句中可能存在的缺陷和异常之处；静态分析所包含的阶段中，（  ）的主要工作是找出输入变量和输出变量之间的依赖关系。** W:B*
