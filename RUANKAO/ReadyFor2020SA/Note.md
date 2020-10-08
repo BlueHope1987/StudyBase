@@ -5733,3 +5733,13 @@ An application architecture specifies the technologies to be used to implement o
 https://uc.educity.cn/tiku/testReport.html?id=9927735
 
 静态分析通过解析程序文本从而识别出程序语句中可能存在的缺陷和异常之处；静态分析所包含的阶段中，（  ）的主要工作是找出输入变量和输出变量之间的依赖关系。** W:B*
+
+20201008 每日一练 75
+https://uc.educity.cn/tiku/testReport.html?id=9955374
+
+某航空公司机票销售系统有n个售票点，该系统为每个售票点创建一个进程Pi（i=1，2，…，n）管理机票销售。...* W:AA
+
+某类产品n种品牌在某地区的市场占有率常用概率向量u...*** W:B**
+
+某公司欲开发一套窗体图形界面类库。该类库需要包含若干预定义的窗格（Pane）对象，例如TextPane、ListPane等，窗格之间不允许直接引用。基于该类库的应用由一个包含一组窗格的窗口组成，并需要协调窗格之间的行为。基于该类库，在不引用窗格的前提下实现窗格之间的协作，应用开发者应采用（中介者模式）最为合适。**** W:C(访问者模式)****
+
