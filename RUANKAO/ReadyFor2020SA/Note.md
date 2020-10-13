@@ -5766,3 +5766,8 @@ https://uc.educity.cn/tiku/testReport.html?id=10076465
 https://uc.educity.cn/tiku/testReport.html?id=10090032
 
 某公司欲为某种型号的示波器开发内置软件。该公司的架构师设计了如下图所示的软件架构。在软件架构评审时，专家认为该架构存在的问题是（  ）。*** W:D***
+
+20201013 每日一练 90
+https://uc.educity.cn/tiku/testReport.html?id=10153885
+
+某公司拟开发了个轿车巡航定速系统，系统需要持续测量车辆当前的实时速度，并根据设定的期望速度启动控制轿车的油门和刹车。针对上述需求，采用（  ）架构风格最为合适。*** W:A**
