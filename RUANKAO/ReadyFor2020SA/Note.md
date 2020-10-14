@@ -5771,3 +5771,8 @@ https://uc.educity.cn/tiku/testReport.html?id=10090032
 https://uc.educity.cn/tiku/testReport.html?id=10153885
 
 某公司拟开发了个轿车巡航定速系统，系统需要持续测量车辆当前的实时速度，并根据设定的期望速度启动控制轿车的油门和刹车。针对上述需求，采用（  ）架构风格最为合适。*** W:A**
+
+20201014 每日一练 95
+https://uc.educity.cn/tiku/testReport.html?id=10192892
+
+软件确认测试也称为有效性测试，主要验证（  ）。确认测试包括（  ）。 W:DC
