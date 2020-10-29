@@ -5887,3 +5887,8 @@ R:C W:B N:基于架构的软件开发方法
 https://uc.educity.cn/tiku/testReport.html?id=10869964
 
 给定关系模式R(U，F)，其中: 属性集 U={A1,A2,A3,A4,A5,A6}，函数依赖集F={A1->A2,A1->A3,A3->A4,A1A5->A6}。关系模式 R 的候选码为（A1A5），由于R存在非主属性对码的部分函数依赖，所以 R 属于（1NF*）。** W:2NF*
+
+20201029 每日一练 100
+https://uc.educity.cn/tiku/testReport.html?id=10930909
+
+<无有效练习总结>
