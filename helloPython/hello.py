@@ -186,3 +186,10 @@ def test(a):
 test(a)
 
 
+#九九乘法表 https://www.runoob.com/python3/python3-99-table.html
+input("回车继续...") #输入输出: https://www.runoob.com/python3/python3-inputoutput.html
+
+for i in range(1,10): #内置range(start, stop[, step]) 函数可创建一个整数列表，一般用在 for 循环中。
+    for j in range(1,i+1):
+        print('{}×{}={}\t'.format(j,i,i*j),end='')
+    print()
