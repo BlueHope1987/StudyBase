@@ -193,3 +193,11 @@ for i in range(1,10): #内置range(start, stop[, step]) 函数可创建一个整
     for j in range(1,i+1):
         print('{}×{}={}\t'.format(j,i,i*j),end='')
     print()
+
+#Python 十进制转二进制、八进制、十六进制 https://www.runoob.com/python3/python3-conversion-binary-octal-hexadecimal.html
+
+dec = int(input("输入数字："))
+print("十进制数为：", dec)
+print("转换为二进制为：", bin(dec))
+print("转换为八进制为：", oct(dec))
+print("转换为十六进制为：", hex(dec))
