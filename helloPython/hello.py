@@ -201,3 +201,52 @@ print("十进制数为：", dec)
 print("转换为二进制为：", bin(dec))
 print("转换为八进制为：", oct(dec))
 print("转换为十六进制为：", hex(dec))
+
+
+
+
+#正则表达式 https://www.runoob.com/python3/python3-reg-expressions.html
+import re
+print(re.match('www', 'www.runoob.com').span())  # 在起始位置匹配
+print(re.match('com', 'www.runoob.com'))         # 不在起始位置匹配
+line = "Cats are smarter than dogs"
+# .* 表示任意匹配除换行符（\n、\r）之外的任何单个或多个字符
+#正则表达式中，group（）用来提出分组截获的字符串，（）用来分组
+#正则表达式中的三组括号把匹配结果分成三组group() 同group（0）就是匹配正则表达式整体结果 group(1) 列出第一个括号匹配部分，group(2) 列出第二个括号匹配部分，group(3) 列出第三个括号匹配部分。
+#re.match(pattern, string, flags=0) 尝试从字符串的起始位置匹配一个模式
+#flags re.I大小写不敏感 L本地化识别 M多行匹配 S使.匹配包括换行在内的所有字符 U根据Unicode字符集解析字符 X更灵活的格式
+matchObj = re.match( r'(.*) are (.*?) .*', line, re.M|re.I)
+if matchObj:
+   print ("matchObj.group() : ", matchObj.group())
+   print ("matchObj.group(1) : ", matchObj.group(1))
+   print ("matchObj.group(2) : ", matchObj.group(2))
+else:
+   print ("No match!!")
+
+#re.search(pattern, string, flags=0)扫描整个字符串并返回第一个成功的匹配
+searchObj = re.search( r'(.*) are (.*?) .*', line, re.M|re.I)
+if searchObj:
+   print ("searchObj.group() : ", searchObj.group())
+   print ("searchObj.group(1) : ", searchObj.group(1))
+   print ("searchObj.group(2) : ", searchObj.group(2))
+else:
+   print ("Nothing found!!")
+
+#re.match与re.search的区别
+matchObj = re.match( r'dogs', line, re.M|re.I)
+if matchObj:
+   print ("match --> matchObj.group() : ", matchObj.group())
+else:
+   print ("No match!!")
+matchObj = re.search( r'dogs', line, re.M|re.I)
+if matchObj:
+   print ("search --> matchObj.group() : ", matchObj.group())
+else:
+   print ("No match!!")
+
+#检索替换
+phone = "2004-959-559 # 这是一个电话号码"
+num = re.sub(r'#.*$', "", phone) # 删除注释 字符串前面加上r表示原生字符串（rawstring）
+print ("电话号码 : ", num)
+num = re.sub(r'\D', "", phone)# 移除非数字的内容
+print ("电话号码 : ", num)
