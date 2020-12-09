@@ -15,8 +15,8 @@ def backward_maximal_matching(s,vocab):
     end_pos=len(s)
     while end_pos>0:
         found=False
-        for start_pos in range(end_pos):
-            if s[start_pos:end_pos] in vocab:
+        for start_pos in range(end_pos): # (int) in range((int))
+            if s[start_pos:end_pos] in vocab: # if s[(int):(int)] in vocab s[0:7] s[1:7] s[2:7]...
                 #找到最长匹配的单词，放在分词结果最前面
                 result=[s[start_pos:end_pos]]+result
                 found=True
@@ -46,3 +46,22 @@ text=('Today is very special. I just got my Ph.D. degree.')
 doc=nlp(text)
 print({e.text for e in doc})
 
+
+#P47 词性标注
+
+#中文命名实体识别和词性标注可以用jieba软件包实现
+import jieba.posseg as pseg
+words=pseg.cut("我爱北京天安门")
+for word, pos in words:
+    print('%s %s'%(word,pos))
+
+#英文命名实体识别和词性标注可以通过spaCy软件包实现
+import spacy
+nlp=spacy.load('en_core_web_sm')
+doc=nlp(u"Apple may buy a U.K. startup for $1 billion")
+print('---------------Part of Speech-----------')
+for token in doc:
+    print(token.text,token.pos_)
+print('---------Named Entity Recognition--------')
+for ent in doc.ents:
+    print(ent.text,ent.label_)
