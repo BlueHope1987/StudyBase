@@ -84,29 +84,29 @@ for ent in doc.ents:
          ...
 '''
 def bigram(A,vocab,K):
-    cnt={word:0 for word in vocab}
-    cnt2={word:{word2:0 for word2 in vocab} for word in vocab}
-    #cnt(word)是word在文本中出现的次数，cnt2[word][word2]是word、word2在文本中出现的次数（word2在后）
+    cnt={word: 0 for word in vocab}
+    cnt2={word: {word2: 0 for word2 in vocab} for word in vocab}
+    #cnt[word]是word在文本中出现的次数，cnt2[word][word2]是word、word2在文本中出现的次数（word2在后）
     for sent in A:
-        for i, word in enumerate(sent):
+        for i, word in enumerate(sent): #enumerate() 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标，一般用在 for 循环当中
             cnt[word]+=1
             if i+1<len(sent):
                 cnt2[word][sent[i+1]]+=1
         for word in cnt2:
             for word2 in cnt2[word]:
                 #拉普拉斯平滑
-                prob=(cnt2[word][word2]+K)/(cnt[word]+K*len(vocab)+0.0)
+                prob=(cnt2[word][word2]+K)/(cnt[word]+K*len(vocab)+2.0) #书本上的为+0.0 结果不对照 改为2.0 结果一致 WHY? 需继续检查
                 print('P({0}|{1})={2}'.format(word2,word,prob))
 
-'''
-bigram([['<s>','今天','天气','不错','</s>'],
-        ['<s>','我们','今天','去','划船','</s>'],
-        ['<s>','我们','今天','去','开会','</s>']],
-       ['<s>','</s>','今天','我们','天气','不错','去','划船','开会'],
-       1) #结果与范例不一致 哪里出了问题？数字精度？
-'''
+A=[['<s>','今天','天气','不错','</s>'],
+    ['<s>','我们','今天','去','划船','</s>'],
+    ['<s>','我们','今天','去','开会','</s>']]
+vocab=['<s>','</s>','今天','我们','天气','不错','去','划船','开会']
+bigram(A,vocab,1) 
 
+'''
 bigram([['我们','今天','来'],
         ['我们','今天','划船']],
        ['我们','今天','昨天','来','划船'],
        1) #结果还是不太对 明天检查
+'''
