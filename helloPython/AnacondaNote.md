@@ -10,8 +10,15 @@ conda分为anaconda和miniconda。anaconda是包含一些常用包的版本（�
 conda list
 列出当前 conda 环境所链接的软件包 
 conda create
+列出环境
+conda info -e
 创建一个 conda 环境
 conda create -n 环境名 -c 镜像源
+conda create -n xxx python=3.8
+删除环境
+conda remove -n 环境 --all
+退出：
+conda deactivate
 
 [安装路径]\Scripts\activate 启动环境
 conda activate XXX 激活环境
