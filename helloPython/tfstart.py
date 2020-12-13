@@ -57,37 +57,30 @@ print(grad_z_val)
 
 
 #一篇文章就够了 TensorFlow 2.0 实战 (持续更新) https://www.jianshu.com/p/fa334fd76d2f
+# 一步一步学用Tensorflow构建卷积神经网络 https://www.jianshu.com/p/53d6cc6bbb25
 print("=========================")
-
-#tf基本数据类型 不可测试？
-with tf.device("cpu"):
-    a=tf.range(4)
-a.device # '/job:localhost/replica:0/task:0/device:CPU:0'
-aa=a.gpu() #出错
-a.numpy() # array([0, 1, 2, 3], dtype=int32)
-a.ndim # 1  (0的话就是标量)
-a.shape # TensorShape([4])
-a.name # AttributeError: Tensor.name is meaningless when eager execution is enabled. 
-tf.rank(tf.ones([3,4,2])) # <tf.Tensor: id=466672, shape=(), dtype=int32, numpy=3>
-tf.is_tensor(a) # True
-a.dtype # tf.int32
-
-#数据类型转换
-a=np.arange(5)
-a.dtype # dtype('int64')
-aa=tf.convert_to_tensor(a) # <tf.Tensor: id=466678, shape=(5,), dtype=int64, numpy=array([0, 1, 2, 3, 4])>
-aa=tf.convert_to_tensor(a, dtype=tf.int32) # <tf.Tensor: id=466683, shape=(5,), dtype=int32, numpy=array([0, 1, 2, 3, 4], dtype=int32)>
-tf.cast(aa, tf.float32)
-b=tf.constant([0,1])
-tf.cast(b, tf.bool) # <tf.Tensor: id=466697, shape=(2,), dtype=bool, numpy=array([False,  True])>
-a.tf.ones([])
-a.numpy()
-int(a) #标量可以直接这样类型转换
-float(a)
-
-#可训练数据类型
-a=tf.range(5)
-b=tf.Variable(a)
-b.dtype # tf.int32
-b.name # 'Variable:0' 其实没啥用
-b.trainable #True
+'''
+Tensorflow中最基本的单元是常量、变量和占位符。
+tf.constant()和tf.Variable()之间的区别很清楚；一个常量有着恒定不变的值，一旦设置了它，它的值不能被改变。而变量的值可以在设置完成后改变，但变量的数据类型和形状无法改变。
+'''
+a=tf.constant(2,tf.int16)
+b=tf.constant(4,tf.float32)
+c=tf.constant(8,tf.float32)
+d = tf.Variable(2, tf.int16)
+e = tf.Variable(4, tf.float32)
+f = tf.Variable(8, tf.float32)
+g = tf.constant(np.zeros(shape=(2,2), dtype=np.float32)) #does work
+h = tf.zeros([11], tf.int16)
+i = tf.ones([2,2], tf.float32)
+j = tf.zeros([1000,4,3], tf.float64)
+k = tf.Variable(tf.zeros([2,2], tf.float32))
+l = tf.Variable(tf.zeros([5,6,5], tf.float32))
+'''
+除了tf.zeros()和tf.ones()能够创建一个初始值为0或1的张量（见这里）之外，还有一个tf.random_normal()函数，它能够创建一个包含多个随机值的张量，这些随机值是从正态分布中随机抽取的（默认的分布均值为0.0，标准差为1.0）。
+另外还有一个tf.truncated_normal()函数，它创建了一个包含从截断的正态分布中随机抽取的值的张量，其中下上限是标准偏差的两倍。
+有了这些知识，我们就可以创建用于神经网络的权重矩阵和偏差向量了。
+'''
+weights = tf.Variable(tf.compat.v1.truncated_normal([256 * 256, 10]))
+biases = tf.Variable(tf.zeros([10]))
+print(weights.get_shape().as_list())
+print(biases.get_shape().as_list())
