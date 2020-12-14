@@ -84,3 +84,16 @@ weights = tf.Variable(tf.compat.v1.truncated_normal([256 * 256, 10]))
 biases = tf.Variable(tf.zeros([10]))
 print(weights.get_shape().as_list())
 print(biases.get_shape().as_list())
+'''
+在Tensorflow中，所有不同的变量以及对这些变量的操作都保存在图（Graph）中。在构建了一个包含针对模型的所有计算步骤的图之后，就可以在会话（Session）中运行这个图了。会话可以跨CPU和GPU分配所有的计算。
+'''
+#似乎有兼容性问题 无法运行
+graph = tf.Graph()
+with graph.as_default():
+    a = tf.Variable(8, tf.float32)
+    b = tf.Variable(tf.zeros([2,2], tf.float32))
+with tf.compat.v1.Session(graph=graph) as session:
+    tf.compat.v1.global_variables_initializer().run()
+    print(f)
+    print(session.run(f))
+    print(session.run(k))
