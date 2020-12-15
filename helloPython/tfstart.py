@@ -95,5 +95,35 @@ with graph.as_default():
 with tf.compat.v1.Session(graph=graph) as session:
     tf.compat.v1.global_variables_initializer().run()
     print(f)
-    print(session.run(f))
-    print(session.run(k))
+#    print(session.run(f))#出错！！！
+#    print(session.run(k))#出错！！！
+'''
+我们已经看到了用于创建常量和变量的各种形式。Tensorflow中也有占位符，它不需要初始值，仅用于分配必要的内存空间。 在一个会话中，这些占位符可以通过feed_dict填入（外部）数据。
+以下是占位符的使用示例。
+'''
+list_of_points1_ = [[1,2], [3,4], [5,6], [7,8]]
+list_of_points2_ = [[15,16], [13,14], [11,12], [9,10]]
+list_of_points1 = np.array([np.array(elem).reshape(1,2) for elem in list_of_points1_])
+list_of_points2 = np.array([np.array(elem).reshape(1,2) for elem in list_of_points2_])
+graph = tf.Graph()
+with graph.as_default():
+    #we should use a tf.placeholder() to create a variable whose value you will fill in later (during session.run()).
+    #this can be done by 'feeding' the data into the placeholder.
+    #below we see an example of a method which uses two placeholder arrays of size [2,1] to calculate the eucledian distance
+    point1 = tf.compat.v1.placeholder(tf.float32, shape=(1, 2))
+    point2 = tf.compat.v1.placeholder(tf.float32, shape=(1, 2))
+    def calculate_eucledian_distance(point1, point2):
+        difference = tf.subtract(point1, point2)
+        power2 = tf.pow(difference, tf.constant(2.0, shape=(1,2)))
+        add = tf.reduce_sum(power2)
+        eucledian_distance = tf.sqrt(add)
+        return eucledian_distance
+    dist = calculate_eucledian_distance(point1, point2)
+with tf.compat.v1.Session(graph=graph) as session:
+    tf.compat.v1.global_variables_initializer().run()
+    for ii in range(len(list_of_points1)):
+        point1_ = list_of_points1[ii]
+        point2_ = list_of_points2[ii]
+        feed_dict = {point1 : point1_, point2 : point2_}
+        distance = session.run([dist], feed_dict=feed_dict)
+        print("the distance between {} and {} -> {}".format(point1_, point2_, distance))
