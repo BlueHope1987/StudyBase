@@ -40,6 +40,7 @@ print('/'.join(seg_list))
 #英文分词可用spaCy软件包实现
 #pip install spacy -i https://pypi.tuna.tsinghua.edu.cn/simple
 #python -m spacy download en_core_web_sm
+#语言包下载错误时下载离线包特定路径下如pip install en_core_web_sm-2.3.1.tar.gz安装照旧使用
 import spacy
 nlp=spacy.load('en_core_web_sm')
 text=('Today is very special. I just got my Ph.D. degree.')
