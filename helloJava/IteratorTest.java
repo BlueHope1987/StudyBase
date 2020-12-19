@@ -6,11 +6,29 @@ import java.util.*;
 public class IteratorTest {
     public static void main(String[] args) {
         ///////////////////////////////////////////
-        //遍历 ArrayList
+        //遍历 ArrayList https://www.runoob.com/java/java-arraylist.html
+        //ArrayList 类是一个可以动态修改的数组，与普通数组的区别就是它是没有固定大小的限制，我们可以添加或删除元素。
+        //方法：.add .get(0) .set(0,"") .remove(0) .size()
+        //引用对象<String> <Boolean> <Byte> <Short> <Integer> <Long> <Float> <Double> <Character>
+
         List<String> list=new ArrayList<String>();
         list.add("Hello");
         list.add("World");
         list.add("HAHAHAHA");
+        System.out.println(list);
+        System.out.println(list.get(1));
+        list.set(1,"World!");
+        System.out.println(list.get(1));
+        list.set(1,"World");
+        System.out.println(list.remove(2));
+        System.out.println(list.size());
+        System.out.println(list);
+        list.add("HAHAHAHA");
+        System.out.println(list.size());
+        System.out.println(list);
+        //Collections.sort(list) 排序
+
+        System.out.println("============ArrayList遍历方法===========");
         //第一种遍历方法使用 For-Each 遍历 List
         for (String str : list) {            //也可以改写 for(int i=0;i<list.size();i++) 这种形式
            System.out.println(str);
@@ -34,7 +52,7 @@ public class IteratorTest {
 
         ///////////////////////////////////////
         //遍历 Map
-
+        System.out.println("============Map遍历方法===========");
         Map<String, String> map = new HashMap<String, String>();
         map.put("1", "value1");
         map.put("2", "value2");
