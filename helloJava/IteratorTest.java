@@ -11,6 +11,7 @@ public class IteratorTest {
         //方法：.add .get(0) .set(0,"") .remove(0) .size()
         //引用对象<String> <Boolean> <Byte> <Short> <Integer> <Long> <Float> <Double> <Character>
 
+        System.out.println("============ArrayList基础===========");
         List<String> list=new ArrayList<String>();
         list.add("Hello");
         list.add("World");
@@ -48,6 +49,37 @@ public class IteratorTest {
         while(ite.hasNext())//判断下一个元素之后有值
         {
             System.out.println(ite.next());
+        }
+
+        ///////////////////////////////////////
+        //遍历 LinkedList https://www.runoob.com/java/java-linkedlist.html
+        //链表可分为单向链表和双向链表。Java LinkedList（链表） 类似于 ArrayList，是一种常用的数据容器。增加和删除对操作效率更高，而查找和修改的操作效率较低。
+        System.out.println("============LinkedList基础===========");
+        LinkedList<String> sites = new LinkedList<String>();
+        sites.add("Google");
+        sites.add("Runoob");
+        sites.add("Taobao");
+        sites.add("Weibo");
+        System.out.println(sites);
+        sites.addFirst("Wiki");
+        System.out.println(sites);
+        sites.addLast("Wiki2");
+        System.out.println(sites);
+        sites.removeFirst();
+        System.out.println(sites);
+        sites.removeLast();
+        System.out.println(sites);
+        System.out.println(sites.getFirst());
+        System.out.println(sites.getLast());
+
+        //迭代元素
+        System.out.println("============LinkedList迭代方法===========");
+        for (int size = sites.size(), i = 0; i < size; i++) {
+            System.out.println(sites.get(i));
+        }
+        //for-each方法
+        for (String i : sites) {
+            System.out.println(i);
         }
 
         ///////////////////////////////////////
