@@ -81,9 +81,33 @@ public class IteratorTest {
         for (String i : sites) {
             System.out.println(i);
         }
-
+        sites=null;
         ///////////////////////////////////////
-        //遍历 Map
+        //遍历 Map https://www.runoob.com/java/java-hashmap.html
+        //HashMap 是一个散列表，它存储的内容是键值对(key-value)映射。是无序的，即不会记录插入的顺序。
+        //key 与 value 类型可以不同
+        System.out.println("============HashMap基础===========");
+        HashMap<Integer, String> Sites = new HashMap<Integer, String>();
+        Sites.put(1, "Google");
+        Sites.put(2, "Runoob");
+        Sites.put(3, "Taobao");
+        Sites.put(4, "Zhihu");
+        System.out.println(Sites);
+        System.out.println(Sites.get(3));
+        Sites.remove(4);
+        System.out.println(Sites);
+        Sites.clear();
+        System.out.println(Sites);
+        Sites=null;
+
+        HashMap<String, String> Sites2 = new HashMap<String, String>();
+        Sites2.put("one", "Google");
+        Sites2.put("two", "Runoob");
+        Sites2.put("three", "Taobao");
+        Sites2.put("four", "Zhihu");
+        System.out.println(Sites2);
+        System.out.println(Sites2.size());
+        
         System.out.println("============Map遍历方法===========");
         Map<String, String> map = new HashMap<String, String>();
         map.put("1", "value1");
@@ -96,6 +120,11 @@ public class IteratorTest {
         System.out.println("key= "+ key + " and value= " + map.get(key));
         }
         
+        System.out.println("通过Map.values遍历value：");
+        for (String value : map.values()) {
+            System.out.println(value + ", ");;
+        }
+
         //第二种
         System.out.println("通过Map.entrySet使用iterator遍历key和value：");
         Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
