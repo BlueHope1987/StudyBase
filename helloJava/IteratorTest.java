@@ -45,7 +45,7 @@ public class IteratorTest {
         
        //第三种遍历 使用迭代器进行相关遍历
         
-        Iterator<String> ite=list.iterator();
+        Iterator<String> ite=list.iterator(); //Java Iterator（迭代器） https://www.runoob.com/java/java-iterator.html
         while(ite.hasNext())//判断下一个元素之后有值
         {
             System.out.println(ite.next());
