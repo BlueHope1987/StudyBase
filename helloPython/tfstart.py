@@ -151,20 +151,21 @@ def reformat_data(dataset, labels, image_width, image_height, image_depth):
     return np_dataset, np_labels
 def flatten_tf_array(array):
     shape = array.get_shape().as_list()
-    return tf.reshape(array, [shape[0], shape[1] * shape[2] * shape[3]])
+    return tf.compat.v1.reshape(array, [shape[0], shape[1] * shape[2] * shape[3]])
 def accuracy(predictions, labels):
     return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1)) / predictions.shape[0])
 
 print("========加载MNIST和CIFAR-10数据集==========")
 #pip install python-mnist #https://github.com/sorki/python-mnist
 from mnist import MNIST
+import pickle
 
-mnist_folder = './helloPython/data/mnist/' #项目根目录相对路径
+mnist_folder = './helloPython/data/mnist/' #修改 项目根目录相对路径
 mnist_image_width = 28
 mnist_image_height = 28
 mnist_image_depth = 1
 mnist_num_labels = 10
-mnist_image_size = 28 #debuging
+mnist_image_size = 28 #debuging 后加
 mndata = MNIST(mnist_folder)
 mnist_train_dataset_, mnist_train_labels_ = mndata.load_training()
 mnist_test_dataset_, mnist_test_labels_ = mndata.load_testing()
@@ -178,15 +179,16 @@ print('Test set shape', mnist_test_dataset.shape, mnist_test_labels.shape)
 train_dataset_mnist, train_labels_mnist = mnist_train_dataset, mnist_train_labels
 test_dataset_mnist, test_labels_mnist = mnist_test_dataset, mnist_test_labels
 ######################################################################################
-cifar10_folder = './data/cifar10/'
+cifar10_folder = './helloPython/data/cifar10/' #修改 项目根目录相对路径
 train_datasets = ['data_batch_1', 'data_batch_2', 'data_batch_3', 'data_batch_4', 'data_batch_5', ]
 test_dataset = ['test_batch']
 c10_image_height = 32
 c10_image_width = 32
 c10_image_depth = 3
 c10_num_labels = 10
+c10_image_size=32 #debuging 后加
 with open(cifar10_folder + test_dataset[0], 'rb') as f0:
-    c10_test_dict = pickle.load(f0, encoding='bytes')
+    c10_test_dict = pickle.load(f0, encoding='bytes') #import pickle
 c10_test_dataset, c10_test_labels = c10_test_dict[b'data'], c10_test_dict[b'labels']
 test_dataset_cifar10, test_labels_cifar10 = reformat_data(c10_test_dataset, c10_test_labels, c10_image_size, c10_image_size, c10_image_depth)
 c10_train_dataset, c10_train_labels = [], []
@@ -203,3 +205,66 @@ del c10_train_labels
 print("The training set contains the following labels: {}".format(np.unique(c10_train_dict[b'labels'])))
 print('Training set shape', train_dataset_cifar10.shape, train_labels_cifar10.shape)
 print('Test set shape', test_dataset_cifar10.shape, test_labels_cifar10.shape)
+
+#创建一个简单的一层神经网络
+'''
+神经网络最简单的形式是一层线性全连接神经网络（FCNN， Fully Connected Neural Network）。 在数学上它由一个矩阵乘法组成。
+最好是在Tensorflow中从这样一个简单的NN开始，然后再去研究更复杂的神经网络。 当我们研究那些更复杂的神经网络的时候，只是图的模型（步骤2）和权重（步骤3）发生了改变，其他步骤仍然保持不变。
+我们可以按照如下代码制作一层FCNN：
+'''
+
+image_width = mnist_image_width
+image_height = mnist_image_height
+image_depth = mnist_image_depth
+num_labels = mnist_num_labels
+batch_size=32 ##debuging 后加
+#the dataset
+train_dataset = mnist_train_dataset
+train_labels = mnist_train_labels
+test_dataset = mnist_test_dataset
+test_labels = mnist_test_labels
+#number of iterations and learning rate
+num_steps = 10001
+display_step = 1000
+learning_rate = 0.5
+graph = tf.Graph()
+with graph.as_default():
+    #1) First we put the input data in a Tensorflow friendly form.
+    tf_train_dataset = tf.compat.v1.placeholder(tf.float32, shape=(batch_size, image_width, image_height, image_depth)) #兼容性修改 下同
+    tf_train_labels = tf.compat.v1.placeholder(tf.float32, shape = (batch_size, num_labels))
+    tf_test_dataset = tf.compat.v1.constant(test_dataset, tf.float32)
+    #2) Then, the weight matrices and bias vectors are initialized
+    #as a default, tf.truncated_normal() is used for the weight matrix and tf.zeros() is used for the bias vector.
+    weights = tf.Variable(tf.compat.v1.truncated_normal([image_width * image_height * image_depth, num_labels]), tf.float32)
+    bias = tf.Variable(tf.zeros([num_labels]), tf.float32)
+    #3) define the model:
+    #A one layered fccd simply consists of a matrix multiplication
+    def model(data, weights, bias):
+        return tf.compat.v1.matmul(flatten_tf_array(data), weights) + bias
+    logits = model(tf_train_dataset, weights, bias)
+    #4) calculate the loss, which will be used in the optimization of the weights
+    loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_train_labels))
+    #5) Choose an optimizer. Many are available.
+    optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+    #6) The predicted values for the images in the train dataset and test dataset are assigned to the variables train_prediction and test_prediction.
+    #It is only necessary if you want to know the accuracy by comparing it with the actual values.
+    train_prediction = tf.compat.v1.nn.softmax(logits)
+    test_prediction = tf.compat.v1.nn.softmax(model(tf_test_dataset, weights, bias))
+
+#tf.compat.v1.summary.merge_all() #自动管理 应对某些可能出现的异常
+with tf.compat.v1.Session(graph=graph) as session:
+    tf.compat.v1.global_variables_initializer().run()
+    print('Initialized')
+    for step in range(num_steps):
+        #新增debug
+        offset = (step * batch_size) % (train_labels.shape[0] - batch_size)
+        batch_data = train_dataset[offset:(offset + batch_size), :, :, :]
+        batch_labels = train_labels[offset:(offset + batch_size), :]
+        feed_dict = {tf_train_dataset : batch_data, tf_train_labels : batch_labels}
+        #新增结尾
+        _, l, predictions = session.run([optimizer, loss, train_prediction],feed_dict=feed_dict) #Debug:新增",feed_dict=feed_dict"及循环内定义逻辑 似乎结果不对
+        if (step % display_step == 0):
+            train_accuracy = accuracy(predictions, train_labels[:, :])
+            test_accuracy = accuracy(test_prediction.eval(), test_labels)
+            message = "step {:04d} : loss is {:06.2f}, accuracy on training set {:02.2f} %, accuracy on test set {:02.2f} %".format(step, l, train_accuracy, test_accuracy)
+            print(message)
