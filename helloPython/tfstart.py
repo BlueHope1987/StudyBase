@@ -235,8 +235,8 @@ with graph.as_default():
     tf_test_dataset = tf.compat.v1.constant(test_dataset, tf.float32)
     #2) Then, the weight matrices and bias vectors are initialized
     #as a default, tf.truncated_normal() is used for the weight matrix and tf.zeros() is used for the bias vector.
-    weights = tf.Variable(tf.compat.v1.truncated_normal([image_width * image_height * image_depth, num_labels]), tf.float32)
-    bias = tf.Variable(tf.zeros([num_labels]), tf.float32)
+    weights = tf.compat.v1.Variable(tf.compat.v1.truncated_normal([image_width * image_height * image_depth, num_labels]), tf.float32)
+    bias = tf.compat.v1.Variable(tf.compat.v1.zeros([num_labels]), tf.float32)
     #3) define the model:
     #A one layered fccd simply consists of a matrix multiplication
     def model(data, weights, bias):
@@ -257,12 +257,13 @@ with tf.compat.v1.Session(graph=graph) as session:
     print('Initialized')
     for step in range(num_steps):
         #新增debug
+        '''
         offset = (step * batch_size) % (train_labels.shape[0] - batch_size)
         batch_data = train_dataset[offset:(offset + batch_size), :, :, :]
         batch_labels = train_labels[offset:(offset + batch_size), :]
-        feed_dict = {tf_train_dataset : batch_data, tf_train_labels : batch_labels}
+        feed_dict = {tf_train_dataset : batch_data, tf_train_labels : batch_labels}'''
         #新增结尾
-        _, l, predictions = session.run([optimizer, loss, train_prediction],feed_dict=feed_dict) #Debug:新增",feed_dict=feed_dict"及循环内定义逻辑 似乎结果不对
+        _, l, predictions = session.run([optimizer, loss, train_prediction]) #Debug:新增",feed_dict=feed_dict"及循环内定义逻辑 似乎结果不对 似乎网络已既定 
         if (step % display_step == 0):
             train_accuracy = accuracy(predictions, train_labels[:, :])
             test_accuracy = accuracy(test_prediction.eval(), test_labels)
