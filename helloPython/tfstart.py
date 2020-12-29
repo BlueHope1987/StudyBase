@@ -234,43 +234,45 @@ test_labels = mnist_test_labels
 num_steps = 10001
 display_step = 1000
 learning_rate = 0.5
-graph = tf.compat.v1.Graph()
+tf.compat.v1.reset_default_graph() #DEBUG:恢复图
+graph = tf.Graph()
 with graph.as_default():
     #1) First we put the input data in a Tensorflow friendly form.
-    tf_train_dataset = tf.compat.v1.placeholder(tf.compat.v1.float32, shape=(batch_size, image_width, image_height, image_depth)) #兼容性修改 下同
-    tf_train_labels = tf.compat.v1.placeholder(tf.compat.v1.float32, shape =(batch_size, num_labels))
-    tf_test_dataset = tf.compat.v1.constant(test_dataset, tf.compat.v1.float32)
+    tf_train_dataset = tf.compat.v1.placeholder(tf.float32, shape=(batch_size, image_width, image_height, image_depth)) #兼容性修改 下同
+    tf_train_labels = tf.compat.v1.placeholder(tf.float32, shape=(batch_size, num_labels))
+    tf_test_dataset = tf.compat.v1.constant(test_dataset, tf.float32)
     #2) Then, the weight matrices and bias vectors are initialized
     #as a default, tf.truncated_normal() is used for the weight matrix and tf.zeros() is used for the bias vector.
-    weights = tf.compat.v1.Variable(tf.compat.v1.truncated_normal([image_width * image_height * image_depth, num_labels]), tf.compat.v1.float32)
-    bias = tf.compat.v1.Variable(tf.compat.v1.zeros([num_labels]), tf.compat.v1.float32)
+    weights = tf.Variable(tf.compat.v1.truncated_normal([image_width * image_height * image_depth, num_labels]), tf.float32)
+    bias = tf.Variable(tf.zeros([num_labels]), tf.float32)
     #3) define the model:
     #A one layered fccd simply consists of a matrix multiplication
     def model(data, weights, bias):
         return tf.compat.v1.matmul(flatten_tf_array(data), weights) + bias
     logits = model(tf_train_dataset, weights, bias)
     #4) calculate the loss, which will be used in the optimization of the weights
-    loss = tf.compat.v1.reduce_mean(tf.compat.v1.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_train_labels))
+    loss = tf.reduce_mean(tf.compat.v1.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_train_labels))
     #5) Choose an optimizer. Many are available.
     optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate).minimize(loss)
     #6) The predicted values for the images in the train dataset and test dataset are assigned to the variables train_prediction and test_prediction.
     #It is only necessary if you want to know the accuracy by comparing it with the actual values.
-    train_prediction = tf.compat.v1.nn.softmax(logits)
-    test_prediction = tf.compat.v1.nn.softmax(model(tf_test_dataset, weights, bias))
+    train_prediction = tf.nn.softmax(logits)
+    test_prediction = tf.nn.softmax(model(tf_test_dataset, weights, bias))
 
 #tf.compat.v1.summary.merge_all() #自动管理 应对某些可能出现的异常
 with tf.compat.v1.Session(graph=graph) as session:
+    #writer=tf.compat.v1.summary.FileWriter('tensorboard_study', session.graph) #生成计算图 tensorboard --logdir=\tensorboard_study
     tf.compat.v1.global_variables_initializer().run()
     print('Initialized')
     for step in range(num_steps):
         #新增debug
-        '''
         offset = (step * batch_size) % (train_labels.shape[0] - batch_size)
         batch_data = train_dataset[offset:(offset + batch_size), :, :, :]
         batch_labels = train_labels[offset:(offset + batch_size), :]
-        feed_dict = {tf_train_dataset : batch_data, tf_train_labels : batch_labels}'''
+        feed_dict = {tf_train_dataset : batch_data, tf_train_labels : batch_labels}
         #新增结尾
-        _, l, predictions = session.run([optimizer, loss, train_prediction]) #Debug:新增",feed_dict=feed_dict"及循环内定义逻辑 似乎结果不对 似乎网络已既定 
+        _, l, predictions = session.run([optimizer, loss, train_prediction],feed_dict=feed_dict)
+        #Debug:新增 ",feed_dict=feed_dict" 及循环内定义逻辑 似乎结果不对 但必须投喂数据 以应对上述既定的placeholder
         if (step % display_step == 0):
             train_accuracy = accuracy(predictions, train_labels[:, :])
             test_accuracy = accuracy(test_prediction.eval(), test_labels)
