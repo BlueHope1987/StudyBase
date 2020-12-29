@@ -58,6 +58,9 @@ print(grad_z_val)
 
 #一篇文章就够了 TensorFlow 2.0 实战 (持续更新) https://www.jianshu.com/p/fa334fd76d2f
 # 一步一步学用Tensorflow构建卷积神经网络 https://www.jianshu.com/p/53d6cc6bbb25
+# https://blog.csdn.net/dyingstraw/article/details/80139343
+# https://ataspinar.com/2017/08/15/building-convolutional-neural-networks-with-tensorflow/
+
 print("=========================")
 '''
 Tensorflow中最基本的单元是常量、变量和占位符。
@@ -87,6 +90,7 @@ print(biases.get_shape().as_list())
 '''
 在Tensorflow中，所有不同的变量以及对这些变量的操作都保存在图（Graph）中。在构建了一个包含针对模型的所有计算步骤的图之后，就可以在会话（Session）中运行这个图了。会话可以跨CPU和GPU分配所有的计算。
 '''
+
 #似乎有兼容性问题 无法运行
 graph = tf.Graph()
 with graph.as_default():
@@ -97,10 +101,12 @@ with tf.compat.v1.Session(graph=graph) as session:
     print(f)
 #    print(session.run(f))#出错！！！
 #    print(session.run(k))#出错！！！
+
 '''
 我们已经看到了用于创建常量和变量的各种形式。Tensorflow中也有占位符，它不需要初始值，仅用于分配必要的内存空间。 在一个会话中，这些占位符可以通过feed_dict填入（外部）数据。
 以下是占位符的使用示例。
 '''
+
 list_of_points1_ = [[1,2], [3,4], [5,6], [7,8]]
 list_of_points2_ = [[15,16], [13,14], [11,12], [9,10]]
 list_of_points1 = np.array([np.array(elem).reshape(1,2) for elem in list_of_points1_])
@@ -127,6 +133,7 @@ with tf.compat.v1.Session(graph=graph) as session:
         feed_dict = {point1 : point1_, point2 : point2_}
         distance = session.run([dist], feed_dict=feed_dict)
         print("the distance between {} and {} -> {}".format(point1_, point2_, distance))
+
 
 '''
 输入数据集：训练数据集和标签、测试数据集和标签（以及验证数据集和标签）。
@@ -227,23 +234,23 @@ test_labels = mnist_test_labels
 num_steps = 10001
 display_step = 1000
 learning_rate = 0.5
-graph = tf.Graph()
+graph = tf.compat.v1.Graph()
 with graph.as_default():
     #1) First we put the input data in a Tensorflow friendly form.
-    tf_train_dataset = tf.compat.v1.placeholder(tf.float32, shape=(batch_size, image_width, image_height, image_depth)) #兼容性修改 下同
-    tf_train_labels = tf.compat.v1.placeholder(tf.float32, shape = (batch_size, num_labels))
-    tf_test_dataset = tf.compat.v1.constant(test_dataset, tf.float32)
+    tf_train_dataset = tf.compat.v1.placeholder(tf.compat.v1.float32, shape=(batch_size, image_width, image_height, image_depth)) #兼容性修改 下同
+    tf_train_labels = tf.compat.v1.placeholder(tf.compat.v1.float32, shape =(batch_size, num_labels))
+    tf_test_dataset = tf.compat.v1.constant(test_dataset, tf.compat.v1.float32)
     #2) Then, the weight matrices and bias vectors are initialized
     #as a default, tf.truncated_normal() is used for the weight matrix and tf.zeros() is used for the bias vector.
-    weights = tf.compat.v1.Variable(tf.compat.v1.truncated_normal([image_width * image_height * image_depth, num_labels]), tf.float32)
-    bias = tf.compat.v1.Variable(tf.compat.v1.zeros([num_labels]), tf.float32)
+    weights = tf.compat.v1.Variable(tf.compat.v1.truncated_normal([image_width * image_height * image_depth, num_labels]), tf.compat.v1.float32)
+    bias = tf.compat.v1.Variable(tf.compat.v1.zeros([num_labels]), tf.compat.v1.float32)
     #3) define the model:
     #A one layered fccd simply consists of a matrix multiplication
     def model(data, weights, bias):
         return tf.compat.v1.matmul(flatten_tf_array(data), weights) + bias
     logits = model(tf_train_dataset, weights, bias)
     #4) calculate the loss, which will be used in the optimization of the weights
-    loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_train_labels))
+    loss = tf.compat.v1.reduce_mean(tf.compat.v1.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_train_labels))
     #5) Choose an optimizer. Many are available.
     optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate).minimize(loss)
     #6) The predicted values for the images in the train dataset and test dataset are assigned to the variables train_prediction and test_prediction.
