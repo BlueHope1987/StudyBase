@@ -58,6 +58,7 @@ print(grad_z_val)
 
 #一篇文章就够了 TensorFlow 2.0 实战 (持续更新) https://www.jianshu.com/p/fa334fd76d2f
 # 一步一步学用Tensorflow构建卷积神经网络 https://www.jianshu.com/p/53d6cc6bbb25
+# https://developer.aliyun.com/article/178374
 # https://blog.csdn.net/dyingstraw/article/details/80139343
 # https://ataspinar.com/2017/08/15/building-convolutional-neural-networks-with-tensorflow/
 
@@ -224,14 +225,14 @@ image_width = mnist_image_width
 image_height = mnist_image_height
 image_depth = mnist_image_depth
 num_labels = mnist_num_labels
-batch_size=32 ##debuging 后加
+batch_size=512 ##debuging 后加 32->
 #the dataset
 train_dataset = mnist_train_dataset
 train_labels = mnist_train_labels
 test_dataset = mnist_test_dataset
 test_labels = mnist_test_labels
 #number of iterations and learning rate
-num_steps = 10001
+num_steps = 50001 #debug 10001 -> 
 display_step = 1000
 learning_rate = 0.5
 tf.compat.v1.reset_default_graph() #DEBUG:恢复图
@@ -241,27 +242,34 @@ with graph.as_default():
     tf_train_dataset = tf.compat.v1.placeholder(tf.float32, shape=(batch_size, image_width, image_height, image_depth)) #兼容性修改 下同
     tf_train_labels = tf.compat.v1.placeholder(tf.float32, shape=(batch_size, num_labels))
     tf_test_dataset = tf.compat.v1.constant(test_dataset, tf.float32)
+
     #2) Then, the weight matrices and bias vectors are initialized
     #as a default, tf.truncated_normal() is used for the weight matrix and tf.zeros() is used for the bias vector.
-    weights = tf.Variable(tf.compat.v1.truncated_normal([image_width * image_height * image_depth, num_labels]), tf.float32)
-    bias = tf.Variable(tf.zeros([num_labels]), tf.float32)
+    weights = tf.Variable(tf.compat.v1.truncated_normal([image_width * image_height * image_depth, num_labels]), tf.float32) #truncated_normal 截断的产生正态分布的随机数
+    bias = tf.Variable(tf.zeros([num_labels]), tf.float32) #创建所有值为0的张量
+
     #3) define the model:
     #A one layered fccd simply consists of a matrix multiplication
     def model(data, weights, bias):
-        return tf.compat.v1.matmul(flatten_tf_array(data), weights) + bias
+        return tf.compat.v1.matmul(flatten_tf_array(data), weights) + bias # matmul函数:矩阵相乘
     logits = model(tf_train_dataset, weights, bias)
+
     #4) calculate the loss, which will be used in the optimization of the weights
     loss = tf.compat.v1.reduce_mean(tf.compat.v1.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_train_labels))
+    #reduce_mean降维平均值 loss是代价值，也就是我们要最小化的值
+
     #5) Choose an optimizer. Many are available.
     optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+    #GradientDescentOptimizer 构造一个新的梯度下降优化器实例 learning_rate优化器将采用的学习速率 minimize梯度计算更新
+
     #6) The predicted values for the images in the train dataset and test dataset are assigned to the variables train_prediction and test_prediction.
     #It is only necessary if you want to know the accuracy by comparing it with the actual values.
-    train_prediction = tf.compat.v1.nn.softmax(logits)
+    train_prediction = tf.compat.v1.nn.softmax(logits) #softmax 将一些输入映射为0-1之间的实数，并且归一化保证和为1
     test_prediction = tf.compat.v1.nn.softmax(model(tf_test_dataset, weights, bias))
 
 #tf.compat.v1.summary.merge_all() #自动管理 应对某些可能出现的异常
 with tf.compat.v1.Session(graph=graph) as session:
-    #writer=tf.compat.v1.summary.FileWriter('tensorboard_study', session.graph) #生成计算图 tensorboard --logdir=\tensorboard_study
+    #writer=tf.compat.v1.summary.FileWriter('tb_study', session.graph) #生成计算图 tensorboard --logdir=tb_study
     tf.compat.v1.global_variables_initializer().run()
     print('Initialized')
     for step in range(num_steps):
@@ -274,7 +282,7 @@ with tf.compat.v1.Session(graph=graph) as session:
         _, l, predictions = session.run([optimizer, loss, train_prediction],feed_dict=feed_dict)
         #Debug:新增 ",feed_dict=feed_dict" 及循环内定义逻辑 似乎结果不对 但必须投喂数据 以应对上述既定的placeholder
         if (step % display_step == 0):
-            train_accuracy = accuracy(predictions, train_labels[:, :])
+            train_accuracy = accuracy(predictions,batch_labels) #Debug: train_labels[:, :] -> batch_labels
             test_accuracy = accuracy(test_prediction.eval(), test_labels)
             message = "step {:04d} : loss is {:06.2f}, accuracy on training set {:02.2f} %, accuracy on test set {:02.2f} %".format(step, l, train_accuracy, test_accuracy)
             print(message)
