@@ -1,5 +1,5 @@
 #利用RNN获得一段文本的但向量表示
-#P35
+#P55
 
 import torch
 import torch.nn as nn

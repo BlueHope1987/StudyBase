@@ -251,13 +251,13 @@ with graph.as_default():
         return tf.compat.v1.matmul(flatten_tf_array(data), weights) + bias
     logits = model(tf_train_dataset, weights, bias)
     #4) calculate the loss, which will be used in the optimization of the weights
-    loss = tf.reduce_mean(tf.compat.v1.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_train_labels))
+    loss = tf.compat.v1.reduce_mean(tf.compat.v1.nn.softmax_cross_entropy_with_logits(logits=logits, labels=tf_train_labels))
     #5) Choose an optimizer. Many are available.
     optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate).minimize(loss)
     #6) The predicted values for the images in the train dataset and test dataset are assigned to the variables train_prediction and test_prediction.
     #It is only necessary if you want to know the accuracy by comparing it with the actual values.
-    train_prediction = tf.nn.softmax(logits)
-    test_prediction = tf.nn.softmax(model(tf_test_dataset, weights, bias))
+    train_prediction = tf.compat.v1.nn.softmax(logits)
+    test_prediction = tf.compat.v1.nn.softmax(model(tf_test_dataset, weights, bias))
 
 #tf.compat.v1.summary.merge_all() #自动管理 应对某些可能出现的异常
 with tf.compat.v1.Session(graph=graph) as session:
