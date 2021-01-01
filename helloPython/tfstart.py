@@ -162,6 +162,8 @@ def flatten_tf_array(array):
     return tf.compat.v1.reshape(array, [shape[0], shape[1] * shape[2] * shape[3]])
 def accuracy(predictions, labels):
     return (100.0 * np.sum(np.argmax(predictions, 1) == np.argmax(labels, 1)) / predictions.shape[0])
+    #argmax取最大值的索引 比较0内层1外层 最大值索引一致的累加
+    #DEBUG检查点 数组维度不一致 已解决
 
 print("========加载MNIST和CIFAR-10数据集==========")
 #pip install python-mnist #https://github.com/sorki/python-mnist
@@ -220,21 +222,23 @@ print('Test set shape', test_dataset_cifar10.shape, test_labels_cifar10.shape)
 最好是在Tensorflow中从这样一个简单的NN开始，然后再去研究更复杂的神经网络。 当我们研究那些更复杂的神经网络的时候，只是图的模型（步骤2）和权重（步骤3）发生了改变，其他步骤仍然保持不变。
 我们可以按照如下代码制作一层FCNN：
 '''
+#参考 https://www.cnblogs.com/imae/p/10629890.html
+#没几步梯度爆炸什么的 调参什么的？
 
 image_width = mnist_image_width
 image_height = mnist_image_height
 image_depth = mnist_image_depth
 num_labels = mnist_num_labels
-batch_size=512 ##debuging 后加 32->
+batch_size=32 ##debuging 后加 32->
 #the dataset
 train_dataset = mnist_train_dataset
 train_labels = mnist_train_labels
 test_dataset = mnist_test_dataset
 test_labels = mnist_test_labels
 #number of iterations and learning rate
-num_steps = 50001 #debug 10001 -> 
-display_step = 1000
-learning_rate = 0.5
+num_steps = 1000 #debug 10001 -> 
+display_step = 10 #debug 1000 ->
+learning_rate = 0.01 #debug 0.5->
 tf.compat.v1.reset_default_graph() #DEBUG:恢复图
 graph = tf.Graph()
 with graph.as_default():
@@ -270,7 +274,7 @@ with graph.as_default():
 #tf.compat.v1.summary.merge_all() #自动管理 应对某些可能出现的异常
 with tf.compat.v1.Session(graph=graph) as session:
     #writer=tf.compat.v1.summary.FileWriter('tb_study', session.graph) #生成计算图 tensorboard --logdir=tb_study
-    tf.compat.v1.global_variables_initializer().run()
+    tf.compat.v1.global_variables_initializer().run() #初始化模型
     print('Initialized')
     for step in range(num_steps):
         #新增debug
@@ -282,7 +286,14 @@ with tf.compat.v1.Session(graph=graph) as session:
         _, l, predictions = session.run([optimizer, loss, train_prediction],feed_dict=feed_dict)
         #Debug:新增 ",feed_dict=feed_dict" 及循环内定义逻辑 似乎结果不对 但必须投喂数据 以应对上述既定的placeholder
         if (step % display_step == 0):
-            train_accuracy = accuracy(predictions,batch_labels) #Debug: train_labels[:, :] -> batch_labels
+            train_accuracy = accuracy(predictions,batch_labels[:, :]) #Debug: train_labels[:, :] -> batch_labels
+            #DEBUG:数组维度不一致异常！！！ 已解决 train_labels与分片的predictions维度不一致 得用batch_labels如是维度 是否可以参照它？
+            '''
+            [m:n] #切片操作，取a[m]~a[n-1]之间的内容，m\n可以为负，m>n时返回空
+            X[:,0]是numpy中数组的一种写法，表示对一个二维数组，取该二维数组第一维中的所有数据，第二维中取第0个数据，直观来说，X[:,0]就是取所有行的第0个数据, X[:,1] 就是取所有行的第1个数据。
+            X[n,:]是取第1维中下标为n的元素的所有值。
+            X[:,m:n]，即取所有数据的第m到n-1列数据，含左不含右
+            '''
             test_accuracy = accuracy(test_prediction.eval(), test_labels)
             message = "step {:04d} : loss is {:06.2f}, accuracy on training set {:02.2f} %, accuracy on test set {:02.2f} %".format(step, l, train_accuracy, test_accuracy)
             print(message)
