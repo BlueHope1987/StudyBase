@@ -236,8 +236,8 @@ train_labels = mnist_train_labels
 test_dataset = mnist_test_dataset
 test_labels = mnist_test_labels
 #number of iterations and learning rate
-num_steps = 1000 #debug 10001 -> 
-display_step = 10 #debug 1000 ->
+num_steps = 50 #debug 10001 -> 
+display_step = 1 #debug 1000 ->
 learning_rate = 0.01 #debug 0.5->
 tf.compat.v1.reset_default_graph() #DEBUG:恢复图
 graph = tf.Graph()
@@ -265,6 +265,10 @@ with graph.as_default():
     #5) Choose an optimizer. Many are available.
     optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate).minimize(loss)
     #GradientDescentOptimizer 构造一个新的梯度下降优化器实例 learning_rate优化器将采用的学习速率 minimize梯度计算更新
+
+    #https://blog.csdn.net/hwl19951007/article/details/81115341 单层卷积神经网络样例使用该优化器 准确率高达90% 不是FCNN？
+    #https://blog.csdn.net/qq_41689620/article/details/89085237 该案例准确度与当前相仿
+    #optimizer = tf.compat.v1.train.AdamOptimizer().minimize(loss) #尝试替代选用Adma算法优化器 没有出众效果
 
     #6) The predicted values for the images in the train dataset and test dataset are assigned to the variables train_prediction and test_prediction.
     #It is only necessary if you want to know the accuracy by comparing it with the actual values.
