@@ -269,6 +269,7 @@ with graph.as_default():
     #https://blog.csdn.net/hwl19951007/article/details/81115341 单层卷积神经网络样例使用该优化器 准确率高达90% 不是FCNN？
     #https://blog.csdn.net/qq_41689620/article/details/89085237 该案例准确度与当前相仿
     #optimizer = tf.compat.v1.train.AdamOptimizer().minimize(loss) #尝试替代选用Adma算法优化器 没有出众效果
+    #检查：为何今天什么代码都没动 准确率上去了？71%~93% 其他操作：转移文件路径经测试无关 新建conda tf1.15环境并跑了两个高准确率范例？其后卡死 强制结束 svchost:SysMain (Superfetch)服务内存猛涨？
 
     #6) The predicted values for the images in the train dataset and test dataset are assigned to the variables train_prediction and test_prediction.
     #It is only necessary if you want to know the accuracy by comparing it with the actual values.

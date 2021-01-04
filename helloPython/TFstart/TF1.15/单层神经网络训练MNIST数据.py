@@ -7,7 +7,7 @@ import tensorflow as tf
  
  
 # 从TensorFlow的样例中获取下载mnist的文件，并解压输入
-import tensorflow.examples.tutorials.mnist.input_data as input_data
+from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
  
 # 展示数据集信息
