@@ -78,7 +78,7 @@ h = tf.zeros([11], tf.int16)
 i = tf.ones([2,2], tf.float32)
 j = tf.zeros([1000,4,3], tf.float64)
 k = tf.Variable(tf.zeros([2,2], tf.float32))
-l = tf.Variable(tf.zeros([5,6,5], tf.float32))
+#l = tf.Variable(tf.zeros([5,6,5], tf.float32)) 变量冲突:单层网络会话中loss值
 '''
 除了tf.zeros()和tf.ones()能够创建一个初始值为0或1的张量（见这里）之外，还有一个tf.random_normal()函数，它能够创建一个包含多个随机值的张量，这些随机值是从正态分布中随机抽取的（默认的分布均值为0.0，标准差为1.0）。
 另外还有一个tf.truncated_normal()函数，它创建了一个包含从截断的正态分布中随机抽取的值的张量，其中下上限是标准偏差的两倍。
@@ -225,6 +225,8 @@ print('Test set shape', test_dataset_cifar10.shape, test_labels_cifar10.shape)
 #参考 https://www.cnblogs.com/imae/p/10629890.html
 #没几步梯度爆炸什么的 调参什么的？
 
+#代码可能是示意 无法调试良好稳定运行
+
 image_width = mnist_image_width
 image_height = mnist_image_height
 image_depth = mnist_image_depth
@@ -240,6 +242,8 @@ num_steps = 50 #debug 10001 ->
 display_step = 1 #debug 1000 ->
 learning_rate = 0.01 #debug 0.5->
 tf.compat.v1.reset_default_graph() #DEBUG:恢复图
+tf.random.set_seed(1) #DEBUG:尝试指定种子以固定结果
+
 graph = tf.Graph()
 with graph.as_default():
     #1) First we put the input data in a Tensorflow friendly form.
@@ -250,7 +254,7 @@ with graph.as_default():
     #2) Then, the weight matrices and bias vectors are initialized
     #as a default, tf.truncated_normal() is used for the weight matrix and tf.zeros() is used for the bias vector.
     weights = tf.Variable(tf.compat.v1.truncated_normal([image_width * image_height * image_depth, num_labels]), tf.float32) #truncated_normal 截断的产生正态分布的随机数
-    bias = tf.Variable(tf.zeros([num_labels]), tf.float32) #创建所有值为0的张量
+    bias = tf.Variable(tf.zeros([num_labels]), tf.float32) #偏置项 创建所有值为0的张量
 
     #3) define the model:
     #A one layered fccd simply consists of a matrix multiplication
@@ -266,10 +270,10 @@ with graph.as_default():
     optimizer = tf.compat.v1.train.GradientDescentOptimizer(learning_rate).minimize(loss)
     #GradientDescentOptimizer 构造一个新的梯度下降优化器实例 learning_rate优化器将采用的学习速率 minimize梯度计算更新
 
-    #https://blog.csdn.net/hwl19951007/article/details/81115341 单层卷积神经网络样例使用该优化器 准确率高达90% 不是FCNN？
-    #https://blog.csdn.net/qq_41689620/article/details/89085237 该案例准确度与当前相仿
     #optimizer = tf.compat.v1.train.AdamOptimizer().minimize(loss) #尝试替代选用Adma算法优化器 没有出众效果
-    #检查：为何今天什么代码都没动 准确率上去了？71%~93% 其他操作：转移文件路径经测试无关 新建conda tf1.15环境并跑了两个高准确率范例？其后卡死 强制结束 svchost:SysMain (Superfetch)服务内存猛涨？
+    #检查：为何今天什么代码都没动 准确率上去了？71%~93%
+    #其他操作：转移文件路径经测试无关 新建conda tf1.15环境并跑了两个高准确率范例？其后卡死 强制结束 svchost:SysMain (Superfetch)服务内存猛涨？
+    #准确率在不同机器显示有巨大差异
 
     #6) The predicted values for the images in the train dataset and test dataset are assigned to the variables train_prediction and test_prediction.
     #It is only necessary if you want to know the accuracy by comparing it with the actual values.
@@ -279,8 +283,8 @@ with graph.as_default():
 #tf.compat.v1.summary.merge_all() #自动管理 应对某些可能出现的异常
 with tf.compat.v1.Session(graph=graph) as session:
     #writer=tf.compat.v1.summary.FileWriter('tb_study', session.graph) #生成计算图 tensorboard --logdir=tb_study
-    tf.compat.v1.global_variables_initializer().run() #初始化模型
-    print('Initialized')
+    tf.compat.v1.global_variables_initializer().run() #初始化模型 global_variables_initializer会将权重设置为随机值
+    print('Initialized with learning_rate', learning_rate)
     for step in range(num_steps):
         #新增debug
         offset = (step * batch_size) % (train_labels.shape[0] - batch_size)
@@ -302,3 +306,19 @@ with tf.compat.v1.Session(graph=graph) as session:
             test_accuracy = accuracy(test_prediction.eval(), test_labels)
             message = "step {:04d} : loss is {:06.2f}, accuracy on training set {:02.2f} %, accuracy on test set {:02.2f} %".format(step, l, train_accuracy, test_accuracy)
             print(message)
+
+'''
+2.5 创建 LeNet5 卷积神经网络
+下面我们将开始构建更多层的神经网络。例如LeNet5卷积神经网络。
+LeNet5 CNN架构最早是在1998年由Yann Lecun（见论文http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf?spm=a2c6h.12873639.0.0.4dd17e76Xl9YXh&file=lecun-01a.pdf ）提出的。它是最早的CNN之一，专门用于对手写数字进行分类。尽管它在由大小为28 x 28的灰度图像组成的MNIST数据集上运行良好，但是如果用于其他包含更多图片、更大分辨率以及更多类别的数据集时，它的性能会低很多。对于这些较大的数据集，更深的ConvNets（如AlexNet、VGGNet或ResNet）会表现得更好。
+但由于LeNet5架构仅由5个层构成，因此，学习如何构建CNN是一个很好的起点。
+
+第1层：卷积层，包含S型激活函数，然后是平均池层。
+第2层：卷积层，包含S型激活函数，然后是平均池层。
+第3层：一个完全连接的网络（S型激活）
+第4层：一个完全连接的网络（S型激活）
+第5层：输出层
+这意味着我们需要创建5个权重和偏差矩阵，我们的模型将由12行代码组成（5个层 + 2个池 + 4个激活函数 + 1个扁平层）。
+由于这个还是有一些代码量的，因此最好在图之外的一个单独函数中定义这些代码。
+'''
+#由上面的示例拓展到LeNet5网络 LeNet5.py
