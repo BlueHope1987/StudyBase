@@ -138,7 +138,7 @@ def model_lenet5(data, variables):
     logits = tf.matmul(layer4_actv, variables['w5']) + variables['b5']
     return logits
 
-
+#由于变量和模型是单独定义的，我们可以稍稍调整一下图，以便让它使用这些权重和模型，而不是以前的完全连接的NN
 
 
 #parameters determining the model size
