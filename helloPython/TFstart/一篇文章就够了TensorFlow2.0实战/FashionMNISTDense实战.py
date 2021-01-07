@@ -1,6 +1,12 @@
 #一篇文章就够了 TensorFlow 2.0 实战 (持续更新) https://www.jianshu.com/p/fa334fd76d2f
 #Fashion MNIST Dense 实战
 
+'''
+Fashion MNIST Dense 时尚物品数据集
+其中包含10个类别的70,000个灰度图像。图像显示了低分辨率（28 x 28像素）的单个衣​​物
+图像是28×28 NumPy数组，像素值范围是0到255。标签是整数数组，范围是0到9。
+'''
+
 #Tensorboard 可视化
 '''
 current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -36,7 +42,7 @@ def preprocess(x, y):
     return x,y
 
 
-(x, y), (x_test, y_test) = datasets.fashion_mnist.load_data()
+(x, y), (x_test, y_test) = datasets.fashion_mnist.load_data() #默认下载到 <用户文件夹>\.keras\datasets\fashion-mnist
 
 batchsz = 128
 

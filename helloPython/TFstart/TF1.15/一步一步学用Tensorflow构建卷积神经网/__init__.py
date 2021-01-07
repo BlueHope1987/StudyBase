@@ -7,6 +7,80 @@ import numpy as np
 # https://blog.csdn.net/dyingstraw/article/details/80139343
 # https://ataspinar.com/2017/08/15/building-convolutional-neural-networks-with-tensorflow/
 
+'''
+Tensorflow中最基本的单元是常量、变量和占位符。
+tf.constant()和tf.Variable()之间的区别很清楚；一个常量有着恒定不变的值，一旦设置了它，它的值不能被改变。而变量的值可以在设置完成后改变，但变量的数据类型和形状无法改变。
+
+a=tf.constant(2,tf.int16)
+b=tf.constant(4,tf.float32)
+c=tf.constant(8,tf.float32)
+d = tf.Variable(2, tf.int16)
+e = tf.Variable(4, tf.float32)
+f = tf.Variable(8, tf.float32)
+g = tf.constant(np.zeros(shape=(2,2), dtype=np.float32)) #does work
+h = tf.zeros([11], tf.int16)
+i = tf.ones([2,2], tf.float32)
+j = tf.zeros([1000,4,3], tf.float64)
+k = tf.Variable(tf.zeros([2,2], tf.float32))
+l = tf.Variable(tf.zeros([5,6,5], tf.float32))
+
+除了tf.zeros()和tf.ones()能够创建一个初始值为0或1的张量（见这里 https://www.tensorflow.org/api_guides/python/constant_op ）之外，还有一个tf.random_normal()函数，它能够创建一个包含多个随机值的张量，这些随机值是从正态分布中随机抽取的（默认的分布均值为0.0，标准差为1.0）。
+另外还有一个tf.truncated_normal()函数，它创建了一个包含从截断的正态分布中随机抽取的值的张量，其中下上限是标准偏差的两倍。
+有了这些知识，我们就可以创建用于神经网络的权重矩阵和偏差向量了。
+'''
+
+print("=========================")
+weights = tf.Variable(tf.compat.v1.truncated_normal([256 * 256, 10]))
+biases = tf.Variable(tf.zeros([10]))
+print(weights.get_shape().as_list())
+print(biases.get_shape().as_list())
+
+'''
+在Tensorflow中，所有不同的变量以及对这些变量的操作都保存在图（Graph）中。在构建了一个包含针对模型的所有计算步骤的图之后，就可以在会话（Session）中运行这个图了。会话可以跨CPU和GPU分配所有的计算。
+'''
+
+#似乎有兼容性问题 无法运行
+graph = tf.Graph()
+with graph.as_default():
+    a = tf.Variable(8, tf.float32)
+    b = tf.Variable(tf.zeros([2,2], tf.float32))
+with tf.compat.v1.Session(graph=graph) as session:
+    tf.compat.v1.global_variables_initializer().run()
+    print(a)
+    print(session.run(a))
+    print(session.run(b))
+
+'''
+我们已经看到了用于创建常量和变量的各种形式。Tensorflow中也有占位符，它不需要初始值，仅用于分配必要的内存空间。 在一个会话中，这些占位符可以通过feed_dict填入（外部）数据。
+以下是占位符的使用示例。
+'''
+
+list_of_points1_ = [[1,2], [3,4], [5,6], [7,8]]
+list_of_points2_ = [[15,16], [13,14], [11,12], [9,10]]
+list_of_points1 = np.array([np.array(elem).reshape(1,2) for elem in list_of_points1_])
+list_of_points2 = np.array([np.array(elem).reshape(1,2) for elem in list_of_points2_])
+graph = tf.Graph()
+with graph.as_default():
+    #we should use a tf.placeholder() to create a variable whose value you will fill in later (during session.run()).
+    #this can be done by 'feeding' the data into the placeholder.
+    #below we see an example of a method which uses two placeholder arrays of size [2,1] to calculate the eucledian distance
+    point1 = tf.placeholder(tf.float32, shape=(1, 2))
+    point2 = tf.placeholder(tf.float32, shape=(1, 2))
+    def calculate_eucledian_distance(point1, point2):
+        difference = tf.subtract(point1, point2)
+        power2 = tf.pow(difference, tf.constant(2.0, shape=(1,2)))
+        add = tf.reduce_sum(power2)
+        eucledian_distance = tf.sqrt(add)
+        return eucledian_distance
+    dist = calculate_eucledian_distance(point1, point2)
+with tf.Session(graph=graph) as session:
+    tf.global_variables_initializer().run()
+    for ii in range(len(list_of_points1)):
+        point1_ = list_of_points1[ii]
+        point2_ = list_of_points2[ii]
+        feed_dict = {point1 : point1_, point2 : point2_}
+        distance = session.run([dist], feed_dict=feed_dict)
+        print("the distance between {} and {} -> {}".format(point1_, point2_, distance))
 
 '''
 输入数据集：训练数据集和标签、测试数据集和标签（以及验证数据集和标签）。
@@ -195,3 +269,38 @@ LeNet5 CNN架构最早是在1998年由Yann Lecun（见论文http://yann.lecun.co
 由于这个还是有一些代码量的，因此最好在图之外的一个单独函数中定义这些代码。
 '''
 #由上面的示例拓展到LeNet5网络 LeNet5.py
+
+
+'''
+2.6 影响层输出大小的参数
+一般来说，神经网络的层数越多越好。我们可以添加更多的层、修改激活函数和池层，修改学习速率，以看看每个步骤是如何影响性能的。由于i层的输入是i-1层的输出，我们需要知道不同的参数是如何影响i-1层的输出大小的。
+
+要了解这一点，可以看看conv2d()函数。
+
+它有四个参数：
+
+输入图像，维度为[batch size, image_width, image_height, image_depth]的4D张量
+权重矩阵，维度为[filter_size, filter_size, image_depth, filter_depth]的4D张量
+每个维度的步幅数。
+填充（='SAME'/'VALID'）
+这四个参数决定了输出图像的大小。
+
+前两个参数分别是包含一批输入图像的4D张量和包含卷积滤波器权重的4D张量。
+
+第三个参数是卷积的步幅，即卷积滤波器在四维的每一个维度中应该跳过多少个位置。这四个维度中的第一个维度表示图像批次中的图像编号，由于我们不想跳过任何图像，因此始终为1。最后一个维度表示图像深度（不是色彩的通道数；灰度为1，RGB为3），由于我们不想跳过任何颜色通道，所以这个也总是为1。第二和第三维度表示X和Y方向上的步幅（图像宽度和高度）。如果要应用步幅，则这些是过滤器应跳过的位置的维度。因此，对于步幅为1，我们必须将步幅参数设置为[1, 1, 1, 1]，如果我们希望步幅为2，则将其设置为[1，2，2，1]。以此类推。
+
+最后一个参数表示Tensorflow是否应该对图像用零进行填充，以确保对于步幅为1的输出尺寸不会改变。如果 padding = 'SAME'，则图像用零填充（并且输出大小不会改变），如果 padding = 'VALID'，则不填充。
+
+...................
+
+对于任意一个步幅S，滤波器尺寸K，图像尺寸W和填充尺寸P，输出尺寸将为
+O = 1 + (W - K + 2P) / S
+如果在Tensorflow中 padding = “SAME”，则分子加起来恒等于1，输出大小仅由步幅S
+
+2.7 调整 LeNet5 的架构
+在原始论文中，LeNet5架构使用了S形激活函数和平均池。 然而，现在，使用relu激活函数则更为常见。 所以，我们来稍稍修改一下LeNet5 CNN，看看是否能够提高准确性。我们将称之为类LeNet5架构
+主要区别是我们使用了relu激活函数而不是S形激活函数。
+除了激活函数，我们还可以改变使用的优化器，看看不同的优化器对精度的影响。
+'''
+
+#由上面的示例拓展到类LeNet5网络 likeLeNet5.py
