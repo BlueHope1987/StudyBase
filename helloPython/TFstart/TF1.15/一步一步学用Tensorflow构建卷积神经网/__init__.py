@@ -186,8 +186,8 @@ print('Test set shape', test_dataset_cifar10.shape, test_labels_cifar10.shape)
 最好是在Tensorflow中从这样一个简单的NN开始，然后再去研究更复杂的神经网络。 当我们研究那些更复杂的神经网络的时候，只是图的模型（步骤2）和权重（步骤3）发生了改变，其他步骤仍然保持不变。
 我们可以按照如下代码制作一层FCNN：
 '''
-#参考 https://www.cnblogs.com/imae/p/10629890.html #没几步梯度爆炸什么的 调参什么的？
-#代码可能是示意 已在tf1.15下调试良好
+#插入无关参考 https://www.cnblogs.com/imae/p/10629890.html #没几步准确率陡降 梯度爆炸什么的 调参什么的？
+#代码可能是示意（划掉） 已在tf1.15下调试良好
 
 image_width = mnist_image_width
 image_height = mnist_image_height
@@ -269,6 +269,24 @@ with tf.Session(graph=graph) as session:
             message = "step {:04d} : loss is {:06.2f}, accuracy on training set {:02.2f} %, accuracy on test set {:02.2f} %".format(step, l, train_accuracy, test_accuracy)
             print(message)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 '''
 在图中，我们加载数据，定义权重矩阵和模型，从分对数矢量中计算损失值，并将其传递给优化器，该优化器将更新迭代“num_steps”次数的权重。
 在上述完全连接的NN中，我们使用了梯度下降优化器来优化权重。然而，有很多不同的优化器(http://ataspinar.com/2017/08/15/building-convolutional-neural-networks-with-Tensorflow/#https://www.Tensorflow.org/api_guides/python/train%23Optimizers)可用于Tensorflow。 最常用的优化器有GradientDescentOptimizer、AdamOptimizer和AdaGradOptimizer，所以如果你正在构建一个CNN的话，我建议你试试这些。
@@ -320,6 +338,16 @@ Lenet5架构如下图所示：
 第5层：输出层
 这意味着我们需要创建5个权重和偏差矩阵，我们的模型将由12行代码组成（5个层 + 2个池 + 4个激活函数 + 1个扁平层）。
 由于这个还是有一些代码量的，因此最好在图之外的一个单独函数中定义这些代码。
+
+Note:
+谓激活函数（Activation Function），就是在人工神经网络的神经元上运行的函数，负责将神经元的输入映射到输出端。
+如果不用激活函数，每一层输出都是上层输入的线性函数，无论神经网络有多少层，输出都是输入的线性组合，这种情况就是最原始的感知机（Perceptron）。
+如果使用的话，激活函数给神经元引入了非线性因素，使得神经网络可以任意逼近任何非线性函数，这样神经网络就可以应用到众多的非线性模型中。
+
+S型激活函数：Sigmoid函数，即f(x)=1/(1+e-x)。神经元的非线性作用函数。（-x是幂数）。函数曲线是S形。
+REF：https://blog.csdn.net/kangyi411/article/details/78969642 几种常用激活函数的简介
+1. sigmod函数   2.tanh函数 双曲正切 和sigmod函数的曲线是比较相近的 更陡   3.ReLU函数 折线性 笔直 "目前比较火" 
+4.ELU函数 软折线性 逆抛物线   5.PReLU函数 折前有斜率的笔直折线
 '''
 #由上面的示例拓展到LeNet5网络 LeNet5.py
 
@@ -365,7 +393,7 @@ O = 1 + (W - K + 2P) / S
 除了激活函数，我们还可以改变使用的优化器，看看不同的优化器对精度的影响。
 '''
 
-#由上面的示例拓展到类LeNet5网络 likeLeNet5.py
+#由上面的示例拓展到类LeNet5网络 LeNet5Like.py
 
 '''
 2.8 学习速率和优化器的影响
@@ -388,6 +416,8 @@ O = 1 + (W - K + 2P) / S
 比如，由Alex Krizhevsky开发的非常有名的AlexNet(https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)架构（2012年），7层的ZF Net(http://arxiv.org/pdf/1311.2901v3.pdf)(2013)，以及16层的 VGGNet(http://arxiv.org/pdf/1409.1556v6.pdf)(2014)。
 在2015年，Google发布了一个包含初始模块的22层的CNN（GoogLeNet(http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf)），而微软亚洲研究院构建了一个152层的CNN，被称为ResNet(https://arxiv.org/pdf/1512.03385v1.pdf)。
 现在，根据我们目前已经学到的知识，我们来看一下如何在Tensorflow中创建AlexNet和VGGNet16架构。
+
+
 3.1 AlexNet
 虽然LeNet5是第一个ConvNet，但它被认为是一个浅层神经网络。它在由大小为28 x 28的灰度图像组成的MNIST数据集上运行良好，但是当我们尝试分类更大、分辨率更好、类别更多的图像时，性能就会下降。
 第一个深度CNN于2012年推出，称为AlexNet，其创始人为Alex Krizhevsky、Ilya Sutskever和Geoffrey Hinton。与最近的架构相比，AlexNet可以算是简单的了，但在当时它确实非常成功。它以令人难以置信的15.4％的测试错误率赢得了ImageNet比赛（亚军的误差为26.2％），并在全球深度学习和人工智能领域掀起了一场革命(https://qz.com/1034972/the-data-that-changed-the-direction-of-ai-research-and-possibly-the-world/)。
@@ -405,106 +435,17 @@ O = 1 + (W - K + 2P) / S
 请注意，由于这些数据集中的图像太小，因此无法在MNIST或CIFAR-10数据集上使用此CNN（或其他的深度CNN）。正如我们以前看到的，一个池化层（或一个步幅为2的卷积层）将图像大小减小了2倍。 AlexNet具有3个最大池化层和一个步长为4的卷积层。这意味着原始图像尺寸会缩小2^5。 MNIST数据集中的图像将简单地缩小到尺寸小于0。
 因此，我们需要加载具有较大图像的数据集，最好是224 x 224 x 3（如原始文件所示）。 17个类别的花卉数据集，又名oxflower17数据集(http://www.robots.ox.ac.uk/~vgg/data/flowers/17/)是最理想的，因为它包含了这个大小的图像：
 
-ox17_image_width = 224
-ox17_image_height = 224
-ox17_image_depth = 3
-ox17_num_labels = 17
- 
-import tflearn.datasets.oxflower17 as oxflower17
-train_dataset_, train_labels_ = oxflower17.load_data(one_hot=True)
-train_dataset_ox17, train_labels_ox17 = train_dataset_[:1000,:,:,:], train_labels_[:1000,:]
-test_dataset_ox17, test_labels_ox17 = train_dataset_[1000:,:,:,:], train_labels_[1000:,:]
- 
-print('Training set', train_dataset_ox17.shape, train_labels_ox17.shape)
-print('Test set', test_dataset_ox17.shape, test_labels_ox17.shape)
+[AlexNet.py#Code 3.1.1]
 
 让我们试着在AlexNet中创建权重矩阵和不同的层。正如我们之前看到的，我们需要跟层数一样多的权重矩阵和偏差矢量，并且每个权重矩阵的大小应该与其所属层的过滤器的大小相对应。
 
-ALEX_PATCH_DEPTH_1, ALEX_PATCH_DEPTH_2, ALEX_PATCH_DEPTH_3, ALEX_PATCH_DEPTH_4 = 96, 256, 384, 256
-ALEX_PATCH_SIZE_1, ALEX_PATCH_SIZE_2, ALEX_PATCH_SIZE_3, ALEX_PATCH_SIZE_4 = 11, 5, 3, 3
-ALEX_NUM_HIDDEN_1, ALEX_NUM_HIDDEN_2 = 4096, 4096
- 
- 
-def variables_alexnet(patch_size1 = ALEX_PATCH_SIZE_1, patch_size2 = ALEX_PATCH_SIZE_2, 
-                      patch_size3 = ALEX_PATCH_SIZE_3, patch_size4 = ALEX_PATCH_SIZE_4, 
-                      patch_depth1 = ALEX_PATCH_DEPTH_1, patch_depth2 = ALEX_PATCH_DEPTH_2, 
-                      patch_depth3 = ALEX_PATCH_DEPTH_3, patch_depth4 = ALEX_PATCH_DEPTH_4, 
-                      num_hidden1 = ALEX_NUM_HIDDEN_1, num_hidden2 = ALEX_NUM_HIDDEN_2,
-                      image_width = 224, image_height = 224, image_depth = 3, num_labels = 17):
- 
-    w1 = tf.Variable(tf.truncated_normal([patch_size1, patch_size1, image_depth, patch_depth1], stddev=0.1))
-    b1 = tf.Variable(tf.zeros([patch_depth1]))
- 
-    w2 = tf.Variable(tf.truncated_normal([patch_size2, patch_size2, patch_depth1, patch_depth2], stddev=0.1))
-    b2 = tf.Variable(tf.constant(1.0, shape=[patch_depth2]))
- 
-    w3 = tf.Variable(tf.truncated_normal([patch_size3, patch_size3, patch_depth2, patch_depth3], stddev=0.1))
-    b3 = tf.Variable(tf.zeros([patch_depth3]))
- 
-    w4 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth3, patch_depth3], stddev=0.1))
-    b4 = tf.Variable(tf.constant(1.0, shape=[patch_depth3]))
- 
-    w5 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth3, patch_depth3], stddev=0.1))
-    b5 = tf.Variable(tf.zeros([patch_depth3]))
- 
-    pool_reductions = 3
-    conv_reductions = 2
-    no_reductions = pool_reductions + conv_reductions
-    w6 = tf.Variable(tf.truncated_normal([(image_width // 2**no_reductions)*(image_height // 2**no_reductions)*patch_depth3, num_hidden1], stddev=0.1))
-    b6 = tf.Variable(tf.constant(1.0, shape = [num_hidden1]))
- 
-    w7 = tf.Variable(tf.truncated_normal([num_hidden1, num_hidden2], stddev=0.1))
-    b7 = tf.Variable(tf.constant(1.0, shape = [num_hidden2]))
- 
-    w8 = tf.Variable(tf.truncated_normal([num_hidden2, num_labels], stddev=0.1))
-    b8 = tf.Variable(tf.constant(1.0, shape = [num_labels]))
- 
-    variables = {
-                 'w1': w1, 'w2': w2, 'w3': w3, 'w4': w4, 'w5': w5, 'w6': w6, 'w7': w7, 'w8': w8, 
-                 'b1': b1, 'b2': b2, 'b3': b3, 'b4': b4, 'b5': b5, 'b6': b6, 'b7': b7, 'b8': b8
-                }
-    return variables
- 
- 
-def model_alexnet(data, variables):
-    layer1_conv = tf.nn.conv2d(data, variables['w1'], [1, 4, 4, 1], padding='SAME')
-    layer1_relu = tf.nn.relu(layer1_conv + variables['b1'])
-    layer1_pool = tf.nn.max_pool(layer1_relu, [1, 3, 3, 1], [1, 2, 2, 1], padding='SAME')
-    layer1_norm = tf.nn.local_response_normalization(layer1_pool)
- 
-    layer2_conv = tf.nn.conv2d(layer1_norm, variables['w2'], [1, 1, 1, 1], padding='SAME')
-    layer2_relu = tf.nn.relu(layer2_conv + variables['b2'])
-    layer2_pool = tf.nn.max_pool(layer2_relu, [1, 3, 3, 1], [1, 2, 2, 1], padding='SAME')
-    layer2_norm = tf.nn.local_response_normalization(layer2_pool)
- 
-    layer3_conv = tf.nn.conv2d(layer2_norm, variables['w3'], [1, 1, 1, 1], padding='SAME')
-    layer3_relu = tf.nn.relu(layer3_conv + variables['b3'])
- 
-    layer4_conv = tf.nn.conv2d(layer3_relu, variables['w4'], [1, 1, 1, 1], padding='SAME')
-    layer4_relu = tf.nn.relu(layer4_conv + variables['b4'])
- 
-    layer5_conv = tf.nn.conv2d(layer4_relu, variables['w5'], [1, 1, 1, 1], padding='SAME')
-    layer5_relu = tf.nn.relu(layer5_conv + variables['b5'])
-    layer5_pool = tf.nn.max_pool(layer4_relu, [1, 3, 3, 1], [1, 2, 2, 1], padding='SAME')
-    layer5_norm = tf.nn.local_response_normalization(layer5_pool)
- 
-    flat_layer = flatten_tf_array(layer5_norm)
-    layer6_fccd = tf.matmul(flat_layer, variables['w6']) + variables['b6']
-    layer6_tanh = tf.tanh(layer6_fccd)
-    layer6_drop = tf.nn.dropout(layer6_tanh, 0.5)
- 
-    layer7_fccd = tf.matmul(layer6_drop, variables['w7']) + variables['b7']
-    layer7_tanh = tf.tanh(layer7_fccd)
-    layer7_drop = tf.nn.dropout(layer7_tanh, 0.5)
- 
-    logits = tf.matmul(layer7_drop, variables['w8']) + variables['b8']
-    return logits
-
+[AlexNet.py#Code 3.1.2]
 
 现在我们可以修改CNN模型来使用AlexNet模型的权重和层次来对图像进行分类。
 
 '''
 
+#AlexNet范例 AlexNet.py
 
 '''
 3.2 VGG Net-16
@@ -513,229 +454,10 @@ VGG Net于2014年由牛津大学的Karen Simonyan和Andrew Zisserman创建出来
 它存在不同的配置，16层或19层。 这两种不同配置之间的区别是在第2，第3和第4最大池化层之后对3或4个卷积层的使用（见下文）。
 [imgs\3.2.png]
 配置为16层（配置D）的结果似乎更好，所以我们试着在Tensorflow中创建它。
+'''
+#VGG Net-16范例 VGGNet-16.py
 
-#The VGGNET Neural Network 
-VGG16_PATCH_SIZE_1, VGG16_PATCH_SIZE_2, VGG16_PATCH_SIZE_3, VGG16_PATCH_SIZE_4 = 3, 3, 3, 3
-VGG16_PATCH_DEPTH_1, VGG16_PATCH_DEPTH_2, VGG16_PATCH_DEPTH_3, VGG16_PATCH_DEPTH_4 = 64, 128, 256, 512
-VGG16_NUM_HIDDEN_1, VGG16_NUM_HIDDEN_2 = 4096, 1000
- 
-def variables_vggnet16(patch_size1 = VGG16_PATCH_SIZE_1, patch_size2 = VGG16_PATCH_SIZE_2, 
-                       patch_size3 = VGG16_PATCH_SIZE_3, patch_size4 = VGG16_PATCH_SIZE_4, 
-                       patch_depth1 = VGG16_PATCH_DEPTH_1, patch_depth2 = VGG16_PATCH_DEPTH_2, 
-                       patch_depth3 = VGG16_PATCH_DEPTH_3, patch_depth4 = VGG16_PATCH_DEPTH_4,
-                       num_hidden1 = VGG16_NUM_HIDDEN_1, num_hidden2 = VGG16_NUM_HIDDEN_2,
-                       image_width = 224, image_height = 224, image_depth = 3, num_labels = 17):
-    
-    w1 = tf.Variable(tf.truncated_normal([patch_size1, patch_size1, image_depth, patch_depth1], stddev=0.1))
-    b1 = tf.Variable(tf.zeros([patch_depth1]))
-    w2 = tf.Variable(tf.truncated_normal([patch_size1, patch_size1, patch_depth1, patch_depth1], stddev=0.1))
-    b2 = tf.Variable(tf.constant(1.0, shape=[patch_depth1]))
- 
-    w3 = tf.Variable(tf.truncated_normal([patch_size2, patch_size2, patch_depth1, patch_depth2], stddev=0.1))
-    b3 = tf.Variable(tf.constant(1.0, shape = [patch_depth2]))
-    w4 = tf.Variable(tf.truncated_normal([patch_size2, patch_size2, patch_depth2, patch_depth2], stddev=0.1))
-    b4 = tf.Variable(tf.constant(1.0, shape = [patch_depth2]))
-    
-    w5 = tf.Variable(tf.truncated_normal([patch_size3, patch_size3, patch_depth2, patch_depth3], stddev=0.1))
-    b5 = tf.Variable(tf.constant(1.0, shape = [patch_depth3]))
-    w6 = tf.Variable(tf.truncated_normal([patch_size3, patch_size3, patch_depth3, patch_depth3], stddev=0.1))
-    b6 = tf.Variable(tf.constant(1.0, shape = [patch_depth3]))
-    w7 = tf.Variable(tf.truncated_normal([patch_size3, patch_size3, patch_depth3, patch_depth3], stddev=0.1))
-    b7 = tf.Variable(tf.constant(1.0, shape=[patch_depth3]))
- 
-    w8 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth3, patch_depth4], stddev=0.1))
-    b8 = tf.Variable(tf.constant(1.0, shape = [patch_depth4]))
-    w9 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth4, patch_depth4], stddev=0.1))
-    b9 = tf.Variable(tf.constant(1.0, shape = [patch_depth4]))
-    w10 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth4, patch_depth4], stddev=0.1))
-    b10 = tf.Variable(tf.constant(1.0, shape = [patch_depth4]))
-    
-    w11 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth4, patch_depth4], stddev=0.1))
-    b11 = tf.Variable(tf.constant(1.0, shape = [patch_depth4]))
-    w12 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth4, patch_depth4], stddev=0.1))
-    b12 = tf.Variable(tf.constant(1.0, shape=[patch_depth4]))
-    w13 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth4, patch_depth4], stddev=0.1))
-    b13 = tf.Variable(tf.constant(1.0, shape = [patch_depth4]))
-    
-    no_pooling_layers = 5
- 
-    w14 = tf.Variable(tf.truncated_normal([(image_width // (2**no_pooling_layers))*(image_height // (2**no_pooling_layers))*patch_depth4 , num_hidden1], stddev=0.1))
-    b14 = tf.Variable(tf.constant(1.0, shape = [num_hidden1]))
-    
-    w15 = tf.Variable(tf.truncated_normal([num_hidden1, num_hidden2], stddev=0.1))
-    b15 = tf.Variable(tf.constant(1.0, shape = [num_hidden2]))
-   
-    w16 = tf.Variable(tf.truncated_normal([num_hidden2, num_labels], stddev=0.1))
-    b16 = tf.Variable(tf.constant(1.0, shape = [num_labels]))
-    variables = {
-        'w1': w1, 'w2': w2, 'w3': w3, 'w4': w4, 'w5': w5, 'w6': w6, 'w7': w7, 'w8': w8, 'w9': w9, 'w10': w10, 
-        'w11': w11, 'w12': w12, 'w13': w13, 'w14': w14, 'w15': w15, 'w16': w16, 
-        'b1': b1, 'b2': b2, 'b3': b3, 'b4': b4, 'b5': b5, 'b6': b6, 'b7': b7, 'b8': b8, 'b9': b9, 'b10': b10, 
-        'b11': b11, 'b12': b12, 'b13': b13, 'b14': b14, 'b15': b15, 'b16': b16
-    }
-    return variables
- 
-def model_vggnet16(data, variables):
-    layer1_conv = tf.nn.conv2d(data, variables['w1'], [1, 1, 1, 1], padding='SAME')
-    layer1_actv = tf.nn.relu(layer1_conv + variables['b1'])
-    layer2_conv = tf.nn.conv2d(layer1_actv, variables['w2'], [1, 1, 1, 1], padding='SAME')
-    layer2_actv = tf.nn.relu(layer2_conv + variables['b2'])
-    layer2_pool = tf.nn.max_pool(layer2_actv, [1, 2, 2, 1], [1, 2, 2, 1], padding='SAME')
- 
-    layer3_conv = tf.nn.conv2d(layer2_pool, variables['w3'], [1, 1, 1, 1], padding='SAME')
-    layer3_actv = tf.nn.relu(layer3_conv + variables['b3'])   
-    layer4_conv = tf.nn.conv2d(layer3_actv, variables['w4'], [1, 1, 1, 1], padding='SAME')
-    layer4_actv = tf.nn.relu(layer4_conv + variables['b4'])
-    layer4_pool = tf.nn.max_pool(layer4_pool, [1, 2, 2, 1], [1, 2, 2, 1], padding='SAME')
- 
-    layer5_conv = tf.nn.conv2d(layer4_pool, variables['w5'], [1, 1, 1, 1], padding='SAME')
-    layer5_actv = tf.nn.relu(layer5_conv + variables['b5'])
-    layer6_conv = tf.nn.conv2d(layer5_actv, variables['w6'], [1, 1, 1, 1], padding='SAME')
-    layer6_actv = tf.nn.relu(layer6_conv + variables['b6'])
-    layer7_conv = tf.nn.conv2d(layer6_actv, variables['w7'], [1, 1, 1, 1], padding='SAME')
-    layer7_actv = tf.nn.relu(layer7_conv + variables['b7'])
-    layer7_pool = tf.nn.max_pool(layer7_actv, [1, 2, 2, 1], [1, 2, 2, 1], padding='SAME')
- 
-    layer8_conv = tf.nn.conv2d(layer7_pool, variables['w8'], [1, 1, 1, 1], padding='SAME')
-    layer8_actv = tf.nn.relu(layer8_conv + variables['b8'])
-    layer9_conv = tf.nn.conv2d(layer8_actv, variables['w9'], [1, 1, 1, 1], padding='SAME')
-    layer9_actv = tf.nn.relu(layer9_conv + variables['b9'])
-    layer10_conv = tf.nn.conv2d(layer9_actv, variables['w10'], [1, 1, 1, 1], padding='SAME')
-    layer10_actv = tf.nn.relu(layer10_conv + variables['b10'])
-    layer10_pool = tf.nn.max_pool(layer10_actv, [1, 2, 2, 1], [1, 2, 2, 1], padding='SAME')
- 
-    layer11_conv = tf.nn.conv2d(layer10_pool, variables['w11'], [1, 1, 1, 1], padding='SAME')
-    layer11_actv = tf.nn.relu(layer11_conv + variables['b11'])
-    layer12_conv = tf.nn.conv2d(layer11_actv, variables['w12'], [1, 1, 1, 1], padding='SAME')
-    layer12_actv = tf.nn.relu(layer12_conv + variables['b12'])
-    layer13_conv = tf.nn.conv2d(layer12_actv, variables['w13'], [1, 1, 1, 1], padding='SAME')
-    layer13_actv = tf.nn.relu(layer13_conv + variables['b13'])
-    layer13_pool = tf.nn.max_pool(layer13_actv, [1, 2, 2, 1], [1, 2, 2, 1], padding='SAME')
-    
-    flat_layer  = flatten_tf_array(layer13_pool)
-    layer14_fccd = tf.matmul(flat_layer, variables['w14']) + variables['b14']
-    layer14_actv = tf.nn.relu(layer14_fccd)
-    layer14_drop = tf.nn.dropout(layer14_actv, 0.5)
-    
-    layer15_fccd = tf.matmul(layer14_drop, variables['w15']) + variables['b15']
-    layer15_actv = tf.nn.relu(layer15_fccd)
-    layer15_drop = tf.nn.dropout(layer15_actv, 0.5)
-    
-    logits = tf.matmul(layer15_drop, variables['w16']) + variables['b16']
-    return logits
-
-
-#The VGGNET Neural Network 
-VGG16_PATCH_SIZE_1, VGG16_PATCH_SIZE_2, VGG16_PATCH_SIZE_3, VGG16_PATCH_SIZE_4 = 3, 3, 3, 3
-VGG16_PATCH_DEPTH_1, VGG16_PATCH_DEPTH_2, VGG16_PATCH_DEPTH_3, VGG16_PATCH_DEPTH_4 = 64, 128, 256, 512
-VGG16_NUM_HIDDEN_1, VGG16_NUM_HIDDEN_2 = 4096, 1000
- 
-def variables_vggnet16(patch_size1 = VGG16_PATCH_SIZE_1, patch_size2 = VGG16_PATCH_SIZE_2, 
-                       patch_size3 = VGG16_PATCH_SIZE_3, patch_size4 = VGG16_PATCH_SIZE_4, 
-                       patch_depth1 = VGG16_PATCH_DEPTH_1, patch_depth2 = VGG16_PATCH_DEPTH_2, 
-                       patch_depth3 = VGG16_PATCH_DEPTH_3, patch_depth4 = VGG16_PATCH_DEPTH_4,
-                       num_hidden1 = VGG16_NUM_HIDDEN_1, num_hidden2 = VGG16_NUM_HIDDEN_2,
-                       image_width = 224, image_height = 224, image_depth = 3, num_labels = 17):
-    
-    w1 = tf.Variable(tf.truncated_normal([patch_size1, patch_size1, image_depth, patch_depth1], stddev=0.1))
-    b1 = tf.Variable(tf.zeros([patch_depth1]))
-    w2 = tf.Variable(tf.truncated_normal([patch_size1, patch_size1, patch_depth1, patch_depth1], stddev=0.1))
-    b2 = tf.Variable(tf.constant(1.0, shape=[patch_depth1]))
- 
-    w3 = tf.Variable(tf.truncated_normal([patch_size2, patch_size2, patch_depth1, patch_depth2], stddev=0.1))
-    b3 = tf.Variable(tf.constant(1.0, shape = [patch_depth2]))
-    w4 = tf.Variable(tf.truncated_normal([patch_size2, patch_size2, patch_depth2, patch_depth2], stddev=0.1))
-    b4 = tf.Variable(tf.constant(1.0, shape = [patch_depth2]))
-    
-    w5 = tf.Variable(tf.truncated_normal([patch_size3, patch_size3, patch_depth2, patch_depth3], stddev=0.1))
-    b5 = tf.Variable(tf.constant(1.0, shape = [patch_depth3]))
-    w6 = tf.Variable(tf.truncated_normal([patch_size3, patch_size3, patch_depth3, patch_depth3], stddev=0.1))
-    b6 = tf.Variable(tf.constant(1.0, shape = [patch_depth3]))
-    w7 = tf.Variable(tf.truncated_normal([patch_size3, patch_size3, patch_depth3, patch_depth3], stddev=0.1))
-    b7 = tf.Variable(tf.constant(1.0, shape=[patch_depth3]))
- 
-    w8 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth3, patch_depth4], stddev=0.1))
-    b8 = tf.Variable(tf.constant(1.0, shape = [patch_depth4]))
-    w9 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth4, patch_depth4], stddev=0.1))
-    b9 = tf.Variable(tf.constant(1.0, shape = [patch_depth4]))
-    w10 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth4, patch_depth4], stddev=0.1))
-    b10 = tf.Variable(tf.constant(1.0, shape = [patch_depth4]))
-    
-    w11 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth4, patch_depth4], stddev=0.1))
-    b11 = tf.Variable(tf.constant(1.0, shape = [patch_depth4]))
-    w12 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth4, patch_depth4], stddev=0.1))
-    b12 = tf.Variable(tf.constant(1.0, shape=[patch_depth4]))
-    w13 = tf.Variable(tf.truncated_normal([patch_size4, patch_size4, patch_depth4, patch_depth4], stddev=0.1))
-    b13 = tf.Variable(tf.constant(1.0, shape = [patch_depth4]))
-    
-    no_pooling_layers = 5
- 
-    w14 = tf.Variable(tf.truncated_normal([(image_width // (2**no_pooling_layers))*(image_height // (2**no_pooling_layers))*patch_depth4 , num_hidden1], stddev=0.1))
-    b14 = tf.Variable(tf.constant(1.0, shape = [num_hidden1]))
-    
-    w15 = tf.Variable(tf.truncated_normal([num_hidden1, num_hidden2], stddev=0.1))
-    b15 = tf.Variable(tf.constant(1.0, shape = [num_hidden2]))
-   
-    w16 = tf.Variable(tf.truncated_normal([num_hidden2, num_labels], stddev=0.1))
-    b16 = tf.Variable(tf.constant(1.0, shape = [num_labels]))
-    variables = {
-        'w1': w1, 'w2': w2, 'w3': w3, 'w4': w4, 'w5': w5, 'w6': w6, 'w7': w7, 'w8': w8, 'w9': w9, 'w10': w10, 
-        'w11': w11, 'w12': w12, 'w13': w13, 'w14': w14, 'w15': w15, 'w16': w16, 
-        'b1': b1, 'b2': b2, 'b3': b3, 'b4': b4, 'b5': b5, 'b6': b6, 'b7': b7, 'b8': b8, 'b9': b9, 'b10': b10, 
-        'b11': b11, 'b12': b12, 'b13': b13, 'b14': b14, 'b15': b15, 'b16': b16
-    }
-    return variables
- 
-def model_vggnet16(data, variables):
-    layer1_conv = tf.nn.conv2d(data, variables['w1'], [1, 1, 1, 1], padding='SAME')
-    layer1_actv = tf.nn.relu(layer1_conv + variables['b1'])
-    layer2_conv = tf.nn.conv2d(layer1_actv, variables['w2'], [1, 1, 1, 1], padding='SAME')
-    layer2_actv = tf.nn.relu(layer2_conv + variables['b2'])
-    layer2_pool = tf.nn.max_pool(layer2_actv, [1, 2, 2, 1], [1, 2, 2, 1], padding='SAME')
- 
-    layer3_conv = tf.nn.conv2d(layer2_pool, variables['w3'], [1, 1, 1, 1], padding='SAME')
-    layer3_actv = tf.nn.relu(layer3_conv + variables['b3'])   
-    layer4_conv = tf.nn.conv2d(layer3_actv, variables['w4'], [1, 1, 1, 1], padding='SAME')
-    layer4_actv = tf.nn.relu(layer4_conv + variables['b4'])
-    layer4_pool = tf.nn.max_pool(layer4_pool, [1, 2, 2, 1], [1, 2, 2, 1], padding='SAME')
- 
-    layer5_conv = tf.nn.conv2d(layer4_pool, variables['w5'], [1, 1, 1, 1], padding='SAME')
-    layer5_actv = tf.nn.relu(layer5_conv + variables['b5'])
-    layer6_conv = tf.nn.conv2d(layer5_actv, variables['w6'], [1, 1, 1, 1], padding='SAME')
-    layer6_actv = tf.nn.relu(layer6_conv + variables['b6'])
-    layer7_conv = tf.nn.conv2d(layer6_actv, variables['w7'], [1, 1, 1, 1], padding='SAME')
-    layer7_actv = tf.nn.relu(layer7_conv + variables['b7'])
-    layer7_pool = tf.nn.max_pool(layer7_actv, [1, 2, 2, 1], [1, 2, 2, 1], padding='SAME')
- 
-    layer8_conv = tf.nn.conv2d(layer7_pool, variables['w8'], [1, 1, 1, 1], padding='SAME')
-    layer8_actv = tf.nn.relu(layer8_conv + variables['b8'])
-    layer9_conv = tf.nn.conv2d(layer8_actv, variables['w9'], [1, 1, 1, 1], padding='SAME')
-    layer9_actv = tf.nn.relu(layer9_conv + variables['b9'])
-    layer10_conv = tf.nn.conv2d(layer9_actv, variables['w10'], [1, 1, 1, 1], padding='SAME')
-    layer10_actv = tf.nn.relu(layer10_conv + variables['b10'])
-    layer10_pool = tf.nn.max_pool(layer10_actv, [1, 2, 2, 1], [1, 2, 2, 1], padding='SAME')
- 
-    layer11_conv = tf.nn.conv2d(layer10_pool, variables['w11'], [1, 1, 1, 1], padding='SAME')
-    layer11_actv = tf.nn.relu(layer11_conv + variables['b11'])
-    layer12_conv = tf.nn.conv2d(layer11_actv, variables['w12'], [1, 1, 1, 1], padding='SAME')
-    layer12_actv = tf.nn.relu(layer12_conv + variables['b12'])
-    layer13_conv = tf.nn.conv2d(layer12_actv, variables['w13'], [1, 1, 1, 1], padding='SAME')
-    layer13_actv = tf.nn.relu(layer13_conv + variables['b13'])
-    layer13_pool = tf.nn.max_pool(layer13_actv, [1, 2, 2, 1], [1, 2, 2, 1], padding='SAME')
-    
-    flat_layer  = flatten_tf_array(layer13_pool)
-    layer14_fccd = tf.matmul(flat_layer, variables['w14']) + variables['b14']
-    layer14_actv = tf.nn.relu(layer14_fccd)
-    layer14_drop = tf.nn.dropout(layer14_actv, 0.5)
-    
-    layer15_fccd = tf.matmul(layer14_drop, variables['w15']) + variables['b15']
-    layer15_actv = tf.nn.relu(layer15_fccd)
-    layer15_drop = tf.nn.dropout(layer15_actv, 0.5)
-    
-    logits = tf.matmul(layer15_drop, variables['w16']) + variables['b16']
-    return logits
-
-
+'''
 3.3 AlexNet 性能
 作为比较，看一下对包含了较大图片的oxflower17数据集的LeNet5 CNN性能：
 [imgs\3.3.png]
