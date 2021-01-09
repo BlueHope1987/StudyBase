@@ -18,6 +18,8 @@ summary_writer = tf.summary.create_file_writer(log_dir)
         print(step, 'loss:', float(loss))
         with summary_writer.as_default(): 
             tf.summary.scalar('train-loss', float(loss), step=step) 
+
+...
         with summary_writer.as_default():
             tf.summary.scalar('test-acc', float(total_correct/total), step=step)
             tf.summary.image("val-onebyone-images:", val_images, max_outputs=25, step=step)
@@ -32,6 +34,7 @@ from    tensorflow import keras
 from    tensorflow.keras import datasets, layers, optimizers, Sequential, metrics
 
 import  os
+import datetime
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -64,7 +67,15 @@ model.summary()
 # w = w - lr*grad
 optimizer = optimizers.Adam(lr=1e-3)
 
+
 def main():
+    #Tensorboard 可视化
+    current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+    log_dir = 'logs/' + current_time
+    summary_writer = tf.summary.create_file_writer(log_dir)
+    val_images = x[:25] #可能需要补充的代码参考https://blog.csdn.net/weixin_30922589/article/details/97486206
+    #//
+
     for epoch in range(30):
         for step, (x,y) in enumerate(db):
 
@@ -87,7 +98,10 @@ def main():
 
             if step % 100 == 0:
                 print(epoch, step, 'loss:', float(loss_ce), float(loss_mse))
-
+                #Tensorboard 可视化
+                with summary_writer.as_default(): 
+                    tf.summary.scalar('train-loss', float(loss_ce), step=step)
+                #//
 
         # test
         total_correct = 0
@@ -115,3 +129,11 @@ def main():
 
         acc = total_correct / total_num
         print(epoch, 'test acc:', acc)
+        #Tensorboard 可视化
+        with summary_writer.as_default(): 
+                    tf.summary.scalar('test-acc', float(acc), step=epoch)
+                    val_images = tf.reshape(val_images, [-1, 28, 28])
+                    #figure  = image_grid(val_images) #可能需要补充定义
+                    #tf.summary.image('val-images:', plot_to_image(figure), step=step)
+                    #tf.summary.image("val-onebyone-images:", val_images, max_outputs=25, step=epoch)
+        #//
