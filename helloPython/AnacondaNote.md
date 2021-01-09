@@ -56,6 +56,11 @@ pkgs_dirs:
 [环境同步参考]
  [tf2] 
     conda create -n tf2 python=3.8.5 tensorflow=2.3.0 pytorch=1.6.0
+    家里的电脑会出问题 所有的tf会话都跑飞 第二步loss值nan 准确度不上升 经反复安装测试 是三者同时进行安装造成的
+     [tf2test]已弃用
+    conda create -n tf2test python=3.8.0 tensorflow=2.3.0
+    没问题 即便换3.8.5 后来再安装pytorch 1.6.0
+
  [tf1.15]
     conda create -n tf1.15 python=3.7 tensorflow=1.15
     (tf1不支持3.8)

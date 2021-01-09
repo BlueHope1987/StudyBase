@@ -34,7 +34,13 @@ from    tensorflow import keras
 from    tensorflow.keras import datasets, layers, optimizers, Sequential, metrics
 
 import  os
+
+
 import datetime
+import io
+import itertools
+import matplotlib.pyplot as plt
+import numpy as np
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
@@ -67,13 +73,43 @@ model.summary()
 # w = w - lr*grad
 optimizer = optimizers.Adam(lr=1e-3)
 
+def plot_to_image(figure):
+  """Converts the matplotlib plot specified by 'figure' to a PNG image and
+  returns it. The supplied figure is closed and inaccessible after this call."""
+  # Save the plot to a PNG in memory.
+  buf = io.BytesIO()
+  plt.savefig(buf, format='png')
+  # Closing the figure prevents it from being displayed directly inside
+  # the notebook.
+  plt.close(figure)
+  buf.seek(0)
+  # Convert PNG buffer to TF image
+  image = tf.image.decode_png(buf.getvalue(), channels=4)
+  # Add the batch dimension
+  image = tf.expand_dims(image, 0)
+  return image
+
+def image_grid(images):
+    """Return a 5x5 grid of the MNIST images as a matplotlib figure."""
+    # Create a figure to contain the plot.
+    figure = plt.figure(figsize=(10, 10))
+    for i in range(25):
+        # Start next subplot.
+        plt.subplot(5, 5, i + 1, title='name')
+        plt.xticks([])
+        plt.yticks([])
+        plt.grid(False)
+        plt.imshow(images[i], cmap=plt.cm.binary)
+ 
+    return figure
+
 
 def main():
-    #Tensorboard 可视化
+    #Tensorboard 可视化 tensorboard --logdir logs
     current_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
     log_dir = 'logs/' + current_time
     summary_writer = tf.summary.create_file_writer(log_dir)
-    val_images = x[:25] #可能需要补充的代码参考https://blog.csdn.net/weixin_30922589/article/details/97486206
+    #val_images = x[:25] #可能需要补充的代码参考https://blog.csdn.net/weixin_30922589/article/details/97486206
     #//
 
     for epoch in range(30):
@@ -130,10 +166,13 @@ def main():
         acc = total_correct / total_num
         print(epoch, 'test acc:', acc)
         #Tensorboard 可视化
+        val_images = x[:25]
+        val_images = tf.reshape(val_images, [-1, 28, 28, 1])
         with summary_writer.as_default(): 
                     tf.summary.scalar('test-acc', float(acc), step=epoch)
-                    val_images = tf.reshape(val_images, [-1, 28, 28])
-                    #figure  = image_grid(val_images) #可能需要补充定义
-                    #tf.summary.image('val-images:', plot_to_image(figure), step=step)
+                    #figure  = image_grid(val_images)
+                    #tf.summary.image('val-images:', plot_to_image(figure), step=epoch)#出错 数据有问题？
                     #tf.summary.image("val-onebyone-images:", val_images, max_outputs=25, step=epoch)
         #//
+
+main()
