@@ -51,3 +51,24 @@ print(c_val)
 print(grad_x_val)
 print(grad_y_val)
 print(grad_z_val)
+
+
+
+#tf.Variable 的定义：tf.Variable.init(initial_value, trainable=True, collections=None, validate_shape=True, name=None)
+'''
+在TensorFlow的世界里，变量的定义和初始化是分开的，一开始，tf.Variable 得到的是张量，而张量并不是具体的值，而是计算过程。
+因为tf.Variable 生成的是一个张量，那么 name 就是一个张量的名字，如果你不主动声明的话，就是默认的 Variable
+而如果你要得到，变量的值的话，那么你就需要对张量进行计算，首先对变量进行初始化，使用会话进行计算
+对变量初始化之后，就可以直接计算变量，那么run 变量，那么就得到了变量的值
+Trainable 属性作用? 就是通过trainable属性控制这个变量是否可以被优化器更新,比如有的变量并不是一个常数，而是一个 正态分布，那么优化器，就可以对这个变量进行更新和优化
+'''
+a=tf.Variable(5)
+print(a)
+ 
+b=tf.Variable(10)
+print(b)
+ 
+with tf.compat.v1.Session() as sess:
+    sess.run(tf.compat.v1.global_variables_initializer())
+    print(sess.run(a))
+    print(sess.run(b))
