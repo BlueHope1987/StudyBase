@@ -1,4 +1,11 @@
 '''
+TensorFlow 的GitHub
+https://github.com/tensorflow/tensorflow
+
+默认需要AVX指令集 若处理器不支持需自行编译或找兼容版本
+https://github.com/fo40225/tensorflow-windows-wheel
+
+
 配置GPU Tensorflow 2.4
 创建 tf2环境 激活 安装cuDNN 7.6 CUDA 10 (默认应对应10.1 但据说存在问题 英伟达官网安装亦可https://developer.nvidia.com/cuda-toolkit-archive)
 TensorFlow 与 cuda cudnn版本对应关系 https://blog.csdn.net/flyfor2013/article/details/107982839
