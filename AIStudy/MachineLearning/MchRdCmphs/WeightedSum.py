@@ -22,3 +22,11 @@ class WeightedSum(nn.Module):
         res=res.squeeze(2)
         return res
 
+#测试代码 摘自GitHub
+batch = 10
+seq_len = 20
+word_dim = 50
+x = torch.randn(batch, seq_len, word_dim)
+weighted_sum = WeightedSum(word_dim)
+res = weighted_sum(x)
+print(res.shape) # torch.Size([10, 50])
