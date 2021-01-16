@@ -1,4 +1,5 @@
 #含参加权和 P58
+#含参加权和是一种将多个词向量变为一个文本向量的常用方法。与平均池化不同，权重根据向量之间的关系确定并优化。是一种自注意力机制。
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -17,7 +18,7 @@ class WeightedSum(nn.Module):
         #softmax运算，结果维度是batch × seq_len × 1
         weights=F.softmax(scores,dim=1)
         #用矩阵乘法实现加权和，结果维度是 batch × word_dim × 1
-        res=torch.bmm(x.transpose(1,2),weights)
+        res=torch.bmm(x.transpose(1,2),weights) #可实现两个批次矩阵的相乘 batch×a×b 与 batch×b×c
         #删除最后一维，结果维度是 batch × word_dim
         res=res.squeeze(2)
         return res
