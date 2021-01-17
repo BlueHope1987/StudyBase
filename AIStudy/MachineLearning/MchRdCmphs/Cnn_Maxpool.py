@@ -1,4 +1,6 @@
-#CNN池化（这是什么？） P57
+#CNN最大池化  P57
+#为得到一个文本向量，将每段文本的L个向量取平均值，即新向量的第j维是这L各向量第j维的平均值。即平均池化
+#或最大池化：对着L个向量的每一维求最大值，即新向量的第j维是这L个向量的第j维的最大值。优势：重要单词位置无关，即平移不变性。
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
