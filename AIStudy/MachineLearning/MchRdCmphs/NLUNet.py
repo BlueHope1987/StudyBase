@@ -35,7 +35,7 @@ res=net(x)
 #Pytorch自带交叉熵函数，包含计算softmax
 loss_func=nn.CrossEntropyLoss()
 loss=loss_func(res,y)
-print('loss1 =', loss) # 测试代码 摘自GitHu
+print('loss1 =', loss) # 测试代码 摘自GitHub
 optimizer.zero_grad()
 loss.backward()
 optimizer.step()
