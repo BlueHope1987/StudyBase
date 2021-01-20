@@ -1,5 +1,5 @@
 #P63 自然语言理解 实战：生成文本
-from Cnn_Maxpool import CNN_Maxpool
+from Cnn_Maxpool import CNN_Maxpool #导入本地最大池化类 或复用代码
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

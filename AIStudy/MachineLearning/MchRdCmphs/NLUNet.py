@@ -1,5 +1,7 @@
 #P60 自然语言理解 实战：文本分类
-from Cnn_Maxpool import CNN_Maxpool
+#用于分类的深度学习网络也被称为判定模型（discriminative model），自然语言中与分类相关的任务被称为自然语言理解（Natural Language Understanding,NLU）
+#编码器通常构成：分词->词向量->全连接、RNN、CNN等层->池化或含参加权和
+from Cnn_Maxpool import CNN_Maxpool #导入本地最大池化类 或复用代码
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
