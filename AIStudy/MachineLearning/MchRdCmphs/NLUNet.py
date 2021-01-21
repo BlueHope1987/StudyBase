@@ -42,6 +42,10 @@ optimizer.zero_grad()
 loss.backward()
 optimizer.step()
 
+# 自定义测试代码
+print(x)
+print(y)
+
 # 测试代码 摘自GitHub
 res = net(x)
 loss = loss_func(res, y)

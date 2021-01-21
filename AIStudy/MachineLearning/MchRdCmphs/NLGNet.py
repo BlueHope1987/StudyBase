@@ -1,4 +1,5 @@
 #P63 自然语言理解 实战：生成文本
+#这种生成文本的方式是将状态转化成单词的过程，被称为解码器。必须是从左到右单向RNN，而不能使用双向RNN，因为解码过程是依次产生下一个词。
 from Cnn_Maxpool import CNN_Maxpool #导入本地最大池化类 或复用代码
 import torch
 import torch.nn as nn
@@ -53,6 +54,10 @@ print('loss1 =', loss)
 optimizer.zero_grad()
 loss.backward()
 optimizer.step()
+
+# 自定义测试代码
+print(x_id)
+print(y_id)
 
 # 测试代码 摘自GitHub
 word_scores = net(x_id, y_id)
