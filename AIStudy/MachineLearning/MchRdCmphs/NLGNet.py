@@ -11,10 +11,12 @@ class NLGNet(nn.Module):
     def __init__(self, word_dim, window_size, rnn_dim, vocab_size):
         super(NLGNet, self).__init__()
         # 单词编号与词向量对应参数矩阵
+        # nn.Embedding: PyTorch自带的词向量参数矩阵，将词编号变成对应的词向量
         self.embed = nn.Embedding(vocab_size, word_dim)  
         # CNN和最大池化        
         self.cnn_maxpool = CNN_Maxpool(word_dim, window_size, rnn_dim)
         # 单层单向GRU，batch是第0维
+        # GRN: Gated Recurrent Unit,门控循环单元
         self.rnn = nn.GRU(word_dim, rnn_dim, batch_first=True) 
         # 输出层为全连接层，产生一个位置每个单词的得分
         self.linear = nn.Linear(rnn_dim, vocab_size)     

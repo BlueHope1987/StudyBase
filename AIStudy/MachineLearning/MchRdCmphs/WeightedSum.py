@@ -16,6 +16,7 @@ class WeightedSum(nn.Module):
         #内积得分，维度是 batch × seq_len × 1
         scores=self.b(x)
         #softmax运算，结果维度是batch × seq_len × 1
+        #softmax函数: 可以把一组输入的数字变成概率值并维持原有的大小关系，使之的和等1
         weights=F.softmax(scores,dim=1)
         #用矩阵乘法实现加权和，结果维度是 batch × word_dim × 1
         res=torch.bmm(x.transpose(1,2),weights) #可实现两个批次矩阵的相乘 batch×a×b 与 batch×b×c
