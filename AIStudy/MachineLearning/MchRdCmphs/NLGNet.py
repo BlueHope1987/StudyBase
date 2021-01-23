@@ -47,7 +47,7 @@ x_id = torch.LongTensor(30, 10).random_(0, vocab_size)
 y_id = torch.LongTensor(30, 8).random_(0, vocab_size)
 optimizer = optim.SGD(net.parameters(), lr=1) 
 # 每个位置词表中每个单词的得分word_scores，维度为30 x 8 x vocab_size
-word_scores = net(x_id, y_id)
+word_scores = net(x_id, y_id) #等同 net.forward(x_id, y_id)
 # PyTorch自带交叉熵函数，包含计算softmax
 loss_func = nn.CrossEntropyLoss()
 # 将word_scores变为二维数组，y_id变为一维数组，计算损失函数值

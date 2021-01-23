@@ -33,7 +33,7 @@ x=torch.randn(30,5,10,requires_grad=True)
 y=torch.LongTensor(30).random_(0,K)
 optimizer=optim.SGD(net.parameters(),lr=0.01)
 #res大小为 batch × K
-res=net(x)
+res=net(x) #等同 net.forward(x)
 #Pytorch自带交叉熵函数，包含计算softmax
 #交叉熵：务分类任中，由于取最大分数的下标这一操作对于网络参数不可导（下标与趋势变化不连续？），于是采用交叉熵函数作为损失函数。它首先softmax操作将分数变为概率值，再希望最大化对应类的概率，即最大化可能性的对数，最小化“预测正确类别的概率的对数的相反数”
 loss_func=nn.CrossEntropyLoss()
@@ -48,6 +48,6 @@ print(x)
 print(y)
 
 # 测试代码 摘自GitHub
-res = net(x)
+res = net(x) #等同 net.forward(x)
 loss = loss_func(res, y)
 print('loss2 =', loss) # loss2应该比loss1小
