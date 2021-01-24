@@ -1,5 +1,5 @@
-#利用RNN获得一段文本的但向量表示
-#P55
+#P55 利用RNN的最终状态 获得一段文本的单向量表示
+#RNN里 第i个单词状态包含了语句前i个词的信息，即最后一词状态代表整段语句向量，文本向量维度就是RNN状态维度
 
 import torch
 import torch.nn as nn
@@ -23,7 +23,7 @@ batch = 10
 seq_len = 20
 word_dim = 50
 hidden_size = 100
-x = torch.randn(batch, seq_len, word_dim)
+x = torch.randn(batch, seq_len, word_dim) #维度随机数
 birnn = BiRNN(word_dim, hidden_size)
 res = birnn(x)
 print(res.shape) # torch.Size([10, 200])

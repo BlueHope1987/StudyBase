@@ -1,5 +1,5 @@
 #含参加权和 P58
-#含参加权和是一种将多个词向量变为一个文本向量的常用方法。与平均池化不同，权重根据向量之间的关系确定并优化。是一种自注意力机制。
+#含参加权和(parametrized weighted sum)是一种将多个词向量变为一个文本向量的常用方法。与"平均池化"不同，权重根据向量之间的关系确定并优化。是一种自注意力机制。
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -8,7 +8,7 @@ class WeightedSum(nn.Module):
     #输入的词向量维度为word_dim
     def __init__(self,word_dim):
         super(WeightedSum,self).__init__()
-        self.b=nn.Linear(word_dim,1) #参数张量
+        self.b=nn.Linear(word_dim,1) #参数张量 全连接层nn.Linear实现向量内积
     
     #x: 输入tensor，维度为 batch × seq_len × word_dim
     #输出res，维度是batch × word_dim

@@ -15,6 +15,7 @@ class CNN_Maxpool(nn.Module):
     #输出res为所有文本向量，每个向量的维度为out_channels
     def forward(self,x):
         #变成单通道，结果维度为batch×1×seq_len×word_dim
+        #tensor.unsqueeze()在指定位置加入一个大小为1的维度表示单通道，tensor.squeeze()删除大小为1的通道
         x_unsqueeze=x.unsqueeze(1)
         #CNN，结果维度为barch×out_channels×new_seq_len×1
         x_cnn=self.cnn(x_unsqueeze)
@@ -34,3 +35,9 @@ x = torch.randn(batch, seq_len, word_dim)
 cnn_maxpool = CNN_Maxpool(word_dim, window_size, out_channels)
 res = cnn_maxpool(x)
 print(res.shape) # torch.Size([10, 100])
+
+'''
+字符CNN(Character CNN)
+子词：CNN过滤器移动过程中，窗口包含的连续字符
+CNN和最大池化的另一用途，可有效应对拼写错误，大部分子词正确不影响输出
+'''
