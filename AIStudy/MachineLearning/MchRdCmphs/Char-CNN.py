@@ -1,8 +1,9 @@
 #P77 字符CNN 字符卷积神经网络Char-CNN
+#应对字符拼写错误和子词需要
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-class Char_CNN_Maxpool(nn.module):
+class Char_CNN_Maxpool(nn.Module):
     #char_num为字符表大小，char_dim为字符向量长度，window_size为CNN窗口长度，output_dim为CNN输出通道数
     def __init__(self,char_num,char_dim,window_size,out_channels):
         super(Char_CNN_Maxpool,self).__init__()
@@ -24,4 +25,17 @@ class Char_CNN_Maxpool(nn.module):
         x_cnn_result=x_cnn.squeeze(3)
         #最大池化，遍历最后一维求最大值，结果维度为(batch×seq_len)×out_channels
         res,_=x_cnn_result.max(2)
-        return res.view(x.shape[2],x.shape[1],-1)
+        return res.view(x.shape[0],x.shape[1],-1)
+
+# 测试代码 摘自GitHub
+batch = 10
+seq_len = 20
+word_len = 12
+char_num = 26
+char_dim = 10
+window_size = 3
+out_channels = 8
+char_cnn = Char_CNN_Maxpool(char_num, char_dim, window_size, out_channels)
+char_ids = torch.LongTensor(batch, seq_len, word_len).random_(0, char_num - 1)
+res = char_cnn(char_ids)
+print(res.shape) # torch.Size([10, 20, 8])
