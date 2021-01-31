@@ -1,11 +1,17 @@
 #P89 训练自由式答案生成网络的输出层
 
+import torch
+import torch.nn as nn
+
 import torch.optim as optim
 import torch.nn.functional as F
 
 '''
   a: 被注意的的向量组，batch x m x dim 
   x: 进行注意力计算的向量组，batch x n x dim
+'''
+from p69_attention import attention
+#通过导入代替下例函数 py文件名带点是强烈不推荐的 导入时代表路径
 '''
 def attention(a, x):
     # 内积计算注意力分数，结果维度为batch x n x m
@@ -15,7 +21,7 @@ def attention(a, x):
     # 注意力向量，结果维度为batch x n x dim
     attended = alpha.bmm(a) 
     return attended
-
+'''
 
 
 class Seq2SeqOutputLayer(nn.Module):
@@ -93,3 +99,9 @@ print('loss1 =', loss)
 optimizer.zero_grad()
 loss.backward()
 optimizer.step()
+
+
+# 测试代码 摘自GitHub
+word_scores = net(x, q, y_id)
+loss = loss_func(word_scores[:,:-1,:].contiguous().view(-1, vocab_size), y_id[:,1:].contiguous().view(-1))
+print('loss2 =', loss) # loss2应该比loss1小
