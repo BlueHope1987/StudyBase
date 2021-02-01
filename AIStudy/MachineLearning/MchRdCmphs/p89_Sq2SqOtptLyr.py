@@ -1,4 +1,10 @@
 #P89 训练自由式答案生成网络的输出层
+'''
+自由式答案生成
+可以为任何自然语言形式，不需要其中所有单词均来自文章 即自然语言生成的过程 任务输出层常用序列到序列模型 即编码器-解码器模型
+编码器 从交互层获得每个单词向量，双向循环神经网络处理文本所有单词
+解码器 使用单向循环神经网络依次产生答案的单词 一般开头<s> 词表外词<UNK> 词表每个单词打分softmax得预测概率状态传递 Teacher Forcing与否使用标准答案或高分词 以此类推
+'''
 
 import torch
 import torch.nn as nn
@@ -10,8 +16,7 @@ import torch.nn.functional as F
   a: 被注意的的向量组，batch x m x dim 
   x: 进行注意力计算的向量组，batch x n x dim
 '''
-from p69_attention import attention
-#通过导入代替下例函数 py文件名带点是强烈不推荐的 导入时代表路径
+from p69_attention import attention #通过导入代替下例函数 （py文件名带点是强烈不推荐的 导入时代表路径）
 '''
 def attention(a, x):
     # 内积计算注意力分数，结果维度为batch x n x m
