@@ -22,3 +22,5 @@ lengths = torch.LongTensor([3, 4])
 cove = MTLSTM(n_vocab=glove.vectors.shape[0], vectors=glove.vectors, model_cache='.embeddings')
 # 每个句子每个单词的CoVe编码，维度为2×4×600
 outputs = cove(inputs, lengths)
+
+print(outputs.shape) # torch.Size([2, 4, 600])
