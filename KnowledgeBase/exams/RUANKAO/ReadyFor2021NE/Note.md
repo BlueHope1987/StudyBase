@@ -6936,3 +6936,91 @@ R:CB N:项目管理
 
     在进行进度安排时，PERT图能清晰地描述每个任务从何时开始、每个任务到何时结束、各任务之间的依赖关系，但不能描述各任务之间的并行情况。
     PERT图关键路径只需要计算总耗时最长的一条路径，亦即B答案中的路径B-E-H-J。总耗时为2+5+6+3=16，该时间是完成整个项目所需要的最短时间。
+
+20210311 每日一练 86
+https://uc.educity.cn/tiku/testReport.html?id=13214060
+
+SNMP 代理使用（）操作向管理端通报重要事件的发生。在下图中，（）能够响应Manager2的getRequest请求。
+<img src="imgs\2021031101.jpg">
+A.GetRequest  B.Get-nextRequest  C.SetRequest  D.Trap
+A.Agent1  B.Agent2  C.Agent3  D.Agent4
+R:D W:A N:SNMP协议
+
+    本题考查的是SNMP的知识。
+    试题（48）分析：SNMP实体不需要在发出请求后等待响应到来，是一个异步的请求/响应协议。SNMP仅支持对管理对象值的检索和修改等简单操作，具体讲，SNMP支持4种操作：
+    get：用于获取特定对象的值，提取指定的网络管理信息；
+    get-next：通过遍历MIB树获取对象的值，提供扫描MIB树和依次检索数据的方法；
+    set：用于修改对象的值，对管理信息进行控制；
+    trap：用于通报重要事件的发生，代理使用它发送非请求性通知给=个或多个预配置的管理工作站，用于向管理者报告管理对象的状态变化。
+    以上4个操作中，前3个是请求由管理者发给代理，需要代理发出响应给管理者，最后一个则是由代理发给管理者，但并不需要管理者响应。
+    试题（49）分析：若要确保SNMP服务正常运行，需要在以下几个方面做好准备工作：
+    （1）主机名和IP地址。在安装SNMP服务之前，对于要向其发送SNMP陷阱或系统中响应SNMP请求的主机，要确保拥有其主机名或IP地址。
+    （2）主机名解析。SNMP服务使用一般的Windows主机名解析方法，将主机名解析为IP地址。如果您使用主机名，一定要确保将所有相关计算机的主机名到IP地址的映射添加到相应的解析源（如Hosts文件、DNS、 WINS或LmhOsts文件）中。
+    （3）管理系统。管理系统是运行TCP/IP协议和第三方SNMP管理器软件的所有计算机。管理系统向代理请求信息。要使用Micrasvft SNMP服务，需要至少一个管理系统。
+    （4）代理。SNMP代理向管理系统提供所请求的状态信息，并报告特别事件，是一台运行 Microsoft SNMP服务的、基于Windows的计算机。
+    （5）定义SNMP团体。团体是运行SNMF服务的主机所属的小组。团体由团体名识别。对于接收请求并启动陷阱的代理以及启动请求并接收陷阱的管理系统，使用团体名可为它们提供基本的安全和环境检查功能。代理不接受所配置团体以外的管理系统的请求。
+    考虑到要与多个团体的SNMP管理器进行通信，SNMP代理可以同时是多个团体的成员。
+    如题目图所示，有两个已定义的团体：Public和Public2。
+    只有作为同一团体成员的代理和管理器才能相互通信。例如：Agentl可以接收Manager2的消息并向它发送消息，因为它们都是PubIic2团体的成员；Agent2-4可以接收Manager1的消息，并向它发送消息，因为它们都是默认团体Public的成员。
+
+报文摘要算法SHA-1输出的位数是（  ）。* W:B
+
+网络连接如下图所示，要使计算机能访问到服务器，在路由器R1中配置路由表的命令是（）。
+<img src="imgs\2021031102.jpg">
+A.R1(config)# ip host R2 202.116.45.110    B.R1(config)# ip network 202.16.7.0 255.255.255.0
+C.R1(config)# ip host R2 202.116.45.0 255.255.255.0    D.R1(config)# ip route 201.16.7.0 255.255.255.0 202.116.45.110
+R:D 
+
+    路由器配置路由信息的命令是ip route。
+    通过配置静态路由，用户可以人为地指定对某一网络访问时所要经过的路径，在网络结构比较简单，且一般到达某一网络所经过的路径唯一的情况下采用静态路由。
+    建立静态路由命令是：ip route prefix mask {address | interface} [distance] [tag tag] [permanent] 。其中Prefix ：所要到达的目的网络。mask ：子网掩码 ，address ：下一个跳的IP地址，即相邻路由器的端口地址。interface ：本地网络接口。distance ：管理距离（可选）。tag tag ：tag值（可选）。permanent ：指定此路由即使该端口关掉也不被移掉。所以选D。
+
+在Windows命令窗口输入（Nslookup）命令来查看DNS服务器的IP。
+
+    本题考查nslookup命令。
+    Nslookup命令，能彻底检查用户的DNS服务器。对用户的DNS数据库中的每个地址都进行定期逆向解析，以确保所有地址和名字都正确。
+    Nslookup命令的使用
+    nslookup是检查我们域名服务器配置的最好工具，它是由BIND软件包提供的，它允许任何人直接查询域名服务器，对于确定服务器是否正确地运行和是否配置得和合适是很有帮助的。
+    Nslookup命令可以交互式的从命令进行查询，在命令行中它可以用来查询IP地址。
+
+计算机采用分级存储体系的主要目的是为了解决（  ）的问题。
+A.主存容量不足  B.存储基读写可靠性  C.外设访问效率  D.存储容量、成本和速度之间的矛盾
+R:D N:内存
+
+    本题存储体系的基本知识。
+    计算机采用分级存储体系主要是为了解决存储容量、成本和速度之间的矛盾。
+
+Serialization delay and  （）  delay are the two components of network delay that are improved by increasing bandwidth.Serialization delay， i.e.the amount of time it takes to put the  （）  on the wire， and queuing delay (depth of the queue) are improved by increasing the  （）  from a 128kbps circuit to a T1.However， three other components of delay， routing/switching delay， distance delay， and protocol delay are components that can not be positively affected by an  （）  in bandwidth.If the circuits are not over-utilized， then increasing the bandwidth to improve the  （）  of the application will only result in an increased bandwidth with no positive effects on performance.
+A.buffering  B.queuing  C.receiving  D.timing
+A.electricity  B.digital  C.data  D.variable
+A.memory  B.cache  C.bandwidth  D.delay
+A.increase  B.decrease  C.maintenance  D.extension
+A.capability  B.cost  C.amount  D.performance
+R:BCCAD W:ACCDD
+
+    串行排序延迟和队列延迟是网络延迟的两个主要因素，这些是可以通过增加带宽加以改进的。串行排序延迟（将数据输出到线路上需要的时间）和队列延迟（队列的长度）可以通过把带宽从128Kbps增加到T1得到改善。然而，另外三种延迟因素—路由咬换延迟、距离延迟和协议处理延迟是不能通过增加带宽来改进的。如果线路没有超量使用，则通过增加带宽来改进应用软件性能的企图只能产生一种结果，那就是带宽的增加对性能并没有产生正面的影响
+
+以太网交换机是按照 （MAC 地址） 进行转发的 。
+
+    以太网交换机是按照MAC地址进行转发的。交换机识别以太帧中的目标地址，选择对应的端口把以太帧转发出去。
+
+下列快速以太网物理层标准中，使用5类无屏蔽双绞线作为传输介质的是（  ）。
+A.100BASE-FX  B.100BASE-T4  C.100BASE-Tx  D.100BASE-T2
+R:C N:高速以太网
+
+    100M以太网的新标准还规定了以下三种不同的物理层标准。
+    100BASE-TX支持2对5类UTP或2对1类STP。1对5类非屏蔽双绞线或1对1类屏蔽双绞线就可以发送，而另1对双绞线可以用于接收，因此100BASE-TX是一个全双工系统，每个节点都可以同时以100Mbps的速率发送与接收。
+    100BASE-T4支持4对3类UTP，其中有3对用于数据传输，1对用于冲突检测。
+    100BASE-FX支持2芯的多模或单模光纤。100BASE-FX主要是用做高速主干网，从节点到集线器（HUB）的距离可以达到2km，是一种全双工系统。
+
+文档的编制在网络项目开发工作中占有突出的地位。下列有关网络工程文档的叙述中，不正确的是（）。
+A.网络工程文档不能作为检查项目设计进度和设计质量的依据   B.网络工程文档是设计入员在一定阶段的工作成果和结束标识
+C.网络工程文档的编制有助于提高设计效率   D.按照规范要求生成一套文档的过程，就是按照网络分析与设计规范完成网络项目分析与设计的过程
+R:A
+
+    文档是网络设计工作中的重点环节，覆盖了需求规范、通信规范、逻辑设计、物理设计、网络实施和运营维护等各个阶段，通过对网络分析、设计实现等阶段的细节进行描述，说明开发一个网络的步骤。文档把设计过程中发生的事件以某种可阅读的形式记录在文档中，管理人员可以把这些记载下来的材料作为检查项目设计进度和设计质量的依据，实现对网络设计工作的管理。
+    文档的编制在网络项目开发工作中占有突出的地位。高效率、高质量地开发、分发、管理和维护文档对于转让、变更、修正、扩充和使用文档，以及充分发挥网络产品的效益都有着重要的意义。
+
+如果要检查本机的IP协议是否工作正常，则应该ping 的地址是（127.0.0.1）。N:特殊IP地址
+
+    127.0.0.1为本地环回地址，可测试本地tcp/ip协议是否正确安装。
