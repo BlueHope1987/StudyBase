@@ -7189,3 +7189,67 @@ A.IPSec 可对数据进行完整性保护  B.IPSec提供用户身份认证服务
 R:C W:A N:VPN配置
 
     在传输模式下，IPsec包头增加在原IP包头和数据之间，在整个传输层报文段的后面和签名添加一些控制字段，构成IPsec数据报。隧道模式是对整个IP数据包提供安全传输机制。是在一个IP数据报的后面和前面都添加一些控制字段，构成IPsec数据报。
+
+
+20200314 每日一练 58
+https://uc.educity.cn/tiku/testReport.html?id=13290838
+
+要显示路由器的运行配置，下面的路由器命令中，哪一条是正确的?（）　
+A.R1 # show running-config  B.R1 # show startup-config  C.R1 > show startup-config  D.R1 > show running-config
+R:A W:D
+
+    路由器当前活动的配置文件（running-config）存储在RAM中，启动时的配置文件（ startup-config）存储在NVRAM中。RAM中存储的运行文件在关闭电源时会丢掉。必须用复制命令存储到NVRAM中。复制命令和显示配置文件的命令必须在特权模式下运行，在对路由器进行了简单的配置后。可以按照下面的顺序输入命令并观察结果.
+    Rl#show running-config  （显示运行文件）
+    R1#show startup-config  （显示启动文件）
+    R1#copy running-config startup-config   （复制运行文件到NVRAM）
+    Rl#show startup-config   （重新显示启动文件）
+    Rl#erase startup-config   （删除P3VRAM巾豹启动文件）
+    Rl#show startup-config（显示启动文件）
+    Rl#reload （蚕启路山器）
+    Rl#show startup-config（显示启动文件）
+    Rl#copy running-config startup-config   （复制运行文件到NVRAM）
+
+以下关于IPsec协议的描述中，正确的是（  ）。* W:D
+
+The TCP protocol is a （  ） layer protocol. Each connection connects two TCPs that may be just one physical network apart or located on opposite sides ofthe globe. In other words， each connection creates a（  ）witha length that may be totally different from another path created by another connection. This means that TCP cannot use the same retransmission time for all connections. Selecting afixed retransnussion time for all connections can result in serious consequences. Ifthe retransmission time does not allow enough time for a（  ）to reach the destination and an acknowledgment to reach the source， it can result in retransmission of segments that are still on the way. Conversely， if the retransnussion time is longer than necessary for a short path， it may result in delay for the application programs.
+Even for one single connection， the retransmission time should not be fixed.A connection may be able to send segments and receive（  ）faster during nontraffic period than during congested periods. TCP uses the dynamic retransmission time，a transmission time is different for each connection and which may be changed during the same connection. Retransmission time can be made（  ）by basing it on the round-trip time （RTT）. Several formulas are used for this purpose。
+ A.physical B.network C.transport D.application
+ A.path B.window C.response D.process
+ A.process B.segment C.program D.user
+ A.connections B.requests C.acknowledgments D.datagrams
+ A.long B.short C.fixed D.dynamic
+R:CABCD W:CBBCD N:计算机专业英语
+
+    TCP是一种传输层协议。每一个连接都连接了两个TCP实体，这两个TCP实体可能存在于同一个物理网络中，也可能是分局于地球的两边。换言之，每一个连接都产生了一条通道，其长度与另外一个连接产生的通路完全不同。这就意味着，TCP不能对所有的连接使用同样的重传时间。对所有的连接选择一个固定的重传时间可能产生严重的后果。如果重传时间不足以使一个段到达目标，或者不足以是一个应答到达源站，这就可能对尚在路途中的段产生重传。反之，如果重传时间比一条短通路所需要的时间长，则可能对应用程序产生延迟。
+   即使对单个连接，重传时间也不应该固定。一个连接应该能够在非峰值时段比拥堵时段更快地发送数据和接收应答。TCP使用了动态重传时间，重传时间对每一个连接是不同的，在同一个连接持续期间也是可以改变的。重传时间可以动态地根据环回时间（RTT）而改变，为此建立了几个公式。
+
+RIP协议中可以使用多种方法防止路由循环，在以下选项中不属于这些方法的是（  ）。
+A.垂直翻转 B.水平分割 C.反向路由毒化 D.设置最大度量值
+R:A W:D N:RIP路由协议
+
+    维护路由表信息的时候，如果在拓扑发生改变后，网络收敛缓慢产生了不协调或者矛盾的路有选择条目，就会发生路由环路的问题，这种条件下，路由器对无法到达的网络路由不予理睬，导致用户的数据包不停在网络上循环发送，最终造成网络资源的严重浪费。为此，解决路由环路的问题的方法就出现了。解决路由环路问题的方法，概括来讲，主要分为六种：定义最大值；水平分割技术；路由中毒；反向路由中毒；控制更新时间；.触发更新。
+
+IGRP 是 Cisco 设计的路由协议，它发布路由更新信息的周期是（）。* W:C
+
+某进程有4个页面，页号为0~3，页面变换表及状态位、访问位和修改位的含义如下图所示。系统给该进程分配了3个存储块，当采用第二次机会页面替换算法时，若访问的页面1不在内存，这时应该淘汰的页号为（  ）。
+<img src="imgs\2021031401.png">
+A.0 B.1 C.2 D.3
+R:D N:页面置换算法
+
+    本题的关键就是看懂这个图。本题3个存储块，4个页面。现在一开始3个存储块里面的页号是0、2、3.现在需要访问页号1，也就是把0、2、3中的一个替换出来，根据第二次机会算法。先看访问位，访问位一样的话，再看修改位。没有修改的页号3替换出来。所以答案是D。
+
+在冗余磁盘阵列中，以下不具有容错技术的是（）。
+A.RAID 0   B.RAID 1   C.RAID 3   D.RAID 5
+R:A N:RAID技术
+
+    本题考查冗余磁盘阵列的基本知识。RAID 0把n块同样的硬盘用硬件的形式通过智能磁盘控制器或用操作系统中的磁盘驱动程序以软件的方式串联在一起，形成一个独立的逻辑驱动器，容量是单独硬盘的n倍。在计算机数据写时被依次写入到各磁盘中，当一块磁盘的空间用尽时，数据就会被自动写入到下一块磁盘中。它的好处是可以增加磁盘的容量。速度与其中任何一块磁盘的速度相同，如果其中的任何一块磁盘出现故障，整个系统将会受到破坏，可靠性是单独使用一块硬盘的1/n。
+    RAID 1称为磁盘镜像，把一个磁盘的数据镜像到另一个磁盘上，在不影响性能情况下最大限度地保证系统的可靠性和可修复性上，具有很高的数据冗余能力。但磁盘利用率为50%，故成本最高，多用在保存关键性重要数据的场合。
+    RAID 3使用一个专门的磁盘存放所有的校验数据，而在剩余的磁盘中创建带区集分散数据的读写操作。
+    RAID 5把校验块分散到所有的数据盘中。RAID 5使用了一种特殊的算法，可以计算出任何一个带区校验块的存放位置。这样就可以确保任何对校验块进行的读写操作都会在所有的RAID磁盘中进行均衡，从而消除了产生瓶颈的可能。
+
+如果一个TCP连接处于ESTABLISHED状态，这是表示（  ）。
+A.已经发出了连接请求 B.连接已经建立 C.处于连接监听状态 D.等待对方的释放连接响应
+R:B N:TCP协议
+
+    本题考察TCP的相关内容。      
+    ESTABLISHED状态是表示连接已经建立。
