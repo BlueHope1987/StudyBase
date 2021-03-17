@@ -7360,3 +7360,109 @@ R:C W:A N:OSPF路由协议
     OSPF是链路状态路由协议，进程号只具备本地意义，主干区域号为0，不同的OSPF进程可以进行重发布。
     路由重分布即路由重发布，把其他进程里面的路由信息发布到另一个进程中；举个例子就是，rip和ospf的路由信息可以通过路由重发布的方式进行导入。
     表示将你原来在转发列表中发向一台路由的路径改成另外一条路径，也就相当于让你的数据走另外一条路到服务器。
+
+20210317 每日一练 12
+https://uc.educity.cn/tiku/testReport.html?id=13380355
+
+下面的应用中，（  ）基于UDP协议。
+A.HTTP  B.telnet  C.RIP  D.FTP
+R:C W:D N:UDP协议
+
+    RIP协议基于UDP，其它三个基于TCP。TFP基于UDP，BGP基于TCP，OSPF协议不使用TCP或者UDP协议而是承载在IP协议之上。
+    ******
+    互联网可以划分为多个自治系统(autonomous system, AS) ，每个AS内部可以和别的 AS 使用不同的路由选择协议，根据使用的范围差异可以将路由选择协议划分为：自治系统内部的协议（interior gateway protocols, IGP）：RIP 和 OSPF；自治系统间的协议：(border gateway protocol, BGP)。RIP是最常用的协议，产生的开销最低，但不能在大型网络中使用。另一方面，OSPF在传输成本方面比RIP表现更好，适用于大型网络。OSPF还提供最大吞吐量和最低排队延迟。
+    RIP 是一种基于距离向量的路由选择协议，它使用跳数（Hop Count）作为度量值来衡量到达目的地址的距离。直接相连的路由器跳数为 1。跳数最多为 15，超过则表示不可达。RIP 每隔30秒和相邻路由器交换自己的路由表，经过若干次交换之后，所有路由器最终会知道到达本自治系统中任何一个网络的最短距离和下一跳路由器地址。
+    OSPF（开放最短路径优先 ）是为了克服 RIP 的缺点而开发出来的。OSPF使用了 Dijkstra 提出的最短路径算法 SPF。使用OSPF协议需要有关复杂网络的高级知识。因此OSPF路由协议允许路由器根据传入请求计算路由。OSPF的缺点是，当网络中添加了更多路由器时，它无法扩展。而OSPF缺乏可扩展性使其不适合在Internet上进行路由。
+
+    路由协议类型： RIP是距离矢量协议，而OSPF是链路状态协议。距离矢量协议使用跳数来确定传输路径。链路状态协议分析不同的源，如速度，成本和路径拥塞，同时识别最短路径。
+    路由表构造： RIP使用周围的路由器请求路由表。然后合并该信息并构造自己的路由表。该表定期发送到相邻设备，同时更新路由器的合并表。在OSPF中，路由器通过仅从相邻设备获取所需信息来合并路由表。它永远不会获得设备的整个路由表，并且路由表构造非常简单。
+    跳数限制： RIP最多只允许15跳，而在OSPF中没有这样的限制。
+    使用的算法： RIP使用距离向量算法，而OSPF使用最短路径算法Dijkstra来确定传输路由。
+    网络分类：在RIP中，网络分为区域和表格。在OSPF中，网络被分类为区域，子区域，自治系统和骨干区域。
+    复杂性级别： RIP相对简单，而OSPF则要复杂得多。
+    RIP与OSPF应用： RIP适用于较小的网络，因为它具有跳数限制。OSPF非常适合大型网络
+
+    边界网关协议（BGP）是运行于 TCP 上的一种自治系统的路由协议。 BGP 是唯一一个用来处理像因特网大小的网络的协议，也是唯一能够妥善处理好不相关路由域间的多路连接的协议。 BGP 构建在 EGP 的经验之上。 BGP 系统的主要功能是和其他的 BGP 系统交换网络可达信息。网络可达信息包括列出的自治系统（AS）的信息。这些信息有效地构造了 AS 互联的拓扑图并由此清除了路由环路，同时在 AS 级别上可实施策略决策。
+    BGP用于在不同的自治系统（AS）之间交换路由信息。当两个AS需要交换路由信息时，每个AS都必须指定一个运行BGP的节点，来代表AS与其他的AS交换路由信息。这个节点可以是一个主机。但通常是路由器来执行BGP。两个AS中利用BGP交换信息的路由器也被称为边界网关（Border Gateway）或边界路由器（Border Router）
+    BGP使用如下四种消息类型：
+    Open消息：Open消息是TCP连接建立后发送的第一个消息，用于建立BGP对等体之间的连接关系。
+    Keepalive消息：BGP会周期性地向对等体发出Keepalive消息，用来保持连接的有效性。
+    Update消息：Update消息用于在对等体之间交换路由信息。它既可以发布可达路由信息，也可以撤销不可达路由信息。
+    Notification消息：当BGP检测到错误状态时，就向对等体发出Notification消息，之后BGP连接会立即中断。
+    BGP邻居建立中的状态和过程如下：
+    空闲（Idle）：为初始状态，当协议激活后开始初始化，复位计时器，并发起第一个TCP连接，并开始倾听远程对等体所发起的连接，同时转向Connect状态。。
+    连接（Connect）：开始TCP连接并等待TCP连接成功的消息。如果TCP连接成功，则进入OpenSent状态；如果TCP连接失败，进入Active状态。
+    行动（Active）：BGP总是试图建立TCP连接，若连接计时器超时，则退回到Connect状态，TCP连接成功就转为Open sent状态。
+    OPEN发送（Open sent）：TCP连接已建立，自己已发送第一个OPEN报文，等待接收对方的Open报文，并对报文进行检查，若发现错误则发送Notification消息报文并退回到Idle状态。若检查无误则发送Keepalive消息报文，Keepalive计时器开始计时，并转为Open confirm状态。
+    OPEN证实（Open confirm）：BGP等待Keepalive报文，同时复位保持计时器。如果收到了Keepalive报文，就转为Established状态，邻居关系协商完成。如果系统收到一条更新或Keepalive消息，它将重新启动保持计时器；如果收到Notification消息，BGP就退回到空闲状态。
+    已建立（Established）：即建立了邻居（对等体）关系，路由器将和邻居交换Update报文，同时复位保持计时器。
+
+PCM编码是把摸拟信号数字化的过程，通常模拟话音信道的带宽是4000Hz，则在数字化采样频率至少（  ）次／秒。     
+A.2000  B.4000  C.8000  D.16000
+R:C W:A N:PCM技术
+
+    PCM的采样频率必须大于通信频率的2倍。所以得出采样频率为：8000Hz。
+
+计算机内存一般分为静态数据区、代码区、栈区和堆区，若某指令的操作数之一采用立即数寻址方式，则该操作数位于（）。
+A.静态数据区  B.代码区  C.栈区  D.堆区
+R:B W:A N:寻址方式
+
+    本题考查运行过程中计算机内存布局及指令寻址方式。
+    计算机运行时的内存空间划分情况如下图所示。
+        可执行代码  静态数据区  栈  →   ←   堆
+    运行时为名字分配存储空间的过程称为绑定。静态数据区用于存放一对一的绑定且编译时就可确定存储空间大小的数据，栈用于存放一对多的绑定且与活动同生存期的绑定；堆用于存储由程序语句动态生成和撤销的数据。
+    程序运行时，需要将程序代码（机器指令序列）和代码所操作的数据加载至内存。指令代码加载至代码区，数据则根据绑定关系可能位于静态数据区、栈或堆区。
+    立即数寻址方式是指指令所需的操作数由指令的地址码部分直接给出，其特点是取指令时同时取出操作数，以提高指令的执行速度。
+
+连接终端和数字专线的设备CSU/DSU被集成在路由器的（  ）端口中。
+A.RJ-45端口  B.同步串口  C.AUI端口  D.异步串口
+R:B W:C N:网络设备的基本概念
+
+    CSU/DSU是用于连接终端和数字专线的设备，而且CSU/DSU属于DCE数据通信设备，目前CSU/DSU通常都被集成在路由器的同步串口之上。
+
+下面关于数字签名的说法错误的是（）。
+A.能够保证信息传输过程中的保密性  B.能够对发送者的身份进行认证  C.如果接收者对报文进行了篡改，会被发现  D.网络中的某一用户不能冒充另一用户作为发送者或接收者。
+R:A W:C
+
+    数字签名是通过一个单项函数对要传送的报文进行处理得到的用以认证报文来源，并核实报文是否发生变化的一个字母数字串，用这几个字符串来代替书写签名或印章，起到与书写签名或印章同样的法律效用。国际社会已开始指定相应的法律、法规，把数字签名作为执法的依据。
+    在电子商务中，传送的文件是通过电子签名证明当事人身份与数据典实性的。数据加密是保护数据的最基本的方法，但也只能防止第三者获得真实数据。电子签名则可以解决否认、伪造、篡改及冒充等问题。具体要求：发送者时候不能否认发送的报文签名、接收者能够核实发送者发送的报文签名、接收者不能伪造发送者的报文签名、接收者不能对发送者的报文进行部分篡改、网络中的某一用户不能冒充另一用户作为发送者接收者。
+    数字签名可以用对称算法实现，也可以用公钥算法实现。但前者除了文件签字者和文件接受者双方，还需要第三方认证，较麻烦；通过公钥加密算法的实现方法，由于用私钥加密的文件，需要靠公钥来解密。因此这可以作为数字签名，签名者用私钥加密一个签名，接收人可以用签名者的公钥来解密，如果成功，就能确保信息来自该公钥的所有人。
+    公钥密码体制实现数字签名的基本原理很简单，假设A要发送一个电子文件给B，那么，A、B双方只需经过下面三个步骤即可：
+    （1）A用其私钥加密文件，这便是签字过程
+    （2）A将加密的文件送到B
+    （3）B用A的公钥解开A送来的文件，并验证签名是否成立。
+    这样的签名方法是符合可靠性原则的。即：签字是可以被确认的；签字时无法被伪造的；签字时无法重复使用的；文件被签字以后是无法被篡改的；签字具有无可否认性。
+
+下面关于Manchester编码的叙述中，错误的是（  ）。
+A.Manchester编码是一种双相码  B.Manchester 编码是一种归零码  C.Manchester 编码提供了比特同步信息  D.Manchester 编码应用在以太网中
+R:B W:A N:PCM技术
+
+    双相码存在电平翻转，是曼彻斯特编码的基础。由于存在电平跳变，所以可以提供同步信息。如果不存在电平跳变，那么发送连续的0或1就是一条直线。曼彻斯特编码应用在以太网中。
+
+E1载波的数据速率是（  ）。E3载波的数据速率是（  ）。** W:BD
+
+话信道的频率为0-4kHZ ，若信噪比为30dB，则信道容量为（  ）kb/s ，要达到此容量，至少需要（  ）个信号状态。
+A.4  B.20  C.40  D.80
+A.4  B.8  C.16  D.32
+R:CD W:CB N:奈奎斯特定律
+
+    用香农定理C=Wlog2(1+S/N)，又因为DB=10log10(S/N)，所以C=40Kbps，而回到奈奎斯特定律，如果R=2Wlog2（N），算出N=32。
+
+The usual way to ensure reliable delivery is to provide the （）with some feedback about what is happening at the other end of the line. Typically， the protocol calls for the receiver to send back special （）frame bearing positive or negative （）  about the incoming frames. If the sender receives a positive acknowledgement about a frame， it knows the frame has arrived safely. On the other hand， a negative acknowledgement means that something has gone wrong， and the frame must be transmitted again.
+An additional complication comes from the possibility that hardware troubles may cause a
+frame to （）completely. In this case， the receiver will not react at all， since it has no any reason to react. It should be clear that a protocol in which the sender transmits a frame and then waits for an acknowledgement， positive or negative， will hang forever if a frame is ever lost due to， for example，（）hardware.
+A.receiver  B.controller  C.sender  D.customer
+A.data  B.control  C.request  D.session
+A.application  B.connection  C.stream  D.acknowledgement
+A.vanish  B.vary  C.appear  D.incline
+A.acting  B.working  C.malfunctioning  D.functioning
+R:CBDAC W:BDCCC
+
+    保证可靠提交的常用方法是向发送端提供一些反馈信息，使它知道在线路的另一端发生了什么情况。典型的情况是：协议要求接收端回送一个承载有关输入帧的肯定或否定应答的特殊控制帧。如果发送端收到了有关帧的肯定应答，它就知道发送的帧已经安全到达。另一方面，否定应答则意味着出现了某种错误，应该重新发送出错的帧。
+    还有一些复杂的情况可能发生，硬件故障可能引起帧完全消失。在这种情况下，接收端完全没有反应，因为它根本无法反应。显然，如果一个帧由于硬件失效而丢失了，那么这样的协议—发送端发出一个帧然后等待肯定或否定应答，就会被永远地挂起了。
+
+使用图像扫描仪以300DPI的分辨率扫描一幅 3x4  英寸的图片，可以得到（  ）像素的数字图像。
+A.300 x300  B.300 x400  C.900 x4  D.900 x1200
+R:D W:C N:主存储器
+
+    例如要冲洗3*4英寸的照片，扫描精度是300dpi，那么文件尺寸应该是(3*300)*(4*300)=900像素*1200像素。
