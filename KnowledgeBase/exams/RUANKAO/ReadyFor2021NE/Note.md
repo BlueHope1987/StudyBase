@@ -7466,3 +7466,91 @@ A.300 x300  B.300 x400  C.900 x4  D.900 x1200
 R:D W:C N:主存储器
 
     例如要冲洗3*4英寸的照片，扫描精度是300dpi，那么文件尺寸应该是(3*300)*(4*300)=900像素*1200像素。
+
+
+20210318 每日一练 63
+https://uc.educity.cn/tiku/testReport.html?id=13401427
+
+DNS 通知是一种推进机制，其作用是使得（  ）。
+A.辅助域名服务器及时更新信息  B.授权域名服务器向管理区内发送公告  C.本地域名服务器发送域名解析申请  D.递归查询迅速返回结果
+R:A N:DNS协议
+
+    DNS通知是一种安全机制，只有被通知的辅助服务器才能进行区域数据库复制，以防止没有授权的服务器进行非法的区域复制。
+    DNS通知同时也是一种推进机制，是的辅助服务器能得到及时的更新区域的信息。
+
+在RMON 中，实现捕获组（capture）时必须实现（）。
+A.事件组（event） B.过滤组（filter） C.警报组（alarm） D.主机组（host）
+R:B W:A
+
+    RMON定义的MIB是MIB下的16个子树，共分10组。存储在每一组的信息都是监视器从一个或几个子网中统计和收集的数据。10组功能是任选的。但实现时有下列联带关系。①实现警报组时必须实现事件组。②实现最高N台主机时必须实现主机组。③实现捕获组时必须实现过滤组。
+    ******
+    RMON（Remote Network Monitoring）远端网络监控, 最初的设计是用来解决从一个中心点管理各局域分网和远程站点的问题。RMON 规范是由 SNMP MIB 扩展而来。 RMON 中，网络监视数据包含了一组统计数据和性能指标，它们在不同的监视器（或称探测器）和控制台系统之间相互交换。结果数据可用来监控网络利用率，以用于网络规划，性能优化和协助网络错误诊断。
+    RMON 监视系统有两部分构成：探测器（代理或监视器）和管理站。 RMON 代理在 RMON MIB 中存储网络信息，它们被直接植入网络设备（如路由器、交换机等），代理也可以是 PC 机上运行的一个程序。代理只能看到流经它们的流量，所以在每个被监控的LAN段或WAN链接点都要设置 RMON 代理，网管工作站用 SNMP 获取 RMON 数据信息。
+    RMON规范定义了RMON MIB ，它是对SNMP 框架的重要补充，其目标是要扩展SNMP 的MIB-II，使SNMP
+    能更为有效、更为积极主动地监控远程设备。RMON MIB 分为10组。存储在每一组中的信息都是监视器从一个或几个子网中统计和收集的数据。
+    1 统计组（statistics）：总计组提供一个表，该表每一行表示一个子网的统计信息。其中的大部分对象是计数器，记录监视器从子网上收集到的各种不同状态的分组数。
+    2 历史组（history）：历史组存储的是以固定间隔取样所获得的子网数据。该组由历史控制表和历史数据组成。控制表定义被取样的子网接口编号，取样间隔大小，以及每次取样数据的多少，而数据表则用于存储取样期间获得的各种数据。
+    3 警报组（Alarm）：设置一定的时间间隔和报警阈值，定期从探测器的采样并与所设置的阈值相比较。
+    4 事件组（Event）：提供关于RMON 代理所产生的所有事件。
+    5 主机组（Host）： 包括网络上发现的与每个主机相关的统计值。
+    6 过滤组（Filter）：允许监视器观测符合一定过滤条件的数据包。
+    7 矩阵组（matrix）：这个组记录子网中一对主机间的通信量，信息以矩阵的形式存储。
+    8 捕获组（capture）：分组捕获组建立一组缓冲区，用于存储从通道中捕获的分组。
+    9 最高N台主机组（hostTopN）：这一组记录某种参数最大的N台主机的有关信息，这些信息来源是主机组。在一个取样间隔中为一个子网上的一个主机组变量收集到的数据集合叫做一个报告。
+    10 令牌环网组（tokenRing）：RFC1513扩展了RMON MIB，增加了有关IEEE 802.5令牌环网的管理信息。
+    RMON定义了远程网络监视的管理信息库，以及SNMP管理站与远程监视器之间的接口。一般来说，RMON的目标就是监视子网范围内的通信，从而减少管理站和被管理系统之间的通信负担。
+
+关于软件著作权产生的时间，表述正确的是（  ）。
+A.自作品首次公开发表时  B.自作者有创作意图时  C.自作品得到国家著作权行政管理部门认可时  D.自作品完成创作之日
+R:D W:A N:知识产权保护期限
+
+    本题考查知识产权中关于软件著作权方面的知识。
+    在我国，软件著作权采用“自动保护”原则。《计算机软件保护条例》第十四条规定:“软件著作权自软件开发完成之日起产生。”即软件著作权自软件开发完成之日起自动产生，不论整体还是局部，只要具备了软件的属性即产生软件著作权，既不要求履行任何形式的登记或注册手续，也无须在复制件上加注著作权标记，也不论其是否己经发表都依法享有软件著作权。
+    一般来讲，一个软件只有开发完成并固定下来才能享有软件著作权。如果一个软件一直处于开发状态中，其最终的形态并没有固定下来，则法律无法对其进行保护。因此，条例（法律）明确规定软件著作权自软件开发完成之日起产生。当然，现在的软件开发经常是一项系统工程，一个软件可能会有很多模块，而每一个模块能够独立完成某一项功能。自该模块开发完成后就产生了著作权。所以说，自该软件开发完成后就产生了著作权。
+
+The Border Gateway Protocol （BGP）is an interautonomous system（  ）protocol.The primary function of a BGP speaking system is to exchange network （  ）information with other BGP system.This network reachability information includes information on the list of Autonomous System（ASs）that reachability  information  traverses.BGP-4 provides a new set of mechanisms for supporting （  ）interdomain routing.These mechanisms include support for advertising an IP （  ）and eliminate the concept of network class within BGP.BGP-4 also introduces mechanisms that allow aggregation of routes， including （  ）of AS paths.These changes provide support for the proposed supernettting scheme. 
+A.connecting  B.resolving  C.routing  D.supernettting
+A.Secubility  B.reachability  C.capability  D.reliability
+A.Answerless  B.Connectionless  C.Confirmless  D.classless
+A.prefix  B.suffix  C.infix  D.reflex
+A.reservation  B.relation  C.aggregation  D.connection
+R:CBDAC W:CBCCD N:计算机专业英语
+
+    边界网关协议BGP是自治系统间的路由协议。BGP发布系统的基本功能就是与其他BGP系统交换网络可到达性信息。这种网络可到达性信息包含了可到达性信息穿越的自治系统的列表。BGP-4提供了一系列新的机制来支持无类别的域间路由。这些机制包括支持发布IP前缀，从而在BGP中排除了网络类别的概念。BGP-4也引入了路由聚合机制，包括AS通路的聚合。这些改变提供了对提议的超网方案的支持。
+
+Traditional network layer packet forwarding relies on the information provided by network layer（  ）protocols, or static routing, to make an independent forwarding decision at each（  ）within the network. The forwarding decision is based solely on the destination（  ）IP address. All packets for the same destination follow the same path across the network  if no other equal-cost（  ）exist. Whenever a router has two equal-cost paths toward a destination, the packets toward the destination might take one or both of them, resulting in some degree of load sharing. Enhanced Interior Gateway Routing Protocol (EIGRP) also supports non-equal-cost（  ）sharing although the default behavior of this protocol is equal-cost. You must configure EIGRP variance for non-equal-cost load balancing.
+A.switching B.signaling C.routing D.session
+A.switch B.hop C.host D.customer
+A.connection B.transmission C.broadcast D.customer
+A.paths B.distance C.broadcast D.session
+A.loan B.Load C.content D.constant
+R:CBDAB W:CADCC N:计算机专业英语
+
+    传统的网络层分组转发是根据网络层路由协议或者静态路由提供的信息，在网络中的每一跳都做出一个独立的转发决策。转发决策只是基于目标单播地址而做出的。如果没有相等费用的其他通路存在，朝着同一目标的所有分组都遵循网路中的同样路径。当路由器具有通向同一目标的相等费用的两条通路时，流向目标的分组就可能走两条通路中的任何一条，这就产生了同样程度的负载共享。增强的内部网关路由协议（EIGRP）也支持不等费用的负载共享，虽然这个协议默认的行为是相等费用的负载共享。通过配置，你可以把EIGRP变为不等费用的负载共享方式。
+
+数据存储在磁盘上的会影响I／O服务的总时间。假设每磁道划分成10个物理块，每块存放1个逻辑记录。逻辑记录R1，R2，…，R10存放在同一个磁道上，记录的安排顺序如下表所示：
+    物理块  1   2   3   4   5   6   7   8   9   10
+    逻辑块  R1  R2  R3  R4  R5  R6  R7  R8  R9  R10
+假定磁盘的旋转速度为20ms／周，磁头当前处在R1的开始处。若系统顺序处理这些记录，使用单缓冲区，每个记录处理时间为4ms，则处理这10个记录的最长时间为（）；若对信息存储进行优化分布后，处理10个记录的最少时间为（）。
+A.180ms  B.200ms  C.204ms  D.220ms
+A.40ms  B.60ms  C.100ms  D.160ms
+R:CB
+
+    已知磁盘的旋转速度为20ms/周，每道存放10个记录，因此读出一个记录的时间是：20/10＝2ms。
+    第1个记录读取后(R1),并处理完记录后,这时磁头会达到R4处.需经过R4,R5,R6,R7,R8,R9,R10,R1,才能再次读取R2.
+    ，必须再转8个记录（从记录R4到记录R1），再花2ms读出时间和4ms的处理时间，共需要时间：2×8＋2＋4=22。
+    其他8个记录都是的读取和处理时间和记录R2相同。于是，处理10个记录的时间是：(2+4)+9*(2*8+2+4)=204ms。
+    对于优化之后，读出并处理R1后，读写头刚好转到记录R2的开始处，因此立即就可读出处理记录R2，又经过2+4，刚好又到R3这个位置，后续记录的读取与处理情况相同。所以处理10个记录的时间为：10*(2+4)＝60ms。
+    具体可以如图：
+        物理块    1   2   3   4   5   6   7   8   9   10
+        逻辑记录  R1  R8  R5  R2  R9  R6  R3 R10  R7  R4
+
+OSPF 协议适用于4种网络。下面的选项中，属于广播多址网络（Broadcast Multi-Access）的是（  ），属于非广播多址网络（None Broadcast Multi-Access）的是（  ）。
+A.Ethernet  B.PPP  C.Frame Relay  D.RARP
+R:AC W:AB N:OSPF路由协议
+
+    OSPF定义了4种网络：
+    （1）广播多址网络（Broadcast Multi-Access），例如Ethemet.Token Ring和FDDI等。
+    （2）非广播多址网络（None Broadcast Multi-Access， NBMA ），例如Franrxe Relay.X.25和SMDS等。
+    （3）点到点网络（Point-to-Point ），例如PPP， HDLC等。
+    （4）点到多点网络（Paint-to-Multi-Point），例如运行RARP协议网络。
