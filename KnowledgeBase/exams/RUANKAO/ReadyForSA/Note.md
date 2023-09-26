@@ -6473,3 +6473,65 @@ R:BD W:BA N: 软件工程>软件设计
 
 逆向工程导出的信息可以分为4个抽象层次，其中（  ）可以抽象出程序的抽象语法树、符号表等信息；（  ）可以抽象出反映程序段功能及程序段之间关系的信息。*** W:AB***
 
+20230926 每日一练 59.9
+https://wangxiao.xisaiwang.com/tiku2/report515898176.html
+
+以下关于敏捷方法的描述中，不属于敏捷方法核心思想的是（  ）。
+A.敏捷方法是适应型，而非可预测型   B.敏捷方法以过程为本
+C.敏捷方法是以人为本，而非以过程为本   D.敏捷方法是迭代增量式的开发过程
+R:B W:C N:软件工程>开发模型
+
+    敏捷方法是一种以人为核心、迭代、循序渐进的开发方法。在敏捷方法中，软件项目的构建被切分成多个子项目，各个子项目成果都经过测试，具备集成和可运行的特征。在敏捷方法中，从开发者的角度来看，主要的关注点有短平快的会议、小版本发布、较少的文档、合作为重、客户直接参与、自动化测试、适应性计划调整和结对编程；从管理者的角度来看，主要的关注点有测试驱动开发、持续集成和重构。 
+    敏捷方法是以人为本，而非以过程为本，所以B选项错误。此处注意一个解题技巧，B和C的说法冲突，此时，这两个选项中至少有一个是错误的。
+
+面向对象的分析模型主要由（  ）、用例与用例图、领域概念模型构成；设计模型则包含以包图表示的软件体系结构图、以交互图表示的（  ）、完整精确的类图、针对复杂对象的状态图和描述流程化处理过程的（  ）等。****** W:DCA
+
+特定领域软件架构（DSSA）是在一个特定应用领域为一组应用提供组织结构参考的标准软件架构。实施DSSA的过程中包括一系列基本的活动，其中（  ）活动的主要目的是为了获得DSSA。该活动参加人员中，（  ）的主要任务是提供关于领域中系统的需求规约和实现的知识。** W:DA
+
+某公司欲开发一个基于图形用户界面的集成调试器。该调试器的编辑器和变量监视器可以设置调试断点。当调试器在断点处暂停运行时，编辑程序可以自动卷屏到断点，变量监视器刷新变量数值。针对这样的功能描述，采用（  ）的架构风格最为合适。* W:A.数据共享
+
+基于构件的开发模型包括软件的需求分析定义（  ）、（  ）、（  ）以及测试和发布5个顺序执行的阶段。*** W:ADA
+
+逆向工程导出的信息可以分为4个抽象层次，其中（  ）可以抽象出程序的抽象语法树、符号表等信息；（  ）可以抽象出反映程序段功能及程序段之间关系的信息。**** W:AB****
+
+20230913 每日一练 68
+https://wangxiao.xisaiwang.com/tiku2/report515898552.html
+
+The prevailing distributed computing model of the current era is called client/server computing. A（  ）is a solution in which the presentation, presentation logic, application logic, data manipulation and data layers are distributed between client PCs and one or more servers. A (  ) is a personal computer that does not have to be very powerful in terms of processor speed and memory because it only presents the interface to the user. A（  ）is a personal computer, notebook.computer, or workstation that is typically more powerful in terms of processor speed, memory, and storage capacity. A（  ）hosts one or more shared database but also executes all database commands and services for information systems. A (n)（  ）hosts Internet or intranet web sites, it communicates with clients by returning to them documents and data.
+A.Client/Server system  B.Client-side  C.Server-sider  D.Database
+A.Server-sider  B.Browser  C.Fat client  D.Thin client
+A.Cloud platform  B.Cluster system  C.Fat client  D.Thin client
+A.Transaction server  B.Database server  C.Application server  D.Message server
+A.Database server  B.Message server  C.Web server  D.Application server
+R:ADCBC W:ADCBD N:专业英语>专业英语
+
+    当前流行的分布式计算模型称为客户端服务器计算。（）是一种解决方案，其中表示、表示逻辑、应用程序逻辑、数据操作和数据层分布在客户端PC和一个或多个服务器之间。（）是一种个人计算机，它不必在处理器速度和内存方面非常强大，因为它只向用户提供界面。（）是个人电脑、笔记本电脑。通常在处理器速度、内存和存储容量方面更强大的计算机或工作站。（）托管一个或多个共享数据库，但也执行信息系统的所有数据库命令和服务。（）托管Internet或intranet网站，它通过向客户返回文档和数据与客户进行通信。
+    A客户/服务器系统 B客户端 C服务器端 D数据库
+    A服务器端 B浏览器 C胖客户端 D 瘦客户端
+    A云平台 B集群系统 C胖客户端 D瘦客户端
+    A事务服务群 B数据库服务器 C应用服务器 D消息服务器
+    A数据库服务器 B消息库服务器 C网络服务器 D应用服务器
+
+对软件体系结构风格的研究和实践促进了对设计的复用。Garlan和Shaw对经典体系结构风格进行了分类 。其中，（ ）属于数据流体系结构风格；（ ）属于虚拟机体系结构风格；而下图描述的属于（ ）体系结构风格 。
+<img src="imgs\2023091301.png">
+A.面向对象 B.事件系统 C.规则系统 D.批处理
+A.面向对象 B.事件系统 C.规则系统 D.批处理
+A.层次型 B.事件系统 C.规则系统 D.批处理
+R:DCA N:软件架构设计>软件架构风格>调用返回风格
+
+    本题考查的是架构风格。
+    关于架构的传统分类如下所示：
+    数据流风格：批处理序列、管道-过滤器，第一空选择D选项批处理。
+    调用/返回风格：主程序/子程序、面向对象、层次结构。
+    独立构件风格：进程通信、事件驱动系统（隐式调用）。
+    虚拟机风格：解释器、基于规则的系统，第二空选择C选项规则系统。
+    仓库风格：数据库系统、超文本系统、黑板系统。
+    题干给出的图示是典型的层次结构。第三空选择A选项。
+
+
+某文件系统采用多级索引结构， 若磁盘块的大小为4KB，每个块号需占4B，那么采用二级索引结构时的文件最大长度可占用（ ）个物理块。* R:B.1024×1024 W:D.4096×4096
+
+集成平台是支持企业信息集成的支撑环境，包括硬件、软件、软件工具和系统。集成平台的基本功能中，（ ）实现不同数据库系统之间的数据交换、互操作、分布数据管理和共享信息模型定义；（ ）能够为应用提供数据交换和访问操作，使各种不同的系统能够相互协作。** W:DA
+
+以下关于层次化网络设计原则的叙述中，错误的是（  ）。* W:D
+
