@@ -6891,3 +6891,15 @@ R:D W:C
 Software architecture reconstruction is an interpretive, interactive, and iterative process including many activities...****** W:ADBDC*
 
 1路和2路公交车都将在10分钟内均匀随机地到达同一车站，则它们相隔4分钟内到达该站的概率为（  ）。* W:B
+
+20231004 每日一练 100
+https://wangxiao.xisaiwang.com/tiku2/report516092887.html
+
+补20230905 每日一练 88
+https://wangxiao.xisaiwang.com/tiku2/report516092994.html
+
+软件概要设计将软件需求转化为软件设计的（  ）和软件的（  ）。* W:CA
+
+把应用程序中应用最频繁的那部分核心程序作为评价计算机性能的标准程序，称为（  ）程序。（  ）不是对Web服务器进行性能评估的主要指标。* W:CB
+
+The software architecture is a set of software components， subsystems， relationships， interactions， the properties of each...**** W:AADBB
