@@ -35,8 +35,6 @@ print(a.dot(b))
 
 print("4-2-(2)绘制梯度的图形")
 import matplotlib.pyplot as plt
-%matplotlib inline
-
 def f(w0,w1):
     return w0**2+w0*w1+3
 def df_dw0(w0,w1):
@@ -62,3 +60,20 @@ for i0 in range(len(w0)):
 
 plt.figure(figsize=(9,4))
 plt.subplots_adjust(wspace=0.3)
+plt.subplot(1,2,1)
+cont=plt.contour(ww0,ww1,ff,10,colors='k')
+cont.clabel(fmt='%d',fontsize=8)
+plt.xticks(range(-w_range,w_range+1,1))
+plt.yticks(range(-w_range,w_range+1,1))
+plt.xlim(-w_range-0.5,w_range+0.5)
+plt.ylim(-w_range-0.5,w_range+0.5)
+
+plt.subplot(1,2,2)
+plt.quiver(ww0,ww1,dff_dw0,dff_dw1)
+plt.xlabel('$w_0$',fontsize=14)
+plt.ylabel('$w_1$',fontsize=14)
+plt.xticks(range(-w_range,w_range+1,1))
+plt.yticks(range(-w_range,w_range+1,1))
+plt.xlim(-w_range-0.5,w_range+0.5)
+plt.ylim(-w_range-0.5,w_range+0.5)
+plt.show()
