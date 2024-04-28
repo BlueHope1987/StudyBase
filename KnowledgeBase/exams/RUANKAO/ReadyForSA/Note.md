@@ -7911,3 +7911,10 @@ https://wangxiao.xisaiwang.com/tiku2/report521120616.html
 假设关系模式R(U，F)，属性集U={A，B，C}，函数依赖集F={A→B，B→C）。若将其分解为ρ={R1(U1，F1)，R2(U2，F2))，其中U1={A，B），U2={A，C}。那么，关系模式R、R1、R2分别达到了（  ）；分解ρ（  ）。****** W:CB
 
 软件架构贯穿于软件的整个生命周期，但在不同阶段对软件架构的关注力度并不相同，在（  ）阶段，对软件架构的关注最多。** W:A*
+
+20240428 每日一练 93
+https://wangxiao.xisaiwang.com/tiku2/report521152638.html
+
+An architectural style defines as a family of such systems in terms of a（  ）of structural organization...***** W:ABDAD
+
+某软件公司欲开发一个Windows平台上的公告板系统。在明确用户需求后，该公司的架构师决定采用Command模式实现该系统的界面显示部分，并设计UML类图如下图所示。图中与Command模式中的“Invoker”角色相对应的类是（  ），与“ConcreteCommand”角色相对应的类是（  ）。**** W:BA**
