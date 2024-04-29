@@ -7918,3 +7918,12 @@ https://wangxiao.xisaiwang.com/tiku2/report521152638.html
 An architectural style defines as a family of such systems in terms of a（  ）of structural organization...***** W:ABDAD
 
 某软件公司欲开发一个Windows平台上的公告板系统。在明确用户需求后，该公司的架构师决定采用Command模式实现该系统的界面显示部分，并设计UML类图如下图所示。图中与Command模式中的“Invoker”角色相对应的类是（  ），与“ConcreteCommand”角色相对应的类是（  ）。**** W:BA**
+
+20240429 每日一练 76.6
+https://wangxiao.xisaiwang.com/tiku2/report521176733.html
+
+若系统中的某子模块需要为其他模块提供访问不同数据库系统的功能，这些数据库系统提供的访问接口有一定的差异，但访问过程却都是相同的，例如，先连接数据库，再打开数据库，最后对数据进行查询。针对上述需求，可以采用（  ）设计模式抽象出相同的数据库访问过程，该设计模式（  ）。***** W:BD**
+
+软件质量属性通常需要采用特定的设计策略实现。例如，（  ）设计策略能提高该系统的可用性，（  ）设计策略能够提高该系统的性能， （  ）设计策略能够提高该系统的安全性。*** W:ADA**
+
+系统测试将软件、硬件、网络等其它因素结合，对整个软件进行测试。（  ）不是系统测试的内容。** W:C**
