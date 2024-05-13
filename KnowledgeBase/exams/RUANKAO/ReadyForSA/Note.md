@@ -8110,3 +8110,15 @@ https://wangxiao.xisaiwang.com/tiku2/report521719760.html
 （  ）不是反映嵌入式实时操作系统实时性的评价指标。***** W:D***
 
 核心层交换机应该实现多种功能，下面选项中，不属于核心层特性的是（  ）。* W:A*
+
+
+20240513 每日一练 78
+https://wangxiao.xisaiwang.com/tiku2/report521760432.html
+
+人工智能技术已成为当前国际科技竞争的核心技术之一，AI芯片是占据人工智能市场的法宝。AI 芯片有别于通常处理器芯片，它应具备四种关键特征。（ ）是AI芯片的关键特点。* W:C
+
+某高校欲构建财务系统，使得用户可通过校园网访问该系统。根据需求，公司给出如下2套方案。...***** W:CA 错误点：不属于其缺点的是
+
+某广告公司的宣传产品有宣传册、文章、传单等多种形式，宣传产品的出版方式包括纸质方式、CD、DVD、在线发布等。现要求为该广告公司设计一个管理这些宣传产品的应用，采用（  ）设计模式较为合适，该模式（  ）。***** W:AB***
+
+The software architecture is a set of software components， subsystems， relationships， interactions， the properties of each...**** W:AADAB
