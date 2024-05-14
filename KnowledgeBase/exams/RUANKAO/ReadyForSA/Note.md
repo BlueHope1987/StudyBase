@@ -8122,3 +8122,12 @@ https://wangxiao.xisaiwang.com/tiku2/report521760432.html
 某广告公司的宣传产品有宣传册、文章、传单等多种形式，宣传产品的出版方式包括纸质方式、CD、DVD、在线发布等。现要求为该广告公司设计一个管理这些宣传产品的应用，采用（  ）设计模式较为合适，该模式（  ）。***** W:AB***
 
 The software architecture is a set of software components， subsystems， relationships， interactions， the properties of each...**** W:AADAB
+
+20240514 每日一练 100
+https://wangxiao.xisaiwang.com/tiku2/report521823629.html
+
+<不稳固题>
+
+面向对象的设计模型包含以（包图）表示的软件体系结构图，以（交互图）表示的用例实现图，完整精确的类图，针对复杂对象的状态图和用以描述流程化处理的活动图等。
+
+逆向工程导出的信息可以分为4个抽象层次，其中（实现级）可以抽象出程序的抽象语法树、符号表等信息；（功能级）可以抽象出反映程序段功能及程序段之间关系的信息。
