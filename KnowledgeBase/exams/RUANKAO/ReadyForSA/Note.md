@@ -8188,3 +8188,12 @@ SDN(Software Defined Network)的网络架构中不包含（  ）。W:C
 把应用程序中应用最频繁的那部分核心程序作为评价计算机性能的标准程序，称为（  ）程序。（  ）不是对Web服务器进行性能评估的主要指标。** W:BA
 
 某计算机系统中有一个CPU、一台扫描仪和一台打印机。现有三个图像任务，每个任务有三个程序段：扫描Si，图像处理Ci和打印Pi (i=1，2，3)。下图为三个任务各程序段并发执行的前驱图，其中，（  ）可并行执行，（  ）的直接制约，（  ）的间接制约。***** W:ABC****
+
+20240520 每日一练 81
+https://wangxiao.xisaiwang.com/tiku2/report522141192.html
+
+按照《中华人民共和国著作权法》的权利保护期（  ）受到永久保护。* W:A*
+
+Designing the data storage architecture is an important activity in system design...*** W:ABACB*
+
+给定关系模式R(U，F)，其中: 属性集 U={A1,A2,A3,A4,A5,A6}，函数依赖集F={A1->A2,A1->A3,A3->A4,A1A5->A6}。关系模式 R 的候选码为（A1A5），由于R存在非主属性对码的部分函数依赖，所以 R 属于（1NF*）。**** W:3NF
