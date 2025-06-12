@@ -22,6 +22,13 @@ conda remove -n 环境 --all
 退出：
 conda deactivate
 
+安装库：
+conda install cudnn=7.6
+conda install tensorflow
+conda install torchvision -c pytorch （-c 从通道中获取）
+pip3 install torchvision
+
+
 [安装路径]\Scripts\activate 启动环境
 conda activate XXX 激活环境
 
