@@ -9,25 +9,42 @@ conda分为anaconda和miniconda。anaconda是包含一些常用包的版本（�
 推荐使用miniconda
 
 常用conda 命令编辑
-conda list
+
 列出当前 conda 环境所链接的软件包 
-conda create
+conda list
+
 列出环境
 conda info -e
+conda info --env
+conda env list
+
 创建一个 conda 环境
+conda create
 conda create -n 环境名 -c 镜像源
 conda create -n xxx python=3.8
+
 删除环境
 conda remove -n 环境 --all
-退出：
+conda env remove --name myenv # 移除名为"myenv"的环境
+conda remove --name myenv package_name # 移除指定环境中的包
+
+激活环境：
+conda activate ENV_NAME
+
+退出环境：
 conda deactivate
 
-安装库：
+环境下安装库：
 conda install cudnn=7.6
 conda install tensorflow
 conda install torchvision -c pytorch （-c 从通道中获取）
 pip3 install torchvision
 
+清理缓存包：
+conda clean --all
+conda clean -p # 删除没有用的包
+conda clean -t # 删除tar打包文件
+conda clean -y --all # 删除所有安装包及缓存
 
 [安装路径]\Scripts\activate 启动环境
 conda activate XXX 激活环境
@@ -59,6 +76,14 @@ envs_dirs:
 pkgs_dirs:
   - D:\xxx\anaconda3\pkgs
   - C:\Users\xxx\AppData\Local\conda\conda\pkgs
+
+
+其他源还有中科大等可以使用：
+channels:
+  - https://mirrors.ustc.edu.cn/anaconda/pkgs/main/
+  - https://mirrors.ustc.edu.cn/anaconda/pkgs/free/
+  - https://mirrors.ustc.edu.cn/anaconda/cloud/conda-forge/
+ssl_verify: true
 
 [环境同步参考]
  [tf2] 
