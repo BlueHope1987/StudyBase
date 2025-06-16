@@ -39,6 +39,8 @@ conda install cudnn=7.6
 conda install tensorflow
 conda install torchvision -c pytorch （-c 从通道中获取）
 pip3 install torchvision
+ 
+ 20250616：除了创建环境时指定库，使用时推荐用 pip3 install XXX 之类的第三类库安装程序。conda恐会出现频道找不到方案
 
 清理缓存包：
 conda clean --all

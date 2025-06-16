@@ -1,11 +1,3 @@
-#https://github.com/datawhalechina/happy-llm/blob/main/docs/chapter5/%E7%AC%AC%E4%BA%94%E7%AB%A0%20%E5%8A%A8%E6%89%8B%E6%90%AD%E5%BB%BA%E5%A4%A7%E6%A8%A1%E5%9E%8B.md
-#第五章 动手搭建大模型
-
-#5.1.1 定义超参数
-#首先我们需要定义一些超参数，这些超参数包括模型的大小、层数、头数、词嵌入维度、隐藏层维度等等。这些超参数可以根据实际情况进行调整。
-#这里我们自定义一个ModelConfig类，来存储和记录我们的超参数，这里我们继承了PretrainedConfig类，这是transformers库中的参数类，
-#我们可以通过继承这个类来方便的使用transformers库中的一些功能，也方便在后续导出Hugging Face模型。
-
 import math
 import inspect
 from dataclasses import dataclass
@@ -18,21 +10,22 @@ from transformers import PreTrainedModel, AutoTokenizer
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from transformers import PretrainedConfig
 
+
 class ModelConfig(PretrainedConfig):
     model_type = "Tiny-K"
     def __init__(
             self,
-            dim: int = 768, # 模型维度
-            n_layers: int = 12, # Transformer的层数
-            n_heads: int = 16, # 注意力机制的头数
-            n_kv_heads: int = 8, # 键值头的数量
-            vocab_size: int = 6144, # 词汇表大小
-            hidden_dim: int = None, # 隐藏层维度
-            multiple_of: int = 64, 
-            norm_eps: float = 1e-5, # 归一化层的eps
-            max_seq_len: int = 512, # 最大序列长度
-            dropout: float = 0.0, # dropout概率
-            flash_attn: bool = True, # 是否使用Flash Attention
+            dim: int = 768,
+            n_layers: int = 12,
+            n_heads: int = 16,
+            n_kv_heads: int = 8,
+            vocab_size: int = 6144,
+            hidden_dim: int = None,
+            multiple_of: int = 64,
+            norm_eps: float = 1e-5,
+            max_seq_len: int = 512,
+            dropout: float = 0.0,
+            flash_attn: bool = True,
             **kwargs,
     ):
         self.dim = dim
@@ -47,14 +40,6 @@ class ModelConfig(PretrainedConfig):
         self.dropout = dropout
         self.flash_attn = flash_attn
         super().__init__(**kwargs)
-
-#我们来看一下其中的一些超参数的含义，比如dim是模型维度，n_layers是Transformer的层数，n_heads是注意力机制的头数，
-# vocab_size是词汇表大小，max_seq_len是输入的最大序列长度等等。上面的代码中也对每一个参数做了详细的注释，在后面的代码中我们会根据这些超参数来构建我们的模型。
-
-#5.1.2 构建 RMSNorm
-
-#这种归一化有助于通过确保权重的规模不会变得过大或过小来稳定学习过程，这在具有许多层的深度学习模型中特别有用。
-#我们可以通过如下代码实现RMSNorm
 
 class RMSNorm(nn.Module):
     def __init__(self, dim: int, eps: float):
@@ -77,34 +62,8 @@ class RMSNorm(nn.Module):
         # 最后乘以weight，这是RMSNorm的一个可学习的缩放因子
         output = self._norm(x.float()).type_as(x)
         return output * self.weight
-    
-#并且，我们可以用下面的代码来对RMSNorm模块进行测试，可以看到代码最终输出的形状为torch.Size([1, 50, 288])，
-#与我们输入的形状一致，说明模块的实现是正确的，归一化并不会改变输入的形状。
-#norm = RMSNorm(args.dim, args.norm_eps)
-#x = torch.randn(1, 50, args.dim)
-#output = norm(x)
-#print(output.shape)
 
-#out:
-#torch.Size([1, 50, 768])
-#构建 LLaMA2 Attention
-#repeat_kv
-def repeat_kv(x: torch.Tensor, n_rep: int) -> torch.Tensor:
-    # 获取输入张量的形状：批量大小、序列长度、键/值对头的数量、每个头的维度大小
-    bs, slen, n_kv_heads, head_dim = x.shape
-    
-    # 如果重复次数为1，则不需要重复，直接返回原始张量
-    if n_rep == 1:
-        return x
-    
-    # 对张量进行扩展和重塑操作以重复键值对
-    return (
-        x[:, :, :, None, :]  # 在第四个维度（头的维度前）添加一个新的维度
-        .expand(bs, slen, n_kv_heads, n_rep, head_dim)  # 将新添加的维度扩展到n_rep大小，实现重复的效果
-        .reshape(bs, slen, n_kv_heads * n_rep, head_dim)  # 重新塑形，合并键/值对头的数量和重复次数的维度
-    )
-
-#旋转嵌入
+# 获得旋转嵌入的实部和虚部
 # 注意：此处的dim应为 dim//n_head，因为我们是对每个head进行旋转嵌入
 def precompute_freqs_cis(dim: int, end: int, theta: float = 10000.0):
     # torch.arange(0, dim, 2)[: (dim // 2)].float()生成了一个从0开始，步长为2的序列，长度为dim的一半
@@ -120,7 +79,7 @@ def precompute_freqs_cis(dim: int, end: int, theta: float = 10000.0):
     freqs_sin = torch.sin(freqs)
     return freqs_cos, freqs_sin
 
-#我们来构造调整张量形状的reshape_for_broadcast函数，这个函数的主要目的是调整 freqs_cis 的形状，使其在进行广播操作时与 x 的维度对齐，从而能够进行正确的张量运算。
+# 此函数的作用是将freqs_cis调整为与x的形状相同，以便能够与x进行广播操作
 def reshape_for_broadcast(freqs_cis: torch.Tensor, x: torch.Tensor):
     # 获取x的维度数
     ndim = x.ndim
@@ -133,14 +92,12 @@ def reshape_for_broadcast(freqs_cis: torch.Tensor, x: torch.Tensor):
     # 将freqs_cis调整为新的形状，并返回
     return freqs_cis.view(shape)
 
-#最后，我们可以通过如下代码实现旋转嵌入：
-
 def apply_rotary_emb(
     xq: torch.Tensor,
     xk: torch.Tensor,
     freqs_cos: torch.Tensor,
     freqs_sin: torch.Tensor
-) -> tuple[torch.Tensor, torch.Tensor]:
+) -> Tuple[torch.Tensor, torch.Tensor]:
 
     # 将查询和键张量转换为浮点数，并重塑形状以分离实部和虚部
     xq_r, xq_i = xq.float().reshape(xq.shape[:-1] + (-1, 2)).unbind(-1)
@@ -162,19 +119,20 @@ def apply_rotary_emb(
 
     return xq_out.type_as(xq), xk_out.type_as(xk)
 
-#这里我们给出可以测试apply_rotary_emb函数的代码，大家也可以尝试在代码中添加断点，来查看每一步的计算结果。
-
-xq = torch.randn(1, 50, 6, 48) # bs, seq_len, dim//n_head, n_head_dim
-xk = torch.randn(1, 50, 6, 48) # bs, seq_len, dim//n_head, n_head_dim
-
-# 使用 precompute_freqs_cis 函数获取 sin和cos
-cos, sin = precompute_freqs_cis(288//6, 50)
-print(cos.shape, sin.shape)
-xq_out, xk_out = apply_rotary_emb(xq, xk, cos, sin)
-
-xq_out.shape, xk_out.shape
-
-#组装 LLaMA2 Attention
+def repeat_kv(x: torch.Tensor, n_rep: int) -> torch.Tensor:
+    # 获取输入张量的形状：批量大小、序列长度、键/值对头的数量、每个头的维度大小
+    bs, slen, n_kv_heads, head_dim = x.shape
+    
+    # 如果重复次数为1，则不需要重复，直接返回原始张量
+    if n_rep == 1:
+        return x
+    
+    # 对张量进行扩展和重塑操作以重复键值对
+    return (
+        x[:, :, :, None, :]  # 在第四个维度（头的维度前）添加一个新的维度
+        .expand(bs, slen, n_kv_heads, n_rep, head_dim)  # 将新添加的维度扩展到n_rep大小，实现重复的效果
+        .reshape(bs, slen, n_kv_heads * n_rep, head_dim)  # 重新塑形，合并键/值对头的数量和重复次数的维度
+    )
 
 class Attention(nn.Module):
     def __init__(self, args: ModelConfig):
@@ -219,7 +177,6 @@ class Attention(nn.Module):
             # 注册为模型的缓冲区
             self.register_buffer("mask", mask)
 
-        
     def forward(self, x: torch.Tensor, freqs_cos: torch.Tensor, freqs_sin: torch.Tensor):
         # 获取批次大小和序列长度，[batch_size, seq_len, dim]
         bsz, seqlen, _ = x.shape
@@ -263,10 +220,7 @@ class Attention(nn.Module):
         output = self.wo(output)
         output = self.resid_dropout(output)
         return output
-    
 
-
-#构建 LLaMA2 MLP模块
 class MLP(nn.Module):
     def __init__(self, dim: int, hidden_dim: int, multiple_of: int, dropout: float):
         super().__init__()
@@ -292,7 +246,6 @@ class MLP(nn.Module):
         # 最后，通过第二层线性变换和dropout层
         return self.dropout(self.w2(F.silu(self.w1(x)) * self.w3(x)))
     
-#构建LLaMA2的Decoder Layer了
 
 class DecoderLayer(nn.Module):
     def __init__(self, layer_id: int, args: ModelConfig):
@@ -326,8 +279,6 @@ class DecoderLayer(nn.Module):
         h = x + self.attention.forward(self.attention_norm(x), freqs_cos, freqs_sin)
         out = h + self.feed_forward.forward(self.ffn_norm(h))
         return out
-    
-#构建LLaMA2模型
 
 class Transformer(PreTrainedModel):
     config_class = ModelConfig  # 配置类
@@ -464,3 +415,31 @@ class Transformer(PreTrainedModel):
             idx = torch.cat((idx, idx_next), dim=1)
 
         return idx[:, index:] # 只返回生成的token
+
+if __name__ == '__main__':
+    tokenizer = AutoTokenizer.from_pretrained(r"StudyBase\helloPython\PyTorch\20250615.LLaMA2\tokenizer_k") # ("tokenizer_k")
+    args = ModelConfig(
+        dim=1024,
+        n_layers=18,
+    )
+    # 实例化LLaMA2Model
+    model = Transformer(args=args)
+    # 计算model的全部参数
+    num_params = sum(p.numel() for p in model.parameters())
+    print(f'LLM总参数量：{num_params / 1e6:.3f} 百万')
+
+    prompt = "你好呀，今天吃什么呢？你过得怎么样嘞？"
+    text = f"{tokenizer.bos_token}{prompt}{tokenizer.eos_token}"
+    print(f"Input text: {text}")
+
+    input_id = tokenizer(text).data['input_ids']
+    print("input_ids :", input_id)
+    print("dcode_str :", tokenizer.decode(input_id))
+
+    X = torch.tensor(input_id[:-1]).unsqueeze(0)
+    Y = torch.tensor(input_id[1:]).unsqueeze(0)
+    print("X shape :", X.shape)
+    print("Y shape :", Y.shape)
+
+    # 将输入张量传入模型
+    output = model(X, Y)
