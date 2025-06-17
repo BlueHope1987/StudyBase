@@ -258,3 +258,5 @@ MachineLearning/MachineLearning/Microsoft_AI-edu/B15/GAN_MNIST/*
 .vscode/settings.json
 helloPython/data/*
 tmp/*
+
+helloPython/PyTorch/20250617.文本聚类主流算法/Datasets/*
