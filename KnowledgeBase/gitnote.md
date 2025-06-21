@@ -19,3 +19,23 @@ git push origin HEAD --force
 git给文件及文件夹改名
 直接在vscode资源管理器改名会被源代码判定删除与新建，用git命令改名或可避免多余的改动。如将ReadyFor2021SA改名为ReadyForSA
 git mv ReadyFor2021SA ReadyForSA
+
+
+
+
+20250622.Git大文件及模型克隆
+
+环境准备：
+git lfs install
+
+下载命令示范
+GIT_LFS_SKIP_SMUDGE=0 git clone https://hf-mirror.com/sentence-transformers/all-MiniLM-L6-v2
+
+Windows cmd：
+set GIT_LFS_SKIP_SMUDGE=1
+git clone https://hf-mirror.com/google-bert/bert-base-chinese/
+cd bert-base-chinese
+git lfs pull --include="*.bin"
+
+继续中断的下载：
+git lfs fetch

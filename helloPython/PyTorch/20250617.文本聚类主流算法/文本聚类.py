@@ -6,7 +6,7 @@
 import pandas as pd
 from IPython.display import display, HTML, Image
  
-df=pd.read_parquet(r"helloPython\PyTorch\20250617.文本聚类主流算法\Datasets\train-00000-of-00001.parquet")  
+df=pd.read_parquet(r"helloPython\Datasets\train-00000-of-00001.parquet")  
 #https://hf-mirror.com/datasets/billingsmoore/text-clustering-example-data/tree/main
 
 display(df.head())
@@ -23,7 +23,7 @@ print("生成句子的嵌入向量表示")
 
 from sentence_transformers import SentenceTransformer
  
-model=SentenceTransformer(r"helloPython\PyTorch\20250617.文本聚类主流算法\Datasets\all-MiniLM-L6-v2")
+model=SentenceTransformer(r"helloPython\Datasets\all-MiniLM-L6-v2")
 '''
 模型过大已忽略路径 下载 GIT_LFS_SKIP_SMUDGE=0 git clone https://hf-mirror.com/sentence-transformers/all-MiniLM-L6-v2
 https://hf-mirror.com/sentence-transformers/all-MiniLM-L6-v2/tree/main

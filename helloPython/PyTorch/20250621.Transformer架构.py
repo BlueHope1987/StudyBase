@@ -330,8 +330,8 @@ def main():
     #args = ModelArgs(100, 10, 100, 0.1, 512, 1000, 1000, 2)
     #text = "我喜欢快乐地学习大模型"
     args = ModelArgs(100, 10, 100, 0.1, 512, 1000, 1000, 2)
-    text = "Good Night！"
-    tokenizer = BertTokenizer.from_pretrained(r"helloPython\PyTorch\20250617.文本聚类主流算法\Datasets\all-MiniLM-L6-v2")
+    text = "我喜欢快乐地学习大模型"
+    tokenizer = BertTokenizer.from_pretrained(r"helloPython\_Datasets\bert-base-chinese")
     inputs_token = tokenizer(
         text,
         return_tensors='pt',
