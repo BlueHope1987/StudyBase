@@ -1,5 +1,6 @@
 #https://hf-mirror.com/google-bert/bert-base-chinese
 
+import torch
 from transformers import AutoTokenizer, AutoModelForMaskedLM,BertModel
 
 model_name=r"helloPython\_Datasets\bert-base-chinese"
@@ -10,7 +11,7 @@ print("Bert分词任务测试")
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForMaskedLM.from_pretrained(model_name)
 
-input_text="你好！你今天过得怎样？"
+input_text="你好！你[MASK][MASK]过得怎样？"
 masked_tokens=tokenizer(input_text,return_tensors="pt")["input_ids"]
 
 predictions=model(masked_tokens)
@@ -18,6 +19,25 @@ predicted_token_id=predictions.logits.argmax(-1)
 
 #待预测的词ID转换为文本
 predicted_token=tokenizer.decode(predicted_token_id[0])
+print(f"输入原文：{input_text}")
+print(f"完整短语：{predicted_token}")
+
+
+# Git Copilot提示：BERT模型要求输入的mask标记为 [MASK]（全部大写），而不是 [masked]；用 tokenizer.mask_token_id 找到mask位置，只解码mask位置的预测结果。
+# 直接用 argmax(-1) 得到的是每个位置上概率最大的token id，但你需要找到 [MASK] 位置的预测结果，而不是全部token的最大概率。
+# 正确流程 找到 [MASK] 的位置 取出该位置的预测分布 取概率最大的token id并decode
+# 修改建议
+input_text="如果感到快乐你就[MASK][MASK][MASK]。"
+inputs = tokenizer(input_text, return_tensors="pt")
+mask_token_index = (inputs["input_ids"] == tokenizer.mask_token_id)[0].nonzero(as_tuple=True)[0]
+
+with torch.no_grad():
+    outputs = model(**inputs)
+    mask_token_logits = outputs.logits[0, mask_token_index, :]
+    top_token_id = mask_token_logits.argmax(dim=-1)
+    predicted_token = tokenizer.decode(top_token_id)
+
+print(f"输入原文：{input_text}")
 print(f"预测的词是：{predicted_token}")
 
 sents = [
@@ -51,12 +71,11 @@ print(pretrained)
 
 ############################
 print("Bert问答任务测试")
-import torch
+
 from transformers import BertTokenizer,BertForQuestionAnswering
 
-context=""
-#input_text="Howe的目标是什么？"
-#context="Howe的目标是让每个人都过得很开心。Howe有三部分组成。Howe的售价非常便宜。Howe的安装非常方便。"
+input_text="Howe的目标是什么？"
+context="Howe的目标是让每个人都过得很开心。Howe有三部分组成。Howe的售价非常便宜。Howe的安装非常方便。"
 
 tokenizer=BertTokenizer.from_pretrained(model_name)
 model=BertForQuestionAnswering.from_pretrained(model_name)
