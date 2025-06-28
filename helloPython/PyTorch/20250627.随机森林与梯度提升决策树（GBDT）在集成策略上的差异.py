@@ -44,7 +44,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 
 # 定义模型
 rf = RandomForestClassifier(n_estimators=50, max_depth=5, random_state=42, oob_score=True) #随机森林
-gbdt = GradientBoostingClassifier(n_estimators=50, learning_rate=0.1, max_depth=3, random_state=42)
+gbdt = GradientBoostingClassifier(n_estimators=50, learning_rate=0.1, max_depth=3, random_state=42) #梯度提升决策树（Gradient Boosting Decision Trees，GBDT）
 
 # 训练模型
 rf.fit(X_train, y_train)
@@ -59,10 +59,12 @@ grid = np.c_[xx.ravel(), yy.ravel()]
 Z_rf = rf.predict(grid).reshape(xx.shape)
 Z_gbdt = gbdt.predict(grid).reshape(xx.shape)
 
-# 1. Decision Boundaries
+# 1. Decision Boundaries 
+# 决策边界（Decision Boundary）是用于划分不同类别的边界线或超平面。
+# 在分类任务中，模型根据输入特征的值来决定样本的类别，决策边界正是模型将输入空间划分为不同类别区域的关键。
 plt.figure()
-plt.contourf(xx, yy, Z_rf, alpha=0.3, cmap='Wistia')
-plt.scatter(X_test[:,0], X_test[:,1], c=y_test, edgecolor='k', cmap='rainbow')
+plt.contourf(xx, yy, Z_rf, alpha=0.3, cmap='Wistia') #画出等高线
+plt.scatter(X_test[:,0], X_test[:,1], c=y_test, edgecolor='k', cmap='rainbow') #绘制散点图
 plt.title("RF Decision Boundary")
 plt.xlabel("Feature 1")
 plt.ylabel("Feature 2")
@@ -75,6 +77,7 @@ plt.xlabel("Feature 1")
 plt.ylabel("Feature 2")
 
 # 2. Accuracy vs Number of Trees
+# 准确性 vs 树木数量
 n_trees = list(range(1, 51))
 acc_rf = []
 acc_gbdt = []
@@ -94,7 +97,7 @@ plt.xlabel("Number of Trees")
 plt.ylabel("Accuracy")
 plt.legend()
 
-# 3. Feature Importance
+# 3. Feature Importance 特征重要性
 fi_rf = rf.feature_importances_
 fi_gbdt = gbdt.feature_importances_
 features = ['Feature 1', 'Feature 2']
@@ -111,12 +114,14 @@ plt.ylabel("Importance")
 plt.legend()
 
 # 4. OOB Error vs Training Devience
-# RF OOB error
+# RF OOB error 随机森林中袋外（OOB）误差
 oob_error = 1 - rf.oob_score_
-# GBDT training deviance
+# GBDT training deviance  GBDT训练偏差
+from sklearn.metrics import log_loss #copliot添加
 test_deviance = np.zeros((50,), dtype=np.float64)
 for i, pred in enumerate(gbdt.staged_predict_proba(X_test)):
-    test_deviance[i] = gbdt.loss_(y_test, pred[:, 1]) #AttributeError: 'GradientBoostingClassifier' object has no attribute 'loss_'
+    # test_deviance[i] = gbdt.loss_(y_test, pred[:, 1]) #AttributeError: 'GradientBoostingClassifier' object has no attribute 'loss_'
+    test_deviance[i] = log_loss(y_test, pred) # copliot添加
 
 plt.figure()
 plt.plot([50], [oob_error], 'o', label='RF OOB Error', markersize=8, color='red')
