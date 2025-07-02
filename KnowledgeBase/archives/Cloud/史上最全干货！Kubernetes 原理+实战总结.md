@@ -613,5 +613,398 @@ pod/nginxpod unchanged
 删除资源 使用命令式对象配置 kubectl delete -f XXX.yaml
 查询资源 使用命令式对象管理 kubectl get(describe) 资源名称
 
-~未完待续~
-https://developer.aliyun.com/article/1366699
+## 4. 实战入门
+
+本章节将介绍如何在 kubernetes 集群中部署一个 nginx 服务，并且能够对其进行访问。
+
+### 4.1 Namespace
+
+Namespace 是 kubernetes 系统中的一种非常重要资源，它的主要作用是用来实现多套环境的资源隔离或者多租户的资源隔离。
+
+默认情况下，kubernetes 集群中的所有的 Pod 都是可以相互访问的。但是在实际中，可能不想让两个 Pod 之间进行互相的访问，那此时就可以将两个 Pod 划分到不同的 namespace 下。kubernetes 通过将集群内部的资源分配到不同的 Namespace 中，可以形成逻辑上的"组"，以方便不同的组的资源进行隔离使用和管理。
+
+可以通过 kubernetes 的授权机制，将不同的 namespace 交给不同租户进行管理，这样就实现了多租户的资源隔离。此时还能结合 kubernetes 的资源配额机制，限定不同租户能占用的资源，例如 CPU 使用量、内存使用量等等，来实现租户可用资源的管理。
+
+kubernetes 在集群启动之后，会默认创建几个 namespace。下面土哥给大家进行演示一下：
+```
+[root@mini1 ~]# kubectl  get namespace
+NAME              STATUS   AGE
+default           Active   45h     #  所有未指定Namespace的对象都会被分配在default命名空间
+kube-node-lease   Active   45h     #  集群节点之间的心跳维护，v1.13开始引入
+kube-public       Active   45h     #  此命名空间下的资源可以被所有人访问（包括未认证用户）
+kube-system       Active   45h     #  所有由Kubernetes系统创建的资源都处于这个命名空间
+```
+下面来看namespace资源的具体操作：
+
+### 4.1.1 查看
+```
+# 1 查看所有的ns  命令：kubectl get ns
+[root@mini1 ~]# kubectl get ns
+NAME              STATUS   AGE
+default           Active   45h
+kube-node-lease   Active   45h
+kube-public       Active   45h     
+kube-system       Active   45h     
+# 2 查看指定的 ns   命令：kubectl get ns ns名称
+[root@mini1 ~]# kubectl get ns default
+NAME      STATUS   AGE
+default   Active   45h
+# 3 指定输出格式  命令：kubectl get ns ns名称  -o 格式参数
+# kubernetes 支持的格式有很多，比较常见的是 wide、json、yaml
+[root@mini1 ~]# kubectl get ns default -o yaml
+  
+# 4 查看 ns 详情  命令：kubectl describe ns ns名称
+[root@mini1 ~]# kubectl describe ns default
+```
+### 4.1.2 创建
+```
+# 创建namespace
+[root@mini1 ~]# kubectl create ns dev
+namespace/dev created
+```
+### 4.1.3 删除
+```
+# 删除namespace
+[root@mini1 ~]# kubectl delete ns dev
+namespace "dev" deleted
+```
+### 4.1.4 配置方式
+首先准备一个yaml文件：ns-dev.yaml
+```
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+```
+然后就可以执行对应的创建和删除命令了：  
+创建：kubectl create -f ns-dev.yaml  
+删除：kubectl delete -f ns-dev.yaml  
+### 4.2 Pod
+
+Pod 是 kubernetes 集群进行管理的最小单元，程序要运行必须部署在容器中，而容器必须存在于 Pod 中。  
+**Pod 可以认为是容器的封装，一个 Pod 中可以存在一个或者多个容器**。
+```mermaid
+stateDiagram-v2
+  state Pod {
+    User_containerN: user containerN
+    User_containerN: user ImageN
+    
+    User_container1: user container1
+    User_container1: user Image1
+
+    User_Pause: Pause
+    User_Pause: gcr.io/google_containers/pause-amd64
+
+  }
+```
+
+kubernetes 在集群启动之后，集群中的各个组件也都是以 Pod 方式运行的。可以通过下面命令查看：  
+```
+[root@mini1 ~]# kubectl get pod -n kube-system
+```
+### 4.2.1 创建并运行
+kubernetes 没有提供单独运行 Pod 的命令，都是通过 **Pod 控制器**来实现的
+```
+# 命令格式：kubectl run (pod控制器名称) [参数] 
+# --image  指定Pod的镜像
+# --port   指定端口
+# --namespace  指定 namespace
+[root@mini1 ~]# kubectl run nginx --image=nginx:latest --port=80 --namespace dev 
+deployment.apps/nginx created
+```
+### 4.2.2 查看 pod 信息
+```
+# 查看 Pod 基本信息
+[root@mini1 ~]# kubectl get pods -n dev
+# 查看 Pod 的详细信息
+[root@mini1 ~]# kubectl describe pod nginx -n dev
+```
+### 4.2.3 访问 Pod
+```
+# 获取 podIP
+[root@mini1 ~]# kubectl get pods -n dev -o wide
+```
+```
+#访问 POD
+[root@mini1 ~]# curl 10.244.2.14:80
+```
+### 4.2.4 删除指定 Pod
+```
+# 删除指定Pod
+[root@mini1 ~]# kubectl delete pod nginx -n dev
+pod "nginx" deleted
+# 此时，显示删除 Pod 成功，但是再查询，发现又新产生了一个 
+[root@mini1 ~]# kubectl get pods -n dev
+NAME    READY   STATUS    RESTARTS   AGE
+nginx-...     x   1/1     Running   0          21s
+# 这是因为当前 Pod 是由 Pod 控制器创建的，控制器会监控 Pod 状况，一旦发现 Pod 死亡，会立即重建
+# **此时要想删除 Pod，必须删除 Pod 控制器**
+# 先来查询一下当前 namespace 下的 Pod 控制器
+[root@mini1 ~]# kubectl get deploy -n  dev
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   1/1     1            1           9m7s
+# 接下来，删除此PodPod控制器
+[root@mini1 ~]# kubectl delete deploy nginx -n dev
+deployment.apps "nginx" deleted
+# 稍等片刻，再查询Pod，发现Pod被删除了
+[root@mini1 ~]# kubectl get pods -n dev
+No resources found in dev namespace.
+```
+### 4.2.5 配置操作
+创建一个pod-nginx.yaml，内容如下：
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: dev
+spec:
+  containers:
+  - image: nginx:latest
+    name: pod
+    ports:
+    - name: nginx-port
+      containerPort: 80
+      protocol: TCP
+```
+然后就可以执行对应的创建和删除命令了：  
+创建：kubectl create -f pod-nginx.yaml  
+删除：kubectl delete -f pod-nginx.yaml  
+
+### 4.3 Label
+Label 是 kubernetes 系统中的一个重要概念。它的作用就是在资源上添加标识，用来对它们进行区分和选择。  
+Label 的特点：  
+- 一个 Label 会以 key/value 键值对的形式附加到各种对象上，如 Node、Pod、Service 等等
+- 一个资源对象可以定义任意数量的 Label ，同一个 Label 也可以被添加到任意数量的资源对象上去
+- Label 通常在资源对象定义时确定，当然也可以在对象创建后动态添加或者删除
+
+可以通过 Label 实现资源的多维度分组，以便灵活、方便地进行资源分配、调度、配置、部署等管理工作。
+
+> 一些常用的 Label 示例如下：  
+> - 版本标签："version":"release", "version":"stable"......
+> - 环境标签："environment":"dev"，"environment":"test"，"environment":"pro"
+> - 架构标签："tier":"frontend"，"tier":"backend"
+
+标签定义完毕之后，还要考虑到标签的选择，这就要使用到 Label Selector，即：  
+Label 用于给某个资源对象定义标识  
+Label Selector 用于查询和筛选拥有某些标签的资源对象
+
+当前有两种 Label Selector：  
+- 基于等式的 Label Selector  
+name = slave: 选择所有包含 Label 中 key="name" 且 value="slave"的对象  
+env != production: 选择所有包括 Label 中的 key="env" 且 value 不等于 "production" 的对象
+
+- 基于集合的 Label Selector  
+name in (master, slave): 选择所有包含Label中的key="name"且value="master"或"slave"的对象  
+name not in (frontend): 选择所有包含Label中的key="name"且value不等于"frontend"的对象  
+
+标签的选择条件可以使用多个，此时将多个 Label Selector 进行组合，使用逗号","进行分隔即可。例如：  
+name=slave，env!=production  
+name not in (frontend)，env!=production  
+### 4.3.1 命令方式
+```
+# 为 pod 资源打标签
+[root@mini1 ~]# kubectl label pod nginx version=1.0 -n lyz
+pod/nginx labeled
+# 为pod资源更新标签
+[root@mini1 ~]# kubectl label pod nginx version=2.0 -n lyz --overwrite
+pod/nginx labeled
+# 查看标签
+[root@mini1 ~]# kubectl get pod nginx  -n lyz --show-labels
+NAME        READY   STATUS    RESTARTS   AGE   LABELS
+nginx   1/1     Running   0          10m   version=2.0
+# 筛选标签 添加 -l
+[root@mini1 ~]# kubectl get pod -n lyz -l version=2.0  --show-labels
+NAME        READY   STATUS    RESTARTS   AGE   LABELS
+nginx   1/1     Running   0          17m   version=2.0
+[root@mini1 ~]# kubectl get pod -n lyz -l version!=2.0 --show-labels
+No resources found in dev namespace.
+#删除标签 key后面添加 - 号
+[root@mini1 ~]# kubectl label pod nginx version- -n lyz
+pod/nginx-pod labeled
+```
+### 4.3.2 配置方式
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx2
+  namespace: lyz
+  labels:
+    version: "3.0" 
+    env: "test"
+spec:
+  containers:
+  - image: nginx:1.7.1
+    name: pod
+    ports:
+    - name: nginx-port
+      containerPort: 80
+      protocol: TCP
+```
+然后就可以执行对应的更新命令了：kubectl apply -f pod-nginx.yaml
+
+## 4.4 Deployment
+
+在 kubernetes 中，Pod 是最小的控制单元，但是 kubernetes 很少直接控制Pod，一般都是通过 Pod 控制器来完成的。Pod 控制器用于 pod 的管理，确保 pod 资源符合预期的状态，当 pod 的资源出现故障时，会尝试进行重启或重建 pod。  
+在 kubernetes 中 Pod 控制器的种类有很多，本章节只介绍一种：Deployment。
+```mermaid
+flowchart TB
+  node_1("Deployment\n seletor:env=dev")
+  node_2(["Pod\n label:env=dev"])
+  node_3(["Pod\n label:env=dev"])
+  node_4(["Pod\n label:env=dev"])
+  node_1 --- node_2
+  node_1 --- node_3
+  node_1 --- node_4
+```
+
+### 4.4.1 命令操作
+```
+# 命令格式: kubectl create deployment 名称  [参数] 
+# --image  指定pod的镜像
+# --port   指定端口
+# --replicas  指定创建pod数量
+# --namespace  指定namespace
+[root@mini1 ~]# kubectl run nginx --image=nginx:latest --port=80 --replicas=3 -n dev
+deployment.apps/nginx created
+# 查看创建的Pod
+[root@mini1 ~]# kubectl get pods -n dev
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-5ff7956ff6-6k8cb   1/1     Running   0          19s
+nginx-5ff7956ff6-jxfjt   1/1     Running   0          19s
+nginx-5ff7956ff6-v6jqw   1/1     Running   0          19s
+# 查看deployment的信息
+[root@mini1 ~]# kubectl get deploy -n dev
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   3/3     3            3           2m42s
+# UP-TO-DATE：成功升级的副本数量
+# AVAILABLE：可用副本的数量
+[root@mini1 ~]# kubectl get deploy -n dev -o wide
+NAME    READY UP-TO-DATE  AVAILABLE   AGE     CONTAINERS   IMAGES              SELECTOR
+nginx   3/3     3         3           2m51s   nginx        nginx:latest        run=nginx
+# 查看deployment的详细信息
+[root@mini1 ~]# kubectl describe deploy nginx -n dev
+  
+# 删除 
+[root@mini1 ~]# kubectl delete deploy nginx -n dev
+deployment.apps "nginx" deleted
+```
+### 4.4.2 配置操作
+创建一个deploy-nginx.yaml，内容如下：  
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: nginx
+  template:
+    metadata:
+      labels:
+        run: nginx
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+```
+然后就可以执行对应的创建和删除命令了：  
+创建：kubectl create -f deploy-nginx.yaml  
+删除：kubectl delete -f deploy-nginx.yaml  
+
+## 4.5 Service
+
+通过前面的分享，我们已经可以使用 Deployment 来创建一组 Pod 来提供具有高可用性的服务。  
+虽然每个 Pod 都会分配一个单独的 Pod IP，然而却存在如下两问题：  
+- Pod IP 会随着 Pod 的重建产生变化  
+- Pod IP 仅仅是集群内可见的虚拟 IP，外部无法访问  
+
+这样对于访问这个服务带来了难度。因此，kubernetes 设计了 Service 来解决这个问题。
+Service 可以看作是一组同类 Pod **对外的访问接口**。借助 Service，应用可以方便地实现服务发现和负载均衡。
+
+```mermaid
+
+flowchart TB
+  node_1("Deployment")
+  node_2("Label<br>Selector")
+  node_3(["Pod<br>label: env=dev"])
+  node_4(["Pod<br>label: env=dev"])
+  node_5(["Pod<br>label: env=dev"])
+  node_6{{"Service<br>seletor: env=dev"}}
+  node_7((" "))
+  node_2 --- node_3
+  node_2 --- node_4
+  node_2 --- node_5
+  node_1 -.- node_2
+  node_6 --- node_2
+  node_7 --> node_6
+
+```
+
+### 4.5.1 创建集群内部可访问的 Service
+```
+# 暴露 Service
+[root@mini1 ~]# kubectl expose deploy nginx --name=svc-nginx --type=ClusterIP --port=80 --target-port=80 -n lyz
+service/svc-nginx exposed
+# 查看 service
+[root@mini1 ~]# kubectl get svc svc-nginx -n lyz -o wide
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE     SELECTOR
+svc-nginx   ClusterIP   10.100.226.217   <none>        80/TCP    23s   run=nginx
+# 这里产生了一个 CLUSTER-IP，这就是 service 的IP，在 Service 的生命周期中，这个地址是不会变动的
+# 可以通过这个 IP 访问当前 service 对应的POD
+[root@mini1 ~]# curl 10.100.226.271:80
+```
+
+### 4.5.2 创建集群外部也可访问的Service
+```
+# 上面创建的 Service 的 type 类型为 ClusterIP，这个 ip 地址只用集群内部可访问
+# 如果需要创建外部也可以访问的 Service，需要修改 type 为 NodePort
+[root@mini1 ~]# kubectl expose deploy nginx --name=svc-nginx2 --type=NodePort --port=80 --target-port=80 -n dev
+service/svc-nginx2 exposed
+# 此时查看，会发现出现了NodePort类型的Service，而且有一对Port（80:31928/TC）
+[root@mini1 ~]# kubectl get svc  svc-nginx2  -n dev -o wide
+NAME          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE    SELECTOR
+svc-nginx2   NodePort   10.99.9.211   <none>        80:31113/TCP   11s   run=nginx
+# 接下来就可以通过集群外的主机访问 节点IP:31113 访问服务了
+# 例如在的电脑主机上通过浏览器访问下面的地址
+http://192.168.244.131:31113/
+```
+### 4.5.3 删除Service
+```
+[root@mini1 ~]# kubectl delete svc svc-nginx2 -n dev 
+service "svc-nginx2" deleted
+```
+### 4.5.4 配置方式
+
+创建一个 svc-nginx.yaml，内容如下：
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-nginx
+  namespace: dev
+spec:
+  clusterIP: 10.109.179.231 #固定 svc 的内网ip
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: nginx
+  type: ClusterIP
+  ```
+然后就可以执行对应的创建和删除命令了：  
+创建：kubectl create -f svc-nginx.yaml  
+删除：kubectl delete -f svc-nginx.yaml
+
+> 小结  
+> 通过土哥的实战演练，我相信只要跟着步骤进行操作，就能掌握 Namespace、Pod、Deployment、Service资源的基本操作，有了这些操作，就可以在 kubernetes 集群中实现一个服务的简单部署和访问了，但是如果想要更好的使用 kubernetes，还需要深入学习这几种资源的细节和原理。
+
+\~完\~
