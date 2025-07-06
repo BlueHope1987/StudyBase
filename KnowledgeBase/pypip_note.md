@@ -41,9 +41,13 @@ index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 
 trusted-host = pypi.tuna.tsinghua.edu.cn
 
+
 批量卸载
 pip uninstall <包名> <包名> <包名> <包名> -y
 -y 不再逐一确认
+
+清理缓存
+pip cache purge
 
 
 淘宝镜像
