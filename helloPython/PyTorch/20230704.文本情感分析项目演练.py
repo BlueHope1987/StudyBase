@@ -12,6 +12,9 @@ import numpy as np
 pip install torch torchtext spacy
 python -m spacy download en_core_web_sm
 
+en_core_web_sm 是 Spacy 库中的一个预训练模型，专门用于处理英语的自然语言处理（NLP）任务。
+Spacy 是一个强大的 Python 库，提供了丰富的 NLP 工具，包括分词、词性标注和命名实体识别
+
 使用IMDB电影评论数据集，包含50,000条带有情感标签(正面/负面)的评论。
 '''
 
@@ -37,6 +40,11 @@ train_data, test_data = TabularDataset.splits(
 TEXT.build_vocab(train_data,
                 max_size=25000,
                 vectors="glove.6B.100d")
+#glove.6B.100d.txt 是一个包含预训练词向量资源的压缩文件。 该词向量是由斯坦福大学训练
+# glove.6B词向量是使用全局向量（Vectors for Word Representation）算法进行训练的，它是一种基于词共现统计的词向量训练方法。
+# 特指包含100维的词向量，适用于各种任务中。
+# 词汇表匹配：您可以通过TEXT.build_vocab方法，将您自定义的词汇表与glove词向量中的词进行匹配，创建出适合您需要的词向量。
+# 获取词向量：一旦构建了新的词向量，您可以通过TEXT.vocab.vectors获取到这些词的向量表示，以便在后续任务中使用。
 
 #模型实现
 
