@@ -4,6 +4,18 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torchtext.data import Field, TabularDataset, BucketIterator
+'''
+发生异常: OSError
+[WinError 127] 找不到指定的程序。
+  File "D:\StudyBase\helloPython\PyTorch\20230704.文本情感分析项目演练.py", line 6, in <module>
+    from torchtext.data import Field, TabularDataset, BucketIterator
+OSError: [WinError 127] 找不到指定的程序。
+
+Copilot:版本不兼容 
+pip show torchtext
+pip uninstall torchtext
+pip install torchtext==0.8.1
+'''
 import spacy
 import numpy as np
 
@@ -17,6 +29,25 @@ Spacy 是一个强大的 Python 库，提供了丰富的 NLP 工具，包括分�
 
 使用IMDB电影评论数据集，包含50,000条带有情感标签(正面/负面)的评论。
 '''
+
+'''
+## Copilot 添加：处理数据集，随机抽取训练集和测试集 按需运行
+# git clone https://github.com/EtherealShen/IMDB/
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# 读取原始数据
+df = pd.read_csv('helloPython\_Datasets\IMDB\IMDB-Movie-Data.csv')  # 假设您的数据文件名为 all.csv
+
+# 随机划分
+train_df, test_df = train_test_split(df, test_size=0.2, random_state=42, shuffle=True)
+
+# 保存为新的csv文件
+train_df.to_csv('helloPython/_Datasets/imdb/train.csv', index=False)
+test_df.to_csv('helloPython/_Datasets/imdb/test.csv', index=False)
+##
+'''
+
 
 #数据预处理
 
@@ -40,6 +71,7 @@ train_data, test_data = TabularDataset.splits(
 TEXT.build_vocab(train_data,
                 max_size=25000,
                 vectors="glove.6B.100d")
+# TODO：调整本地
 #glove.6B.100d.txt 是一个包含预训练词向量资源的压缩文件。 该词向量是由斯坦福大学训练
 # glove.6B词向量是使用全局向量（Vectors for Word Representation）算法进行训练的，它是一种基于词共现统计的词向量训练方法。
 # 特指包含100维的词向量，适用于各种任务中。
@@ -137,7 +169,13 @@ def accuracy(preds, y):
 
 #预测新文本
 
-'''
+## 由Copilot添加声明
+# 加载Spacy英文模型
+nlp = spacy.load('en_core_web_sm')
+# 设备配置
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+
 def predict_sentiment(model, sentence):
     tokenized = [tok.text for tok in nlp.tokenizer(sentence)]
     indexed = [TEXT.vocab.stoi[t] for t in tokenized]
@@ -148,13 +186,12 @@ def predict_sentiment(model, sentence):
     prediction = torch.sigmoid(model(tensor, length_tensor))
     return prediction.item()
 
-'''
 
-'''
-示例预测
+
+#示例预测
+
 positive_review = "This movie was fantastic! I really enjoyed it."
 negative_review = "The film was terrible and boring."
 
 print(f"Positive review score: {predict_sentiment(model, positive_review):.4f}")
 print(f"Negative review score: {predict_sentiment(model, negative_review):.4f}")
-'''
