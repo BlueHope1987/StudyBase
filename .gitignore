@@ -260,3 +260,6 @@ helloPython/data/*
 tmp/*
 
 */_Datasets/*
+*.vector_cache/*
+*/.cache/*
+*/.pytest_cache/*

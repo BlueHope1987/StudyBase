@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torchtext.data import Field, TabularDataset, BucketIterator
+from torchtext.vocab import Vectors
 '''
 发生异常: OSError
 [WinError 127] 找不到指定的程序。
@@ -14,7 +15,13 @@ OSError: [WinError 127] 找不到指定的程序。
 Copilot:版本不兼容 
 pip show torchtext
 pip uninstall torchtext
-pip install torchtext==0.8.1
+pip install torchtext==0.6.0 （没有0.8.1版）
+升级到最新 pip3 install torch torchtext -i https://pypi.tuna.tsinghua.edu.cn/simple -U
+
+https://stackoverflow.org.cn/questions/69765669
+自 0.9 版本以来，字段是 Torchtext 的遗留功能。您链接的那篇文章来自该版本之前。
+如果您拥有最新的 torchtext，但正在尝试使用旧版功能，则需要使用 torchtext.legacy。
+（经测试0.18.0不可用）
 '''
 import spacy
 import numpy as np
@@ -70,8 +77,8 @@ train_data, test_data = TabularDataset.splits(
 # 构建词汇表
 TEXT.build_vocab(train_data,
                 max_size=25000,
-                vectors="glove.6B.100d")
-# TODO：调整本地
+                vectors=Vectors(name=r"helloPython\_Datasets\glove.6B.100d.txt")) #vectors="glove.6B.100d" 改写本地
+
 #glove.6B.100d.txt 是一个包含预训练词向量资源的压缩文件。 该词向量是由斯坦福大学训练
 # glove.6B词向量是使用全局向量（Vectors for Word Representation）算法进行训练的，它是一种基于词共现统计的词向量训练方法。
 # 特指包含100维的词向量，适用于各种任务中。
@@ -195,3 +202,18 @@ negative_review = "The film was terrible and boring."
 
 print(f"Positive review score: {predict_sentiment(model, positive_review):.4f}")
 print(f"Negative review score: {predict_sentiment(model, negative_review):.4f}")
+
+#文心一言生成的五段好评影评 每段影评均突出不同电影类型（奇幻、剧情、喜剧、爱情、动作）的亮点，语言充满热情且细节丰富，适合用于表达真挚好评。
+print(f"Pegative review score: {predict_sentiment(model, "This film is a masterpiece of visual storytelling! From the breathtaking cinematography to the emotionally resonant score, every frame feels meticulously crafted. The characters are layered and unforgettable, and the plot twists kept me on the edge of my seat until the final credits. A must-watch for anyone who believes in the power of cinema to transport us to another world."):.4f}")
+print(f"Pegative review score: {predict_sentiment(model, "A hauntingly beautiful film that lingers long after the lights come up. The performances are raw and authentic, especially the lead actress who delivers a career-defining role. The director’s use of silence and subtle symbolism creates an atmosphere of tension and melancholy that’s both mesmerizing and deeply moving. I left the theater feeling utterly spellbound."):.4f}")
+print(f"Pegative review score: {predict_sentiment(model, "Hilarious, heartwarm, and surprisingly profound! This comedy manages to balance side-splitting humor with genuine emotional stakes. The chemistry between the cast is electric, and the script is filled with witty dialogue that never feels forced. It’s the kind of film that makes you laugh, cry, and then immediately want to rewatch it with friends. A modern classic!"):.4f}")
+print(f"Pegative review score: {predict_sentiment(model, "A sweeping epic that redefines romance on screen! The cinematography is lush, the costumes are exquisite, and the chemistry between the leads is palpable. What sets this film apart is its willingness to explore the complexities of love—joy, sacrifice, and resilience—without resorting to clichés. I was utterly captivated from start to finish. Bravo to the entire team!"):.4f}")
+print(f"Pegative review score: {predict_sentiment(model, "An adrenaline-fueled thrill ride that delivers on every level! The action sequences are inventive and jaw-dropping, but what truly elevates this film is its heart. The protagonist’s journey from vulnerability to strength is inspiring, and the supporting cast adds depth to the story. This isn’t just a superhero movie—it’s a celebration of courage and hope. I can’t wait to see what comes next!"):.4f}")
+
+#文心一言生成的五段差评影评 每段影评均针对不同问题（剧情混乱、节奏拖沓、特效依赖、类型混搭失败、对原作不尊重）展开犀利批评，语言直接且充满讽刺，适合用于表达强烈不满。
+print(f"Negative review score: {predict_sentiment(model, "This film is a chaotic mess of clichés and poor decisions! The pacing drags endlessly, the characters are one-dimensional, and the plot twists feel forced and predictable. The supposed 'thrills' fall flat, and the dialogue is so cringe-worthy it made me laugh—for all the wrong reasons. Save your time and money; this is a dumpster fire of a movie."):.4f}")
+print(f"Negative review score: {predict_sentiment(model, "I’ve never felt so bored in a theater. This pretentious 'art-house' film is two and a half hours of slow-motion shots, mumbled dialogue, and zero narrative coherence. The director seems more interested in showing off their 'vision' than telling a story that matters. By the end, I was actively rooting for the credits to roll. Avoid at all costs."):.4f}")
+print(f"Negative review score: {predict_sentiment(model, "What a disappointment! This blockbuster relies entirely on over-the-top CGI and deafening explosions to distract from its paper-thin plot and cardboard characters. The action scenes are so poorly edited they’re impossible to follow, and the 'humor' feels like it was written by a middle schooler. Even the most die-hard fans of the genre will leave feeling cheated."):.4f}")
+print(f"Negative review score: {predict_sentiment(model, "This film tries to mix romance and horror but ends up failing spectacularly at both. The jokes are stale, the horror elements are laughably tame, and the chemistry between the leads is nonexistent. It’s as if the writers threw random scenes into a blender and hoped for the best. The result? A cringeworthy disaster that’s not even 'so bad it’s good'—just bad."):.4f}")
+print(f"Negative review score: {predict_sentiment(model, "As a fan of the original series, this reboot is an insult to everything that made the franchise great. The story is riddled with plot holes, the new characters are irritating, and the special effects look like they were pulled from a low-budget video game. The filmmakers clearly didn’t care about the source material, and it shows. This isn’t just a bad movie—it’s a betrayal of its audience."):.4f}")
+
