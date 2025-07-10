@@ -3,7 +3,8 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torchtext.data import Field, TabularDataset, BucketIterator
+from torchtext import data, datasets
+from torchtext.data import Field, TabularDataset, BucketIterator,LabelField
 from torchtext.vocab import Vectors
 '''
 发生异常: OSError
@@ -52,6 +53,8 @@ train_df, test_df = train_test_split(df, test_size=0.2, random_state=42, shuffle
 # 保存为新的csv文件
 train_df.to_csv('helloPython/_Datasets/imdb/train.csv', index=False)
 test_df.to_csv('helloPython/_Datasets/imdb/test.csv', index=False)
+print(train_df['label'].value_counts())
+print(test_df['label'].value_counts())
 ##
 '''
 '''
@@ -73,6 +76,8 @@ from sklearn.model_selection import train_test_split
 train_df, test_df = train_test_split(df, test_size=0.2, random_state=42, shuffle=True)
 train_df.to_csv('helloPython/_Datasets/imdb/train.csv', index=False)
 test_df.to_csv('helloPython/_Datasets/imdb/test.csv', index=False)
+print(train_df['label'].value_counts())
+print(test_df['label'].value_counts())
 '''
 
 
@@ -83,8 +88,15 @@ TEXT = Field(tokenize='spacy',
             tokenizer_language='en_core_web_sm',
             include_lengths=True)
 # LABEL = Field(sequential=False, use_vocab=False)
-LABEL = Field(sequential=False, use_vocab=False, dtype=torch.float) # Copilot: 检查 LABEL 字段类型
+LABEL = LabelField(dtype=torch.float) # Copilot: 使用 LabelField 替代 Field 处理标签 LabelField会自动把'pos'/'neg'转为数字，适配你的模型 LABEL 会自动把 'pos' 映射为 1.0，'neg' 映射为 0.0，兼容你的二分类损失函数。 防止报错ValueError: could not convert string to float: 'pos'
 
+# 用 torchtext 提供的imdb数据集
+# datasets.IMDB.splits() 方法会自动下载数据集并返回训练集和测试集
+train_data, test_data = datasets.IMDB.splits(TEXT, LABEL) #第三方下载http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz 解压至项目根\.data\imdb\
+print(f"Train: {len(train_data)}, Test: {len(test_data)}")
+print(vars(train_data.examples[0]))
+
+'''
 # 加载数据集
 train_data, test_data = TabularDataset.splits(
   #  path='./data',
@@ -92,14 +104,15 @@ train_data, test_data = TabularDataset.splits(
     train='train.csv',
     test='test.csv',
     format='csv',
-    fields=[('text', TEXT), ('label', LABEL)]
+    fields=[('text', TEXT), ('label', LABEL)],
+    skip_header=True  # 关键参数，跳过表头
 )
-
+'''
 # 构建词汇表
 TEXT.build_vocab(train_data,
                 max_size=25000,
                 vectors=Vectors(name=r"helloPython\_Datasets\glove.6B.100d.txt")) #vectors="glove.6B.100d" 改写本地
-
+LABEL.build_vocab(train_data)
 #glove.6B.100d.txt 是一个包含预训练词向量资源的压缩文件。 该词向量是由斯坦福大学训练
 # glove.6B词向量是使用全局向量（Vectors for Word Representation）算法进行训练的，它是一种基于词共现统计的词向量训练方法。
 # 特指包含100维的词向量，适用于各种任务中。
@@ -117,7 +130,7 @@ class SentimentLSTM(nn.Module):
                            num_layers=n_layers,
                            bidirectional=True)
         self.fc = nn.Linear(hidden_dim * 2, output_dim)
-        self.dropout = nn.Dropout(0.5)
+        self.dropout = nn.Dropout(0.6) #0.5 提高以防止过拟
        
     def forward(self, text, text_lengths):
         embedded = self.dropout(self.embedding(text))
@@ -132,15 +145,17 @@ class SentimentLSTM(nn.Module):
 # 模型参数
 INPUT_DIM = len(TEXT.vocab)
 EMBEDDING_DIM = 100
-HIDDEN_DIM = 256
+HIDDEN_DIM = 128 #256 降低以避免过拟
 OUTPUT_DIM = 1
 N_LAYERS = 2
 
 # 初始化模型
 model = SentimentLSTM(INPUT_DIM, EMBEDDING_DIM, HIDDEN_DIM, OUTPUT_DIM, N_LAYERS)
+model.embedding.weight.data.copy_(TEXT.vocab.vectors)
 
 # 优化器和损失函数
-optimizer = optim.Adam(model.parameters())
+#optimizer = optim.Adam(model.parameters())
+optimizer = optim.Adam(model.parameters(), weight_decay=1e-5)  # L2正则 以防过拟
 criterion = nn.BCEWithLogitsLoss()
 
 #训练循环
@@ -150,7 +165,23 @@ def train(model, iterator, optimizer, criterion):
     epoch_acc = 0
    
     model.train()
-   
+    #更频繁的打印进度方法
+    for i, batch in enumerate(iterator):
+        text, text_lengths = batch.text
+        predictions = model(text, text_lengths).squeeze(1)
+        loss = criterion(predictions, batch.label)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        epoch_loss += loss.item()
+        epoch_acc += accuracy(predictions, batch.label)
+        # 每100个batch打印一次进度
+        if (i + 1) % 100 == 0:
+            print(f"  Batch {i+1}/{len(iterator)} processed")
+    return epoch_loss / len(iterator), epoch_acc / len(iterator)
+
+    '''
+    #原方法
     for batch in iterator:
         text, text_lengths = batch.text
         predictions = model(text, text_lengths).squeeze(1)
@@ -164,7 +195,7 @@ def train(model, iterator, optimizer, criterion):
         epoch_acc += accuracy(predictions, batch.label)
        
     return epoch_loss / len(iterator), epoch_acc / len(iterator)
-
+    '''
 #模型评估
 
 #评估函数
@@ -209,14 +240,28 @@ model = model.to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 criterion = criterion.to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 
 # 训练过程
-N_EPOCHS = 500
+N_EPOCHS = 20
+best_test_loss = float('inf')
+patience = 10
+counter = 0
+
 for epoch in range(N_EPOCHS):
     train_loss, train_acc = train(model, train_iterator, optimizer, criterion)
     test_loss, test_acc = evaluate(model, test_iterator, criterion)
     print(f'Epoch: {epoch+1:02}')
     print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
     print(f'\t Test Loss: {test_loss:.3f} |  Test Acc: {test_acc*100:.2f}%')
-
+    
+    # Early stopping 早停以避免过拟
+    if test_loss < best_test_loss:
+        best_test_loss = test_loss
+        counter = 0
+        torch.save(model.state_dict(), 'best_model.pt')
+    else:
+        counter += 1
+        if counter >= patience:
+            print("Early stopping triggered.")
+            break
 '''
 训练损失（train loss）和测试损失（test loss）是评估神经网络性能的两个关键指标，其变化趋势可反映模型训练状态及潜在问题。
 正常学习状态
@@ -229,20 +274,6 @@ for epoch in range(N_EPOCHS):
 当‌train loss和test loss均趋于平稳‌，可能因学习率过低或批次大小过小导致训练停滞，需调整学习率或增加批次数量。 ‌
 结构或参数问题
 若‌两者同时上升‌，通常由网络结构设计缺陷（如层数过多）、参数配置不当或数据未清洗引起，需优化网络架构或参数设置。
-本例目前存在过拟合征象
-Epoch: 01
-        Train Loss: 0.693 | Train Acc: 54.57%
-         Test Loss: 0.692 |  Test Acc: 55.08%
-Epoch: 02
-        Train Loss: 0.679 | Train Acc: 58.65%
-         Test Loss: 0.691 |  Test Acc: 56.64%
-Epoch: 03
-        Train Loss: 0.653 | Train Acc: 59.13%
-         Test Loss: 0.724 |  Test Acc: 46.48%
-...
-Epoch: 30
-        Train Loss: 0.053 | Train Acc: 97.84%
-         Test Loss: 2.268 |  Test Acc: 52.34%
 '''
 
 
