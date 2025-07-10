@@ -38,7 +38,7 @@ Spacy 是一个强大的 Python 库，提供了丰富的 NLP 工具，包括分�
 '''
 
 '''
-## Copilot 添加：处理数据集，随机抽取训练集和测试集 按需运行
+## Copilot 添加：处理数据集，随机抽取训练集和测试集 未分列不可用
 # git clone https://github.com/EtherealShen/IMDB/
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -54,6 +54,26 @@ train_df.to_csv('helloPython/_Datasets/imdb/train.csv', index=False)
 test_df.to_csv('helloPython/_Datasets/imdb/test.csv', index=False)
 ##
 '''
+'''
+## Copilot 添加：处理数据集，随机抽取训练集和测试集 考虑选列 按需运行一次
+import pandas as pd
+
+df = pd.read_csv('helloPython/_Datasets/IMDB/IMDB-Movie-Data.csv')
+
+# 以Description为文本，Rating为情感标签（>=7为正面，<7为负面）
+df = df[['Description', 'Rating']].dropna()
+df['label'] = (df['Rating'] >= 7).astype(int)
+df = df.rename(columns={'Description': 'text'})
+
+# 只保留text和label两列
+df = df[['text', 'label']]
+
+# 划分训练集和测试集
+from sklearn.model_selection import train_test_split
+train_df, test_df = train_test_split(df, test_size=0.2, random_state=42, shuffle=True)
+train_df.to_csv('helloPython/_Datasets/imdb/train.csv', index=False)
+test_df.to_csv('helloPython/_Datasets/imdb/test.csv', index=False)
+'''
 
 
 #数据预处理
@@ -62,7 +82,8 @@ test_df.to_csv('helloPython/_Datasets/imdb/test.csv', index=False)
 TEXT = Field(tokenize='spacy',
             tokenizer_language='en_core_web_sm',
             include_lengths=True)
-LABEL = Field(sequential=False, use_vocab=False)
+# LABEL = Field(sequential=False, use_vocab=False)
+LABEL = Field(sequential=False, use_vocab=False, dtype=torch.float) # Copilot: 检查 LABEL 字段类型
 
 # 加载数据集
 train_data, test_data = TabularDataset.splits(
@@ -84,7 +105,7 @@ TEXT.build_vocab(train_data,
 # 特指包含100维的词向量，适用于各种任务中。
 # 词汇表匹配：您可以通过TEXT.build_vocab方法，将您自定义的词汇表与glove词向量中的词进行匹配，创建出适合您需要的词向量。
 # 获取词向量：一旦构建了新的词向量，您可以通过TEXT.vocab.vectors获取到这些词的向量表示，以便在后续任务中使用。
-
+# git clone https://gitcode.com/open-source-toolkit/fd914
 #模型实现
 
 class SentimentLSTM(nn.Module):
@@ -171,6 +192,110 @@ def accuracy(preds, y):
     correct = (rounded_preds == y).float()
     acc = correct.sum() / len(correct)
     return acc
+
+# Copilot补充训练代码
+# 构建数据迭代器
+BATCH_SIZE = 64
+train_iterator, test_iterator = BucketIterator.splits(
+    (train_data, test_data),
+    batch_size=BATCH_SIZE,
+    sort_within_batch=True,
+    sort_key=lambda x: len(x.text),
+    device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+)
+
+# 将模型和损失函数移动到设备
+model = model.to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+criterion = criterion.to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
+
+# 训练过程
+N_EPOCHS = 500
+for epoch in range(N_EPOCHS):
+    train_loss, train_acc = train(model, train_iterator, optimizer, criterion)
+    test_loss, test_acc = evaluate(model, test_iterator, criterion)
+    print(f'Epoch: {epoch+1:02}')
+    print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
+    print(f'\t Test Loss: {test_loss:.3f} |  Test Acc: {test_acc*100:.2f}%')
+
+'''
+训练损失（train loss）和测试损失（test loss）是评估神经网络性能的两个关键指标，其变化趋势可反映模型训练状态及潜在问题。
+正常学习状态
+当‌train loss和test loss均持续下降‌，表明模型仍在有效学习，训练过程正常。 ‌
+过拟合风险
+若‌train loss持续下降但test loss趋于平稳或上升‌，通常意味着模型过拟合训练数据，需通过简化模型结构、增加数据多样性（如数据增强）或调整训练策略（如减少批次大小、引入dropout）来改善。 ‌
+数据集质量问题
+若‌train loss趋于平稳但test loss持续下降‌，可能因数据集标注错误或分布不均衡导致，需检查数据完整性及划分方式。 ‌
+训练瓶颈
+当‌train loss和test loss均趋于平稳‌，可能因学习率过低或批次大小过小导致训练停滞，需调整学习率或增加批次数量。 ‌
+结构或参数问题
+若‌两者同时上升‌，通常由网络结构设计缺陷（如层数过多）、参数配置不当或数据未清洗引起，需优化网络架构或参数设置。
+本例目前存在过拟合征象
+Epoch: 01
+        Train Loss: 0.693 | Train Acc: 54.57%
+         Test Loss: 0.692 |  Test Acc: 55.08%
+Epoch: 02
+        Train Loss: 0.679 | Train Acc: 58.65%
+         Test Loss: 0.691 |  Test Acc: 56.64%
+Epoch: 03
+        Train Loss: 0.653 | Train Acc: 59.13%
+         Test Loss: 0.724 |  Test Acc: 46.48%
+...
+Epoch: 30
+        Train Loss: 0.053 | Train Acc: 97.84%
+         Test Loss: 2.268 |  Test Acc: 52.34%
+'''
+
+
+
+'''
+# 参考训练过程代码 https://www.cnblogs.com/Fgociallo/p/18886660
+#正式训练
+
+BATCH_SIZE = 64 # 先确定好一个批次的样本数
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') # 自动检测是否可用 GPU（cuda），否则使用 CPU
+# 创建迭代器
+train_iterator, valid_iterator, test_iterator = data.BucketIterator.splits(
+    (train_data, valid_data, test_data), 
+    batch_size=BATCH_SIZE, 
+    device=device)
+# 通过这行代码可以看到各样本的第 2 个词, 详情就不细说了
+[TEXT.vocab.itos[i] for i in next(iter(train_iterator)).text[1, :]]
+
+# 初始化组件
+optimizer = optim.Adam(model.parameters()) # 使用Adam优化器
+criterion = nn.BCEWithLogitsLoss() # 二分类损失函数（结合了 Sigmoid 激活和二元交叉熵损失）
+model = model.to(device) # 将模型移至GPU（如果可用）
+criterion = criterion.to(device)  # 损失函数也移至GPU
+
+# 训练参数
+N_EPOCHS = 10 # 训练轮数
+best_valid_loss = float('inf') # 要求记录验证集上的最低损失，用于保存最佳模型
+
+# 训练循环
+for epoch in range(N_EPOCHS):
+    start_time = time.time() # 记录epoch开始时间
+    
+    # 训练并评估
+    train_loss, train_acc = train(model, train_iterator, optimizer, criterion)
+    valid_loss, valid_acc = evaluate(model, valid_iterator, criterion)
+    
+    # 计算耗时
+    end_time = time.time()
+    epoch_mins, epoch_secs = epoch_time(start_time, end_time)
+    
+    # 保存最佳模型
+    if valid_loss < best_valid_loss:
+        best_valid_loss = valid_loss
+        torch.save(model.state_dict(), 'wordavg-model.pt')
+    
+    # 打印日志
+    print(f'迭代轮次: {epoch+1:02} | 迭代一轮时间: {epoch_mins}m {epoch_secs}s')
+    print(f'\t训练损失: {train_loss:.3f} | 训练准确率: {train_acc*100:.2f}%')
+    print(f'\t 验证损失: {valid_loss:.3f} |  验证准确率: {valid_acc*100:.2f}%')
+'''
+
+
 
 #模型应用
 
