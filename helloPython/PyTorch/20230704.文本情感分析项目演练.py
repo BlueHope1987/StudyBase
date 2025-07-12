@@ -176,8 +176,21 @@ def train(model, iterator, optimizer, criterion):
         epoch_loss += loss.item()
         epoch_acc += accuracy(predictions, batch.label)
         # 每100个batch打印一次进度
+        # if (i + 1) % 100 == 0:
         if (i + 1) % 100 == 0:
             print(f"  Batch {i+1}/{len(iterator)} processed")
+            print(f"  Loss: {epoch_loss / (i + 1):.4f}, Accuracy: {epoch_acc / (i + 1):.4f}")
+            # 绘制训练曲线 Copilot代码提示添加
+        '''
+            plt.clf()  # 清除当前图形
+            plt.plot(range(i+1), [epoch_loss / (j + 1) for j in range(i+1)], label='Train Loss')
+            plt.xlabel('Batch')
+            plt.ylabel('Loss')
+            plt.title('Training Loss Progress')
+            plt.legend()
+            plt.pause(0.001)  # 暂停以更新图形
+            plt.show()
+            '''
     return epoch_loss / len(iterator), epoch_acc / len(iterator)
 
     '''
@@ -235,6 +248,14 @@ train_iterator, test_iterator = BucketIterator.splits(
     device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 )
 
+# 如果有预训练模型，载入模型参数
+try:
+    model.load_state_dict(torch.load('best_model.pt'))
+    print("Loaded pre-trained model.")
+except FileNotFoundError:
+    print("No pre-trained model found, starting from scratch.")
+
+
 # 将模型和损失函数移动到设备
 model = model.to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
 criterion = criterion.to(torch.device('cuda' if torch.cuda.is_available() else 'cpu'))
@@ -245,13 +266,41 @@ best_test_loss = float('inf')
 patience = 10
 counter = 0
 
+# 绘制训练曲线 Copilot代码提示添加
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+plt.ion()  # 开启交互模式
+train_losses = []
+test_losses = []
+train_acc = []
+test_acc = []
+plt.show()  # 显示图形窗口
+
+# 训练循环
 for epoch in range(N_EPOCHS):
     train_loss, train_acc = train(model, train_iterator, optimizer, criterion)
     test_loss, test_acc = evaluate(model, test_iterator, criterion)
     print(f'Epoch: {epoch+1:02}')
     print(f'\tTrain Loss: {train_loss:.3f} | Train Acc: {train_acc*100:.2f}%')
     print(f'\t Test Loss: {test_loss:.3f} |  Test Acc: {test_acc*100:.2f}%')
+
+    # 绘制训练曲线 Copilot代码提示添加
+    train_losses.append(train_loss)
+    test_losses.append(test_loss)
+    # 绘制训练曲线
+    plt.clf()  # 清除当前图形
+    plt.plot(train_losses, label='Train Loss')
+    plt.plot(test_losses, label='Test Loss')
+    plt.plot(train_acc, label='Train Acc')
+    plt.plot(test_acc, label='Test Acc')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.title('Training and Test Loss')
+    plt.legend()
+    plt.pause(0.001)  # 暂停以更新图形
+    plt.show()
     
+    # 保存最佳模型
     # Early stopping 早停以避免过拟
     if test_loss < best_test_loss:
         best_test_loss = test_loss
