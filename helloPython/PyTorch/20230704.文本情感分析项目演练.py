@@ -177,11 +177,11 @@ def train(model, iterator, optimizer, criterion):
         epoch_acc += accuracy(predictions, batch.label)
         # 每100个batch打印一次进度
         # if (i + 1) % 100 == 0:
-        if (i + 1) % 100 == 0:
+        if (i + 1) % 1 == 0:
             print(f"  Batch {i+1}/{len(iterator)} processed")
             print(f"  Loss: {epoch_loss / (i + 1):.4f}, Accuracy: {epoch_acc / (i + 1):.4f}")
-            # 绘制训练曲线 Copilot代码提示添加
         '''
+            # 绘制训练曲线 Copilot代码提示添加
             plt.clf()  # 清除当前图形
             plt.plot(range(i+1), [epoch_loss / (j + 1) for j in range(i+1)], label='Train Loss')
             plt.xlabel('Batch')
