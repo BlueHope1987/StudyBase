@@ -180,7 +180,7 @@ def train(model, iterator, optimizer, criterion):
         if (i + 1) % 1 == 0:
             print(f"  Batch {i+1}/{len(iterator)} processed")
             print(f"  Loss: {epoch_loss / (i + 1):.4f}, Accuracy: {epoch_acc / (i + 1):.4f}")
-        '''
+
             # 绘制训练曲线 Copilot代码提示添加
             plt.clf()  # 清除当前图形
             plt.plot(range(i+1), [epoch_loss / (j + 1) for j in range(i+1)], label='Train Loss')
@@ -189,8 +189,11 @@ def train(model, iterator, optimizer, criterion):
             plt.title('Training Loss Progress')
             plt.legend()
             plt.pause(0.001)  # 暂停以更新图形
-            plt.show()
-            '''
+
+        if stop_event.is_set():
+            print("检测到停止请求，正在停止批次...")
+            break
+        
     return epoch_loss / len(iterator), epoch_acc / len(iterator)
 
     '''
@@ -250,7 +253,7 @@ train_iterator, test_iterator = BucketIterator.splits(
 
 # 如果有预训练模型，载入模型参数
 try:
-    model.load_state_dict(torch.load('best_model.pt'))
+    model.load_state_dict(torch.load('helloPython/_Datasets/IMDB/best_model.pt'))
     print("Loaded pre-trained model.")
 except FileNotFoundError:
     print("No pre-trained model found, starting from scratch.")
@@ -263,6 +266,7 @@ criterion = criterion.to(torch.device('cuda' if torch.cuda.is_available() else '
 # 训练过程
 N_EPOCHS = 20
 best_test_loss = float('inf')
+test_loss = float('inf')
 patience = 10
 counter = 0
 
@@ -276,8 +280,39 @@ train_acc = []
 test_acc = []
 plt.show()  # 显示图形窗口
 
+
+import threading
+import sys
+from queue import Queue
+
+stop_event = threading.Event()
+message_queue = Queue()
+
+# 新增：键盘监听线程函数
+def keyboard_listener():
+    input()  # 等待用户输入
+    stop_event.set()  # 设置停止标志
+    message_queue.put("训练停止请求已发送")
+
+# 启动键盘监听线程
+keyboard_thread = threading.Thread(target=keyboard_listener, daemon=True)
+keyboard_thread.start()
+
+print("按 Enter 键停止训练...")
+
+stop_event.set() # ****程序控制：跳过训练循环直接进入推理****
+
 # 训练循环
 for epoch in range(N_EPOCHS):
+    if stop_event.is_set():
+        print("检测到停止请求，正在停止迭代...")
+        if test_loss < best_test_loss:
+            best_test_loss = test_loss
+            counter = 0
+            torch.save(model.state_dict(), 'helloPython/_Datasets/IMDB/best_model.pt')
+            print("模型已保存，进行后续过程。")
+        break
+
     train_loss, train_acc = train(model, train_iterator, optimizer, criterion)
     test_loss, test_acc = evaluate(model, test_iterator, criterion)
     print(f'Epoch: {epoch+1:02}')
@@ -305,7 +340,7 @@ for epoch in range(N_EPOCHS):
     if test_loss < best_test_loss:
         best_test_loss = test_loss
         counter = 0
-        torch.save(model.state_dict(), 'best_model.pt')
+        torch.save(model.state_dict(), 'helloPython/_Datasets/IMDB/best_model.pt')
     else:
         counter += 1
         if counter >= patience:
