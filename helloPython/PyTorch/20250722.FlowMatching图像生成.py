@@ -2,6 +2,8 @@
 https://mp.weixin.qq.com/s/x2CDIKId64136zx8Gr-R6g
 Flow Matching生成模型：从理论基础到Pytorch代码实现
 
+>>>示例同 20250723.checkerboard_flow_matching.ipynb
+
 与传统扩散模型通过逆向去噪过程生成数据不同，Flow Matching通过学习时间相关的速度场，建立从噪声分布到目标数据分布的直接映射路径。文章将理论推导与代码实现相结合，使用2D演示数据集验证方法的有效性，为深度学习研究者和工程师提供了一个完整的技术参考。
 
 引言
@@ -171,6 +173,50 @@ for step in tqdm(range(num_steps)):
     if step % 100 == 0:  
          print(f"Step {step} | Loss: {loss.item():.4f}")
 
+
+##### 附加 图表代码
+# Plot after training
+plt.plot(losses)
+plt.xlabel("Step")
+plt.ylabel("Loss")
+plt.title("Training Loss Curve")
+plt.grid(True)
+plt.show()
+
+def plot_velocity_row(model, t_values=[0.0, 0.25, 0.5, 0.75, 1.0], grid_size=20):
+    model.eval()
+    with torch.no_grad():
+        # Set up grid and figure
+        fig, axes = plt.subplots(1, len(t_values), figsize=(4 * len(t_values), 4))
+        x = np.linspace(-4, 4, grid_size)
+        y = np.linspace(-4, 4, grid_size)
+        xx, yy = np.meshgrid(x, y)
+        xy = np.stack([xx.flatten(), yy.flatten()], axis=1)
+        xt = torch.tensor(xy, dtype=torch.float32).to(device)
+
+        for i, t_val in enumerate(t_values):
+            # Repeat t for each grid point
+            tt = torch.full((xt.shape[0], 1), t_val, dtype=torch.float32).to(device)
+
+            # Predict velocity vectors
+            v = model(xt, tt).cpu().numpy()
+
+            # Plot velocity field as arrows
+            ax = axes[i]
+            ax.quiver(xx, yy,
+                      v[:, 0].reshape(grid_size, grid_size),
+                      v[:, 1].reshape(grid_size, grid_size),
+                      scale=20)
+            ax.set_title(f"t = {t_val}")
+            ax.axis("equal")
+            ax.grid(True)
+
+        plt.tight_layout()
+        plt.show()
+
+    plot_velocity_row(model)
+
+
 '''
 采样算法实现
 为了从训练好的模型生成新样本，我们从噪声分布中的一个点开始，使用学习的速度场f(x,t)向前推动它。这通过求解从t = 0到t = 1的ODE来完成，正如第3.3节中描述的那样。我们使用scipy.integrate.solve_ivp这一标准ODE求解器来数值积分学习的速度场，产生位于目标分布中的输出。
@@ -198,6 +244,46 @@ def sample_flow(model, x0, t_span=(0, 1)):
     # 返回t=1时的最终状态(即预测的x1)  
     return sol.y[:, -1]
 
+
+
+##### 附加 图表代码
+
+samples = []
+
+# Sample 1000 points from the source distribution p₀
+x0 = sample_source(1000).to(device)
+
+# Push each point through the learned flow to generate a sample from p₁
+for x in x0:
+    with torch.no_grad():
+        x = x.to(device)
+        x1_hat = sample_flow(model, x, t_span=(0, 1))  # Integrate flow from t=0 to t=1
+        samples.append(x1_hat)
+
+# Convert list of sampled points to NumPy array for plotting
+samples = np.array(samples)
+
+# Scatter plot of generated samples in 2D
+plt.scatter(samples[:, 0], samples[:, 1], alpha=0.6)
+plt.title("Generated Samples from Flow Matching")
+plt.axis("equal")
+plt.grid(True)
+plt.show()
+
+real = sample_target(1000)
+gen = np.array(samples)
+
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.scatter(real[:, 0], real[:, 1], alpha=0.3)
+plt.title("Target: Checkerboard")
+
+plt.subplot(1, 2, 2)
+plt.scatter(gen[:, 0], gen[:, 1], alpha=0.3)
+plt.title("Generated from Model")
+
+plt.show()
 
 '''
 实验结果与性能分析
