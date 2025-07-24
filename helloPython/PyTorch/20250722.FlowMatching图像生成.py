@@ -148,6 +148,7 @@ def flow_matching_loss(model, x0, x1, t):
 '''
 训练流程实现
 模型训练过程包括从p₀和p₁分布采样噪声和数据点。在每个训练步骤中，我们在[0,1]范围内选择随机时间，计算Flow Matching损失，并使用Adam优化器更新参数。随着训练进行，模型逐渐学会连接两个分布的速度场。
+实验结果与性能分析：
 '''
 
 num_steps = 10000  
@@ -181,7 +182,12 @@ plt.xlabel("Step")
 plt.ylabel("Loss")
 plt.title("Training Loss Curve")
 plt.grid(True)
+'''
+训练收敛性分析
+训练损失曲线显示了良好的收敛特性。损失在早期迭代中快速下降，随后进入振荡阶段，这是神经网络训练中的典型现象。
+'''
 plt.show()
+
 
 def plot_velocity_row(model, t_values=[0.0, 0.25, 0.5, 0.75, 1.0], grid_size=20):
     model.eval()
@@ -213,9 +219,11 @@ def plot_velocity_row(model, t_values=[0.0, 0.25, 0.5, 0.75, 1.0], grid_size=20)
 
         plt.tight_layout()
         plt.show()
-
-    plot_velocity_row(model)
-
+'''
+速度场演化过程
+学习的速度场在时间维度上表现出平滑的演化特性。在t = 0时，流场从中心向外定向，反映了向高斯分布的移动特征。在较大的t值时，流场开始表现出更接近棋盘结构的特征。
+'''
+plot_velocity_row(model)
 
 '''
 采样算法实现
@@ -268,7 +276,12 @@ plt.scatter(samples[:, 0], samples[:, 1], alpha=0.6)
 plt.title("Generated Samples from Flow Matching")
 plt.axis("equal")
 plt.grid(True)
+'''
+数据分布特征
+我们为Flow Matching设计了一个简单的合成玩具问题，其中源分布p₀为2D高斯分布，目标分布p₁为棋盘模式。这种设置使我们能够轻松可视化学习的流场和中间诊断结果。
+'''
 plt.show()
+
 
 real = sample_target(1000)
 gen = np.array(samples)
@@ -283,19 +296,14 @@ plt.subplot(1, 2, 2)
 plt.scatter(gen[:, 0], gen[:, 1], alpha=0.3)
 plt.title("Generated from Model")
 
-plt.show()
-
 '''
-实验结果与性能分析
-数据分布特征
-我们为Flow Matching设计了一个简单的合成玩具问题，其中源分布p₀为2D高斯分布，目标分布p₁为棋盘模式。这种设置使我们能够轻松可视化学习的流场和中间诊断结果。
-训练收敛性分析
-训练损失曲线显示了良好的收敛特性。损失在早期迭代中快速下降，随后进入振荡阶段，这是神经网络训练中的典型现象。
-速度场演化过程
-学习的速度场在时间维度上表现出平滑的演化特性。在t = 0时，流场从中心向外定向，反映了向高斯分布的移动特征。在较大的t值时，流场开始表现出更接近棋盘结构的特征。
 生成质量评估
 为了生成新样本，我们使用scipy.integrate.solve_ivp从t = 0到t = 1积分学习的速度场。从定性角度来看，生成的样本在形状和结构上与目标棋盘分布紧密匹配，验证了方法的有效性。
+'''
+plt.show()
 
+
+'''
 方法局限性与发展方向
 现有局限性分析
 虽然Flow Matching为分数匹配提供了简单而优雅的替代方案，但仍面临一些重要局限性。
