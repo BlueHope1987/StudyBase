@@ -14,104 +14,114 @@ https://blog.csdn.net/qq839019311/article/details/143110729
 '''
 
 
-from transformers import AutoTokenizer, AutoModelForCausalLM
-import transformers 
+import gradio as gr
 import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import StoppingCriteria, StoppingCriteriaList, TextIteratorStreamer
+from threading import Thread
+# 模型路径
+
 model = r"helloPython\_Datasets\Qwen2.5-7B-Instruct"
 
-tokenizer = AutoTokenizer.from_pretrained(model)
-
 '''
-pipeline = transformers.pipeline(
-    "text-generation",
-    model=model,
-    torch_dtype=torch.float16, 
-    device_map="cpu",#"auto",
+# 正确配置8-bit量化
+bnb_config = BitsAndBytesConfig(
+    load_in_8bit=True,  # 启用8-bit量化
+    llm_int8_threshold=6.0,  # 阈值控制异常值处理
 )
 '''
 
+# 豆包：如果需要4bit量化 使用该代码 内存占用约3.5G
+bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True, # 指定要以 4-bit 精度转换和加载模型。
+    bnb_4bit_compute_dtype=torch.float16,  # 计算精度 计算数据类型用于更改计算期间将使用的数据类型。默认情况下，计算数据类型设置为 float32，但可以设置为 bf16 以提高速度。
+    bnb_4bit_use_double_quant=True,  # 双重量化，进一步减少内存 使用嵌套量化来提高内存效率的推理和训练。
+    bnb_4bit_quant_type="nf4",  # 使用NormalFloat 4-bit量化
+)
 
+# todo:多次尝试运行python内存反复波动过大 最小数十兆 疑似没有成功加载模型 vsc卡顿崩溃 偶尔可以开放gradio但无法推理
 
-#对话界面范例
-'''
-torch>=2.0
-transformers>=4.35.0
-gradio>=4.13.0
-'''
+# 加载tokenizer和模型
+tokenizer = AutoTokenizer.from_pretrained(model, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(
+    model,
+    quantization_config=bnb_config,  # 应用量化配置
+    device_map="cpu", 
+    trust_remote_code=True,  # 允许执行模型特定代码
+    low_cpu_mem_usage=True,  # 减少CPU内存使用
+)
 
-import gradio as gr
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from transformers import StoppingCriteria, StoppingCriteriaList, TextIteratorStreamer
-from threading import Thread
-
-torch.autograd.set_detect_anomaly(True)
-
-# Loading the tokenizer and model from Hugging Face's model hub.
-tokenizer = AutoTokenizer.from_pretrained(model)
-model = AutoModelForCausalLM.from_pretrained(model)
-
-# using CUDA for an optimal experience
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = model.to(device)
-
-
-# Defining a custom stopping criteria class for the model's text generation.
+# 定义停止条件
 class StopOnTokens(StoppingCriteria):
     def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor, **kwargs) -> bool:
-        stop_ids = [2]  # IDs of tokens where the generation should stop.
+        stop_ids = [tokenizer.eos_token_id]  # 使用模型的EOS token
         for stop_id in stop_ids:
-            if input_ids[0][-1] == stop_id:  # Checking if the last generated token is a stop token.
+            if input_ids[0][-1] == stop_id:
                 return True
         return False
 
-
-# Function to generate model predictions.
+# 生成函数
 def predict(message, history):
-    history_openai_format=[{
-        "role":"system",
-        "content":"You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
+    # 构建对话历史
+    history_openai_format = [{
+        "role": "system",
+        "content": "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
     }]
-
+    
     for human, assistant in history:
         history_openai_format.append({"role": "user", "content": human})
-        history_openai_format.append({
-            "role":"assistant",
-            "content":assistant
-        })
+        history_openai_format.append({"role": "assistant", "content": assistant})
     history_openai_format.append({"role": "user", "content": message})
 
-    stop = StopOnTokens()
+    # 编码输入
+    model_inputs = tokenizer.apply_chat_template(
+        history_openai_format, 
+        return_tensors="pt", 
+        add_generation_prompt=True
+    ).to(model.device)
 
-
-    model_inputs = tokenizer([history_openai_format], return_tensors="pt").to(device)
-    streamer = TextIteratorStreamer(tokenizer, timeout=10., skip_prompt=True, skip_special_tokens=True)
+    # 创建流式生成器
+    streamer = TextIteratorStreamer(
+        tokenizer, 
+        timeout=30.0, 
+        skip_prompt=True, 
+        skip_special_tokens=True
+    )
+    
+    # 生成参数
     generate_kwargs = dict(
         model_inputs,
-        torch_dtype=torch.qint8, # 8位量化
+        # torch_dtype=torch.qint8, # 8位量化 豆包：仅在生成时生效，但模型加载时仍使用完整精度（FP16/FP32），导致初始加载就占用大量内存（7B 模型 FP16 约 14GB）
         streamer=streamer,
         max_new_tokens=512,
         do_sample=True,
         top_p=0.9,
-        # top_k=50,
         temperature=0.45,
         num_beams=1,
-        stopping_criteria=StoppingCriteriaList([stop])
+        stopping_criteria=StoppingCriteriaList([StopOnTokens()])
     )
-    t = Thread(target=model.generate, kwargs=generate_kwargs)
-    t.start()  # Starting the generation in a separate thread.
+    
+    # 在主线程中生成（避免内存复制）
+    # 注意：这可能导致UI在生成期间暂时无响应
+    thread = Thread(target=model.generate, kwargs=generate_kwargs)
+    thread.start()
+    
+    # 流式输出
     partial_message = ""
     for new_token in streamer:
         partial_message += new_token
-        if '</s>' in partial_message:  # Breaking the loop if the stop token is generated.
-            break
         yield partial_message
 
-
-# Setting up the Gradio chat interface.
-gr.ChatInterface(predict,
-                 title="通义千问2.5-7B-Instruct chatBot测试",
-                 description="Ask 通义千问2.5-7B-Instruct any questions",
-                 examples=['How to cook a fish?', 'Who is the president of US now?']
-                 ).launch()  # Launching the web interface.
-
+# 启动Gradio界面
+gr.ChatInterface(
+    predict,
+    title="通义千问2.5-7B-Instruct ChatBot",
+    description="Ask Qwen2.5-7B any questions",
+    examples=["你好", "推荐一本关于AI的书", "解释一下量子计算"]
+).launch(
+    share=False,  # 设为True可生成公共分享链接
+    server_name="0.0.0.0",  # 绑定所有网络接口
+    server_port=7860,  # 端口号
+    max_threads=4,  # 限制最大线程数，避免资源竞争
+    show_error=True  # 显示详细错误信息
+)
