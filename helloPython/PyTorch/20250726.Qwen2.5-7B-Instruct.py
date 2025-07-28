@@ -39,7 +39,19 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_quant_type="nf4",  # 使用NormalFloat 4-bit量化
 )
 
-# todo:多次尝试运行python内存反复波动过大 最小数十兆 疑似没有成功加载模型 vsc卡顿崩溃 偶尔可以开放gradio但无法推理
+# 多次尝试运行python内存反复波动过大 最小数十兆 疑似没有成功加载模型 vsc卡顿崩溃 偶尔可以开放gradio但无法推理
+# 模型过大 尝试可以在vsc外简单终端尝试运行 速度更快 且深入更稳
+# 但目前尝试在非管理员状态下完成载入后提示
+# Cannot find empty port in range: 7860-7860. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`.
+'''
+cmd命令行
+conda activate pyNN
+f: 
+cd F:\Documents\Marvin\Source\Repos\BlueHope1987\StudyBase
+python F:\Documents\Marvin\Source\Repos\BlueHope1987\StudyBase\helloPython\PyTorch\20250726.Qwen2.5-7B-Instruct.py
+'''
+
+
 
 # 加载tokenizer和模型
 tokenizer = AutoTokenizer.from_pretrained(model, trust_remote_code=True)
