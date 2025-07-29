@@ -101,6 +101,7 @@ def predict(message, history):
     )
     
     # 生成参数
+    # todo: ValueError: dictionary update sequence element #0 has length 33; 2 is required
     generate_kwargs = dict(
         model_inputs,
         # torch_dtype=torch.qint8, # 8位量化 豆包：仅在生成时生效，但模型加载时仍使用完整精度（FP16/FP32），导致初始加载就占用大量内存（7B 模型 FP16 约 14GB）
@@ -131,9 +132,11 @@ gr.ChatInterface(
     description="Ask Qwen2.5-7B any questions",
     examples=["你好", "推荐一本关于AI的书", "解释一下量子计算"]
 ).launch(
+'''
     share=False,  # 设为True可生成公共分享链接
     server_name="0.0.0.0",  # 绑定所有网络接口
     server_port=7860,  # 端口号
     max_threads=4,  # 限制最大线程数，避免资源竞争
     show_error=True  # 显示详细错误信息
+'''
 )
