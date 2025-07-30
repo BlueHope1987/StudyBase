@@ -85,34 +85,39 @@ def predict(message, history):
         history_openai_format.append({"role": "assistant", "content": assistant})
     history_openai_format.append({"role": "user", "content": message})
 
-    # 编码输入
+    # 编码输入 （返回input_ids和attention_mask）
     model_inputs = tokenizer.apply_chat_template(
         history_openai_format, 
         return_tensors="pt", 
-        add_generation_prompt=True
+        add_generation_prompt=True,
+        return_attention_mask=True  # 显式生成attention_mask 防attention mask警告
     ).to(model.device)
+
+     # 分离input_ids和attention_mask（apply_chat_template返回的是字典） 防attention mask警告
+    input_ids = model_inputs["input_ids"].to(model.device)
+    attention_mask = model_inputs["attention_mask"].to(model.device)
 
     # 创建流式生成器
     streamer = TextIteratorStreamer(
         tokenizer, 
-        timeout=30.0, 
+        timeout=1800.0, # 30秒不够反应 设定30分钟的超时 
         skip_prompt=True, 
         skip_special_tokens=True
     )
     
     # 生成参数
-    # todo: ValueError: dictionary update sequence element #0 has length 33; 2 is required
-    generate_kwargs = dict(
-        model_inputs,
-        # torch_dtype=torch.qint8, # 8位量化 豆包：仅在生成时生效，但模型加载时仍使用完整精度（FP16/FP32），导致初始加载就占用大量内存（7B 模型 FP16 约 14GB）
-        streamer=streamer,
-        max_new_tokens=512,
-        do_sample=True,
-        top_p=0.9,
-        temperature=0.45,
-        num_beams=1,
-        stopping_criteria=StoppingCriteriaList([StopOnTokens()])
-    )
+    generate_kwargs = {
+            "input_ids": input_ids,  # 显式指定input_ids 由: model_inputs修改防attention mask警告
+            "attention_mask": attention_mask,  # 显式传入attention_mask 防attention mask警告
+             # torch_dtype=torch.qint8, # 8位量化 豆包：仅在生成时生效，但模型加载时仍使用完整精度（FP16/FP32），导致初始加载就占用大量内存（7B 模型 FP16 约 14GB）
+            "streamer": streamer,
+            "max_new_tokens": 128,
+            "temperature": 0.7,
+            "top_p": 0.9,
+            "do_sample": True,
+            "num_beams": 1,
+            "stopping_criteria": StoppingCriteriaList([StopOnTokens()])
+        }
     
     # 在主线程中生成（避免内存复制）
     # 注意：这可能导致UI在生成期间暂时无响应
