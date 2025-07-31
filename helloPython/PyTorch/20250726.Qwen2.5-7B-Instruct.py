@@ -89,13 +89,10 @@ def predict(message, history):
     model_inputs = tokenizer.apply_chat_template(
         history_openai_format, 
         return_tensors="pt", 
-        add_generation_prompt=True,
-        return_attention_mask=True  # 显式生成attention_mask 防attention mask警告
+        add_generation_prompt=True
     ).to(model.device)
 
-     # 分离input_ids和attention_mask（apply_chat_template返回的是字典） 防attention mask警告
-    input_ids = model_inputs["input_ids"].to(model.device)
-    attention_mask = model_inputs["attention_mask"].to(model.device)
+
 
     # 创建流式生成器
     streamer = TextIteratorStreamer(
@@ -107,16 +104,15 @@ def predict(message, history):
     
     # 生成参数
     generate_kwargs = {
-            "input_ids": input_ids,  # 显式指定input_ids 由: model_inputs修改防attention mask警告
-            "attention_mask": attention_mask,  # 显式传入attention_mask 防attention mask警告
+            "input_ids": model_inputs,  # 显式指定input_ids
              # torch_dtype=torch.qint8, # 8位量化 豆包：仅在生成时生效，但模型加载时仍使用完整精度（FP16/FP32），导致初始加载就占用大量内存（7B 模型 FP16 约 14GB）
             "streamer": streamer,
-            "max_new_tokens": 128,
-            "temperature": 0.7,
-            "top_p": 0.9,
+            "max_new_tokens": 256, #适当增大
+            "temperature": 0.9, #0.7->0.9 提高随机性，减少提前终止
+            "top_p": 0.95,
             "do_sample": True,
             "num_beams": 1,
-            "stopping_criteria": StoppingCriteriaList([StopOnTokens()])
+            #"stopping_criteria": StoppingCriteriaList([StopOnTokens()]) # 暂时注释掉停止条件
         }
     
     # 在主线程中生成（避免内存复制）
