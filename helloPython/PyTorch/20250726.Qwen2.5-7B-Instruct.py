@@ -97,7 +97,7 @@ def predict(message, history):
     # 创建流式生成器
     streamer = TextIteratorStreamer(
         tokenizer, 
-        timeout=1800.0, # 30秒不够反应 设定30分钟的超时 
+        timeout=21600.0, # 30秒不够反应 设定30分钟的超时 ...CPU推理30分钟只吐出两行字 约一两分钟一个词 按停止按钮后可显示出后余部分 设定21600即6个小时
         skip_prompt=True, 
         skip_special_tokens=True
     )
@@ -107,7 +107,7 @@ def predict(message, history):
             "input_ids": model_inputs,  # 显式指定input_ids
              # torch_dtype=torch.qint8, # 8位量化 豆包：仅在生成时生效，但模型加载时仍使用完整精度（FP16/FP32），导致初始加载就占用大量内存（7B 模型 FP16 约 14GB）
             "streamer": streamer,
-            "max_new_tokens": 256, #适当增大
+            "max_new_tokens": 4096, #适当增大 128->256->4096
             "temperature": 0.9, #0.7->0.9 提高随机性，减少提前终止
             "top_p": 0.95,
             "do_sample": True,

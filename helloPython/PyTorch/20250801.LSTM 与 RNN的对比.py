@@ -58,6 +58,10 @@ from sklearn.preprocessing import MinMaxScaler
 from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import mean_squared_error
 
+# 设置中文字体（如微软雅黑），确保中文正常显示
+plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+plt.rcParams['axes.unicode_minus'] = False
+
 # 设置随机种子
 np.random.seed(42)
 torch.manual_seed(42)
